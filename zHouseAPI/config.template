@@ -1,0 +1,38 @@
+var development = {
+  server: {
+    host: 'localhost',
+    port: 3000
+  },
+  database: {
+    host: 'host',
+    user: 'z_house',
+    password: 'password',
+    database: 'z_house'
+  },
+  aws: {
+    accessKeyId: 'accessKeyId',
+    secretAccessKey: 'secretAccessKey',
+    topicArn: 'topicArn'
+  }
+};
+
+var production = {
+  server: {
+    host: 'localhost',
+    port: 3000
+  },
+  database: {
+    host: 'host',
+    user: 'z_house',
+    password: 'password',
+    database: 'z_house'
+  },
+  aws: {
+    accessKeyId: 'accessKeyId',
+    secretAccessKey: 'secretAccessKey',
+    topicArn: 'topicArn'
+  }
+};
+
+exports.development = development;
+exports.production = production;
