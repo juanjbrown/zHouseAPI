@@ -1,9 +1,17 @@
-var SequelizeModule = require('./modules/sequelize/sequelize.js');
+var config = require('./config.js')[process.env.NODE_ENV];
+
 var ExpressModule = require('./modules/express/express.js');
-var EpilogueModule = require('./modules/epilogue/epilogue.js');
+var SequelizeModule = require('./modules/sequelize/sequelize.js');
+var ZWaveModule = require('./modules/zwave/zwave.js');
 
-var expressModule = new ExpressModule();
 var sequelizeModule = new SequelizeModule();
-var epilogueModule = new EpilogueModule(expressModule, sequelizeModule);
+var zwaveModule = new ZWaveModule('socket', 'aws', 'scenes',sequelizeModule);
+var expressModule = new ExpressModule('test', sequelizeModule);
 
-sequelizeModule.start(expressModule);
+sequelizeModule.initialize(function() {
+  zwaveModule.connect();
+});
+
+zwaveModule.zwave.on('scan complete', function () {
+  expressModule.initialize();
+});

@@ -1,8 +1,9 @@
-module.exports = function(socketParam, awsParam, scenesParam) {
+module.exports = function(socketParam, awsParam, scenesParam, sequelizeParam) {
+  var sequelize = sequelizeParam;
   var scenes = scenesParam;
   var socket = socketParam;
   var aws = awsParam;
-  var ZWave = require('../node_modules/openzwave-shared/lib/openzwave-shared.js');
+  var ZWave = require('../../node_modules/openzwave-shared/lib/openzwave-shared.js');
   var os = require('os');
   var zwave = new ZWave({ConsoleOutput: false});
   var nodes = [];
@@ -16,9 +17,7 @@ module.exports = function(socketParam, awsParam, scenesParam) {
 
   zwave.on('node added', function (nodeid) {
     nodes[nodeid] = {manufacturer: '', manufacturerid: '', product: '', producttype: '', productid: '', type: '', name: '', loc: '', classes: {}, ready: false,};
-    GLOBAL.mysqlGlobal.addNode(nodeid, function() {
-      socket.updateNodes(nodes);
-    });
+    sequelize.addNode(nodeid);
   });
 
   zwave.on('value added', function (nodeid, comclass, value) {
@@ -26,13 +25,13 @@ module.exports = function(socketParam, awsParam, scenesParam) {
       nodes[nodeid]['classes'][comclass] = {};
     }
     nodes[nodeid]['classes'][comclass][value.index] = value;
-    socket.updateNodes(nodes);
+    //socket.updateNodes(nodes);
   });
 
   zwave.on('value changed', function (nodeid, comclass, value) {
     if(nodes[nodeid]['classes'][comclass][value.index].value !== value.value) {
       nodes[nodeid]['classes'][comclass][value.index] = value;
-      socket.updateNodes(nodes);
+      //socket.updateNodes(nodes);
       if(scanComplete) {
         checkAlarm(nodeid, comclass, value);
       }
@@ -43,7 +42,7 @@ module.exports = function(socketParam, awsParam, scenesParam) {
     if (nodes[nodeid]['classes'][comclass] && nodes[nodeid]['classes'][comclass][index]) {
       delete nodes[nodeid]['classes'][comclass][index];
     }
-    socket.updateNodes(nodes);
+    //socket.updateNodes(nodes);
   });
 
   zwave.on('node ready', function (nodeid, nodeinfo) {
@@ -56,10 +55,11 @@ module.exports = function(socketParam, awsParam, scenesParam) {
     nodes[nodeid]['name'] = nodeinfo.name;
     nodes[nodeid]['loc'] = nodeinfo.loc;
     nodes[nodeid]['ready'] = true;
-    socket.updateNodes(nodes);
+    //socket.updateNodes(nodes);
   });  
   
   zwave.on('scan complete', function () {
+    console.log('scan complete');
     scanComplete = true;
   });
   
@@ -73,7 +73,7 @@ module.exports = function(socketParam, awsParam, scenesParam) {
   
   zwave.on('scene event', function(nodeid, sceneid) {
     console.log('scene event');
-    scenes.runScene(sceneid);
+    //scenes.runScene(sceneid);
   });
   
   zwave.on('node event', function(nodeid, sceneid) {
@@ -165,7 +165,7 @@ module.exports = function(socketParam, awsParam, scenesParam) {
   }
   
   function checkAlarm(nodeid, comclass, value) {
-    GLOBAL.mysqlGlobal.getAlarm(function(status, response) {
+    /*GLOBAL.mysqlGlobal.getAlarm(function(status, response) {
       if(response.data[0].armed) {
         GLOBAL.mysqlGlobal.getNode(nodeid, function(status, response) {
           if(typeof response.data.nodes_alarm !== 'undefined') {
@@ -188,10 +188,11 @@ module.exports = function(socketParam, awsParam, scenesParam) {
           }
         });
       }
-    });
+    });*/
   }
   
   return {
+    zwave: zwave,
     connect: connect,
     disconnect: disconnect,
     restart: restart,

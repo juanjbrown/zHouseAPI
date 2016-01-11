@@ -1,40 +1,43 @@
 module.exports = function() {
   var config = require('../../config.js')[process.env.NODE_ENV];
   var Sequelize = require('sequelize');
-  var Models = require('./models.js');
+  var Models = require('./models/_models.js');
   
   var sequelize = new Sequelize(config.database.database, config.database.user, config.database.password, {
     host: config.database.host,
     dialect: 'mysql',
-
     pool: {
-      max: 5,
+      max: 1,
       min: 0,
       idle: 10000
     }
   });
 
-  // import models
   var models = new Models(sequelize);
   
-  function start(express) {
-    sequelize
-      .sync({
-        force: false
-      })
-      .then(function () {
-        express.server.listen(config.server.port, config.server.host, function () {
-          var host = express.server.address().address;
-          var port = express.server.address().port;
-
-          console.log('listening at http://%s:%s', host, port);
-        });
-      });
+  function addNode(nodeid) {
+    models.nodes.findOrCreate({
+      where: {
+        node_id: nodeid
+      },
+      defaults: {
+        node_id: nodeid
+      }
+    });
+  }
+  
+  function initialize(callback) {
+    sequelize.sync({
+      force: false
+    }).then(function() {
+      callback();
+    });
   }
   
   return {
+    initialize: initialize,
     sequelize: sequelize,
     models: models,
-    start: start
+    addNode: addNode
   }
 }

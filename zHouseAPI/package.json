@@ -6,7 +6,6 @@
     "body-parser": "^1.14.2",
     "cors": "^2.7.1",
     "cron": "^1.1.0",
-    "epilogue": "^0.6.5",
     "express": "^4.13.3",
     "express-brute": "^0.6.0",
     "mysql": "^2.10.0",
