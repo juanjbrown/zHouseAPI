@@ -7,7 +7,8 @@ var development = {
     host: 'host',
     user: 'z_house',
     password: 'password',
-    database: 'z_house'
+    database: 'z_house',
+    salt: 'salt'
   },
   aws: {
     accessKeyId: 'accessKeyId',
@@ -25,7 +26,8 @@ var production = {
     host: 'host',
     user: 'z_house',
     password: 'password',
-    database: 'z_house'
+    database: 'z_house',
+    salt: 'salt'
   },
   aws: {
     accessKeyId: 'accessKeyId',

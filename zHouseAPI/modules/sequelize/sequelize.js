@@ -7,7 +7,7 @@ module.exports = function() {
     host: config.database.host,
     dialect: 'mysql',
     pool: {
-      max: 1,
+      max: 10,
       min: 0,
       idle: 10000
     }
@@ -28,7 +28,7 @@ module.exports = function() {
   
   function initialize(callback) {
     sequelize.sync({
-      force: false
+      force: true
     }).then(function() {
       callback();
     });

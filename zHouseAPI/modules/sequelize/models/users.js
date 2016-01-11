@@ -33,6 +33,10 @@ module.exports = function(sequelize) {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         unique: true
+      },
+      forgotpasswordkey: {
+        type: Sequelize.UUID,
+        unique: true
       }
     },
     {

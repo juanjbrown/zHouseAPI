@@ -316,7 +316,7 @@
 		{
 			"id": "20d3e673-8071-55f4-ca2e-8b69d4bd3d90",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/nodes/3",
+			"url": "{{server}}/nodes/14",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "GET",
@@ -326,12 +326,11 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452319955544,
-			"name": "nodes/:id",
+			"time": 1452470994145,
+			"name": "nodes/:node_id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
-			"responses": [],
-			"folder": "70639567-7b2d-6470-ea03-7aeb535bd4eb"
+			"responses": []
 		},
 		{
 			"id": "28e70332-16bd-7417-3223-3cfa9d37a868",
@@ -378,7 +377,7 @@
 		{
 			"id": "4c010268-8d99-ae67-4136-f92ffe22c329",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/users/{{uuid}}",
+			"url": "{{server}}/users/{{username}}",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "PUT",
@@ -388,12 +387,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452413044989,
-			"name": "users/:uuid",
+			"time": 1452493426349,
+			"name": "users/:username",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"username\": \"paul@pauljdehmer.com\"\n}"
+			"rawModeData": "{\n  \"username\": \"paul@pauljdehmer.com\",\n  \"email\": \"paul@pauljdehmer.com\",\n  \"password\": \"asdf\",\n  \"role\": 0\n}"
 		},
 		{
 			"id": "4cef8449-e288-aad4-9d6a-ce8bed084242",
@@ -418,7 +417,7 @@
 		{
 			"id": "57880221-0843-df60-3d85-0a9abb193da8",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/users/{{uuid}}",
+			"url": "{{server}}/users/{{username}}",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "DELETE",
@@ -428,8 +427,8 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452413013612,
-			"name": "users/:uuid",
+			"time": 1452492097922,
+			"name": "users/:username",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
@@ -468,13 +467,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452230072276,
-			"name": "nodes/:id",
+			"time": 1452465164963,
+			"name": "nodes/:node_id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"name\": \"Kitchen Scentsy\",\n  \"type\": \"appliance\",\n}",
-			"folder": "70639567-7b2d-6470-ea03-7aeb535bd4eb"
+			"rawModeData": "{\n  \"name\": \"Kitchen Scentsy\",\n  \"type\": \"appliance\"\n}"
 		},
 		{
 			"id": "7d3164f1-67ff-8557-31fe-13d3446bad6e",
@@ -614,12 +612,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452413167165,
+			"time": 1452494777128,
 			"name": "users/:email/forgotpassword",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"forgot_password_key\": \"109156be-c4fb-41ea-b1b4-efe1671c5836\",\n  \"password\": \"password\"\n}"
+			"rawModeData": "{\n  \"forgotpasswordkey\": \"109156be-c4fb-41ea-b1b4-efe1671c5836\",\n  \"password\": \"password\"\n}"
 		},
 		{
 			"id": "89819c38-95e4-eaf2-4938-06b3e70f6449",
@@ -820,12 +818,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452412968517,
+			"time": 1452497197250,
 			"name": "users",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"username\": \"paul@pauljdehmer.com\",\n  \"email\": \"paul@pauljdehmer.com\",\n  \"password\": \"password\",\n  \"role\": 0\n}"
+			"rawModeData": "{\n  \"username\": \"{{username}}\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"role\": 0\n}"
 		},
 		{
 			"id": "afa5a16e-a196-9edd-dd6a-4b40126afa40",
@@ -1046,13 +1044,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1451803843197,
+			"time": 1452497342550,
 			"name": "login",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n    \"username\": \"{{username}}\",\n    \"password\": \"{{password}}\"\n}",
-			"folder": "406f16f6-336e-3395-f62c-dd18d409ceb1"
+			"rawModeData": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}"
 		},
 		{
 			"id": "fae2a510-91e5-7bcf-f515-2f153c73785e",
@@ -1077,7 +1074,7 @@
 		{
 			"id": "ff972e20-d811-89fe-fa95-8ffc0b3849ad",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/users/{{uuid}}",
+			"url": "{{server}}/users/{{username}}",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "GET",
@@ -1087,8 +1084,8 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452412990974,
-			"name": "users/:uuid",
+			"time": 1452492077860,
+			"name": "users/:username",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": []
