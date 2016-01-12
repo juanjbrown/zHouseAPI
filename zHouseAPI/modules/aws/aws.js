@@ -1,6 +1,6 @@
 module.exports = function() {
   var AWS = require('aws-sdk');
-  var config = require('../config.js');
+  var config = require('../../config.js')[process.env.NODE_ENV];
 
   AWS.config.update({accessKeyId: config.aws.accessKeyId, secretAccessKey: config.aws.secretAccessKey});
   AWS.config.update({region: 'us-east-1'});

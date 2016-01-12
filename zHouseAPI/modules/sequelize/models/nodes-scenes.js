@@ -1,7 +1,7 @@
 module.exports = function(sequelize) {
   var Sequelize = require('sequelize');
   
-  var NodesAlarm = sequelize.define('NodesAlarm',
+  var NodesScenes = sequelize.define('NodesScenes',
     {
       id: {
         type: Sequelize.INTEGER,
@@ -13,12 +13,6 @@ module.exports = function(sequelize) {
       },
       value: {
         type: Sequelize.STRING
-      },
-      sms: {
-        type: Sequelize.BOOLEAN
-      },
-      siren: {
-        type: Sequelize.BOOLEAN
       }
     },
     {
@@ -27,6 +21,6 @@ module.exports = function(sequelize) {
   );
   
   return {
-    NodesAlarm: NodesAlarm
+    NodesScenes: NodesScenes
   }
 }

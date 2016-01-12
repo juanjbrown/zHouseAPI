@@ -102,16 +102,10 @@ module.exports = function(socketParam, awsParam, scenesParam, sequelizeParam) {
         zwave.disablePoll(nodeid, data.class_id);
       }
       zwave.refreshNodeInfo(nodeid);
-      callback(200, {
-        'status': 'success',
-        'message': 'node successfully updated'
-      });
+      callback(200, {message: 'node successfully updated'});
     }
     catch (error) {
-      callback(400, {
-        'status': 'error',
-        'message': String(error)
-      });
+      callback(400, {message: String(error)});
     }
   }
   
@@ -119,48 +113,30 @@ module.exports = function(socketParam, awsParam, scenesParam, sequelizeParam) {
     try {
       zwave.setConfigParam(nodeid, data.paramid, data.paramvalue);
       zwave.refreshNodeInfo(nodeid);
-      callback(200, {
-        'status': 'success',
-        'message': 'node successfully updated'
-      });
+      callback(200, {message: 'node successfully updated'});
     }
     catch (error) {
-      callback(400, {
-        'status': 'error',
-        'message': String(error)
-      });
+      callback(400, {message: String(error)});
     }
   }
 
   function setValue(nodeid, data, callback) {
     try {
       zwave.setValue({nodeid: nodeid, class_id: data.class_id, instance: data.instance, inded: data.index}, data.value);
-      callback(200, {
-        'status': 'success',
-        'message': 'node successfully updated'
-      });
+      callback(200, {message: 'node successfully updated'});
     }
     catch (error) {
-      callback(400, {
-        'status': 'error',
-        'message': String(error)
-      });
+      callback(400, {message: String(error)});
     }
   }
 
   function controllerReset(callback) {
     try {
       zwave.hardReset();
-      callback(200, {
-        'status': 'success',
-        'message': 'performing hard reset on the controller'
-      });
+      callback(200, {message: 'performing hard reset on the controller'});
     }
     catch (error) {
-      callback(400, {
-        'status': 'error',
-        'message': String(error)
-      });
+      callback(400, {message: String(error)});
     }
   }
   

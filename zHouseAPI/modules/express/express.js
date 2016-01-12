@@ -1,5 +1,6 @@
-module.exports = function(schedulesParam, sequelize) {
+module.exports = function(schedulesParam, sequelize, zwave) {
   var config = require('../../config.js')[process.env.NODE_ENV];
+  var uuid = require('node-uuid');
   var crypto = require('crypto');
   var ExpressBrute = require('express-brute');
   var store = new ExpressBrute.MemoryStore();
@@ -64,6 +65,184 @@ module.exports = function(schedulesParam, sequelize) {
     }).end();
   });
   
+  //alarm
+  router.get('/alarm', function(req, res) {
+    sequelize.models.alarm.findAll({
+      attributes: {
+        exclude: ['id']
+      }
+    }).then(function(alarm) { //sequelize connection success
+      res.status(200).json({
+        status: 'success',
+        data: {
+          armed: alarm[0].armed
+        }
+      });
+    }, function(error) { //sequelize connection error
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.put('/alarm', function(req, res) {
+    if(typeof req.body.id !== 'undefined') {
+      res.status(400).json({
+        status: 'error',
+        data: {
+          mesage: 'not allowed to change id'
+        }
+      });
+      return;
+    }
+    
+    sequelize.models.alarm.update(
+      req.body,
+      {
+        where: {
+          id: 1
+        }
+      }
+    ).then(function(affectedArray) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          affectedCount: affectedArray[0]
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  //cameras
+  router.post('/cameras', function(req, res) {
+    if(typeof req.body.id !== 'undefined') {
+      res.status(400).json({
+        status: 'error',
+        data: {
+          mesage: 'not allowed to set id'
+        }
+      });
+      return;
+    }
+    
+    sequelize.models.cameras.create(req.body).then(function(camera) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          camera: camera
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.get('/cameras', function(req, res) {
+    sequelize.models.cameras.findAll({}).then(function(cameras) { //sequelize connection success
+      res.status(200).json({
+        status: 'success',
+        data: cameras
+      });
+    }, function(error) { //sequelize connection error
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.get('/cameras/:id', function(req, res) {
+    sequelize.models.cameras.findAll({
+      where: {
+        id: req.params.id
+      }
+    }).then(function(camera) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          camera: camera
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.put('/cameras/:id', function(req, res) {
+    if(typeof req.body.id !== 'undefined') {
+      res.status(400).json({
+        status: 'error',
+        data: {
+          mesage: 'not allowed to change id'
+        }
+      });
+      return;
+    }
+    
+    sequelize.models.cameras.update(
+      req.body,
+      {
+        where: {
+          id: req.params.id
+        }
+      }
+    ).then(function(affectedArray) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          affectedCount: affectedArray[0]
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.delete('/cameras/:id', function(req, res) {
+    sequelize.models.cameras.destroy({
+      where: {
+        id: req.params.id,
+      }
+    }).then(function(destroyedRows) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          destroyedRows: destroyedRows
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  //controller
+  router.get('/controller/reset', function(req, res) {
+    zwave.controllerReset(function(status, message) {
+      res.status(status).json({
+        status: status === 200 ? 'success' : 'error',
+        data:  message
+      });
+    });
+  });
+  
   //login
   router.post('/login', bruteforce.prevent, function(req, res) {
     if((typeof req.body.username === 'undefined') || (typeof req.body.password === 'undefined')){
@@ -86,7 +265,7 @@ module.exports = function(schedulesParam, sequelize) {
       attributes: {
         exclude: ['password', 'forgotpasswordkey']
       }
-    }).then(function(user) {
+    }).then(function(user) { //sequelize connection success
       if(user) {
         res.status(200).json({
           status: 'success',
@@ -102,7 +281,7 @@ module.exports = function(schedulesParam, sequelize) {
           }
         });
       }
-    }, function(error) {
+    }, function(error) { //sequelize connection error
       res.status(400).json({
         status: 'error',
         data: error
@@ -114,20 +293,37 @@ module.exports = function(schedulesParam, sequelize) {
   router.get('/nodes', function(req, res) {
     sequelize.models.nodes.findAll({
       order: [['node_id', 'ASC']],
-      include: [{
-        model: sequelize.models.nodesAlarm,
-        as: 'alarm',
-        required: false
-      }],
+      include: [
+        {
+          model: sequelize.models.nodesAlarm,
+          as: 'alarm',
+          required: false
+        },
+        {
+          model: sequelize.models.nodesScenes,
+          as: 'scenes',
+          required: false
+        }
+      ],
       attributes: {
         exclude: ['id']
       }
-    }).then(function(nodes) {
+    }).then(function(nodes) { //sequelize connection success
+      for(var i=0;i<nodes.length;i++) {
+        nodes[i].dataValues.zwave_data = zwave.nodes[nodes[i].dataValues.node_id];
+        delete nodes[i].dataValues.zwave_data.name;
+        delete nodes[i].dataValues.zwave_data.loc;
+      }
       res.status(200).json({
         status: 'success',
         data: {
           nodes: nodes
         }
+      });
+    }, function(error) { //sequelize connection error
+      res.status(400).json({
+        status: 'error',
+        data: error
       });
     });
   });
@@ -137,15 +333,25 @@ module.exports = function(schedulesParam, sequelize) {
       where: {
         node_id: req.params.nodeid
       },
-      include: [{
-        model: sequelize.models.nodesAlarm,
-        as: 'alarm',
-        required: false
-      }],
+      include: [
+        {
+          model: sequelize.models.nodesAlarm,
+          as: 'alarm',
+          required: false
+        },
+        {
+          model: sequelize.models.nodesScenes,
+          as: 'scenes',
+          required: false
+        }
+      ],
       attributes: {
         exclude: ['id']
       }
     }).then(function(node) {
+      node[0].dataValues.zwave_data = zwave.nodes[node[0].dataValues.node_id];
+      delete node[0].dataValues.zwave_data.name;
+      delete node[0].dataValues.zwave_data.loc;
       res.status(200).json({
         status: 'success',
         data: {
@@ -161,6 +367,26 @@ module.exports = function(schedulesParam, sequelize) {
   });
   
   router.put('/nodes/:nodeid', function(req, res) {
+    if(typeof req.body.id !== 'undefined') {
+      res.status(400).json({
+        status: 'error',
+        data: {
+          mesage: 'not allowed to change id'
+        }
+      });
+      return;
+    }
+    
+    if(typeof req.body.node_id !== 'undefined') {
+      res.status(400).json({
+        status: 'error',
+        data: {
+          mesage: 'not allowed to change node id'
+        }
+      });
+      return;
+    }
+    
     sequelize.models.nodes.update(
       req.body,
       {
@@ -182,6 +408,33 @@ module.exports = function(schedulesParam, sequelize) {
       });
     });
   });
+  
+  router.put('/nodes/:nodeid/command', function(req, res) {
+    zwave.setValue(req.params.nodeid, req.body, function(status, message) {
+      res.status(status).json({
+        status: status === 200 ? 'success' : 'error',
+        data:  message
+      });
+    });
+  });
+  
+  router.put('/nodes/:nodeid/config', function(req, res) {
+    zwave.setConfigParam(req.params.nodeid, req.body, function(status, message) {
+      res.status(status).json({
+        status: status === 200 ? 'success' : 'error',
+        data:  message
+      });
+    });
+  });
+  
+  router.put('/nodes/:nodeid/polling', function(req, res) {
+    zwave.changePolling(req.params.nodeid, req.body, function(status, message) {
+      res.status(status).json({
+        status: status === 200 ? 'success' : 'error',
+        data:  message
+      });
+    });
+  });
 
   //users
   router.post('/users', function(req, res) {
@@ -190,7 +443,7 @@ module.exports = function(schedulesParam, sequelize) {
         username: req.headers.username,
         apikey: req.headers.apikey
       }
-    }).then(function(user) {
+    }).then(function(user) { //sequelize connection success
       //TODO: delete this
       var user = [];
       user.role = 0;
@@ -249,6 +502,11 @@ module.exports = function(schedulesParam, sequelize) {
           data: 'not authorized'
         });
       }
+    }, function(error) { //sequelize connection error
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
     });
   });
   
@@ -258,7 +516,7 @@ module.exports = function(schedulesParam, sequelize) {
         username: req.headers.username,
         apikey: req.headers.apikey
       }
-    }).then(function(user) {
+    }).then(function(user) { //sequelize connection success
       //TODO: delete this
       var user = [];
       user.role = 0;
@@ -286,6 +544,11 @@ module.exports = function(schedulesParam, sequelize) {
           data: 'not authorized'
         });
       }
+    }, function(error) { //sequelize connection error
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
     });
   });
   
@@ -295,7 +558,7 @@ module.exports = function(schedulesParam, sequelize) {
         username: req.headers.username,
         apikey: req.headers.apikey
       }
-    }).then(function(user) {
+    }).then(function(user) { //sequelize connection success
       //TODO: delete this
       var user = [];
       user.role = 0;
@@ -326,16 +589,31 @@ module.exports = function(schedulesParam, sequelize) {
           data: 'not authorized'
         });
       }
+    }, function(error) { //sequelize connection error
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
     });
   });
   
   router.put('/users/:username', function(req, res) {
+    if(typeof req.body.id !== 'undefined') {
+      res.status(400).json({
+        status: 'error',
+        data: {
+          mesage: 'not allowed to change id'
+        }
+      });
+      return;
+    }
+    
     sequelize.models.users.findOne({
       where: {
         username: req.headers.username,
         apikey: req.headers.apikey
       }
-    }).then(function(user) {
+    }).then(function(user) { //sequelize connection success
       //TODO: delete this
       var user = [];
       user.role = 0;
@@ -411,6 +689,11 @@ module.exports = function(schedulesParam, sequelize) {
           data: 'not authorized'
         });
       }
+    }, function(error) { //sequelize connection error
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
     });
   });
   
@@ -420,7 +703,7 @@ module.exports = function(schedulesParam, sequelize) {
         username: req.headers.username,
         apikey: req.headers.apikey
       }
-    }).then(function(user) {
+    }).then(function(user) { //sequelize connection success
       //TODO: delete this
       var user = [];
       user.role = 0;
@@ -448,15 +731,88 @@ module.exports = function(schedulesParam, sequelize) {
           data: 'not authorized'
         });
       }
+    }, function(error) { //sequelize connection error
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
     });
   });
   
   router.get('/users/:email/forgotpassword', function(req, res) {
-    //TODO
+    sequelize.models.users.update(
+      {
+        forgotpasswordkey: uuid.v4()
+      },
+      {
+        where: {
+          email: req.params.email
+        }
+      }
+    ).then(function() { //sequelize connection success
+      //TODO: send email
+      res.status(200).json({
+        status: 'success',
+        data: {
+          message: 'check your email for instructions on how to change your password'
+        }
+      });
+    }, function() { //sequlize connection error
+      res.status(200).json({
+        status: 'success',
+        data: {
+          message: 'check your email for instructions on how to change your password'
+        }
+      });
   });
+    });
   
   router.post('/users/:email/forgotpassword', function(req, res) {
-    //TODO
+    if(req.body.forgotpasswordkey === null) {
+      res.status(400).json({
+        status: 'error',
+        data: {
+          message: 'there was an error updating your password'
+        }
+      });
+      return;
+    }
+    
+    sequelize.models.users.update(
+      {
+        password: getsha256(req.body.password),
+        forgotpasswordkey: null
+      },
+      {
+        where: {
+          email: req.params.email,
+          forgotpasswordkey: req.body.forgotpasswordkey
+        }
+      }
+    ).then(function(affectedArray) { //sequelize connection success
+      if(affectedArray[0] === 1) {
+        res.status(200).json({
+          status: 'success',
+          data: {
+            message: 'your password has been updated'
+          }
+        });
+      } else {
+        res.status(400).json({
+          status: 'error',
+          data: {
+            message: 'there was an error updating your password'
+          }
+        });
+      }
+    }, function(error) { //sequelize connection error
+      res.status(400).json({
+        status: 'error',
+        data: {
+          message: 'there was an error updating your password'
+        }
+      });
+    });
   });
   
   //setting up app  
@@ -492,5 +848,9 @@ module.exports = function(schedulesParam, sequelize) {
 }
 
 /*TODO:
-- make sure i have error states on the mysql connection not just the queries
+- nodes alarm endpoints
+- nodes scenes endpoints
+- scenes/scene-action endpoints
+- schedules/schedule-scenes endpoints
+- delete schedule containing a scene and reload schedules when deleting a scene
 */
