@@ -60,8 +60,6 @@
 				"f7f05774-900e-d213-9dcb-8905698f9b24",
 				"7db6ca24-d60d-bf32-0e5f-5b6cd45c80ae",
 				"7ef89cd9-de2c-aa0e-2323-d9d354547005",
-				"ee3cc71a-eab6-d4fa-1ffe-6dbc9795fe36",
-				"1c7aa771-e063-aa9a-a7e7-7e31cd3f8dc9",
 				"117a0620-668f-2d21-8665-69d07c59e15a",
 				"085239aa-4556-5ed1-f6e1-b4c341b5eb81",
 				"c592e2f6-000e-1875-804a-62861cdf7ced"
@@ -210,7 +208,7 @@
 		{
 			"id": "0bbaf1cf-842b-cf00-165c-fc7b25002b76",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/nodes/alarm/9",
+			"url": "{{server}}/nodes/alarms/1",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "PUT",
@@ -220,13 +218,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452326499701,
-			"name": "nodes/alarm/:id",
+			"time": 1452585205995,
+			"name": "nodes/alarms/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"class_id\": 37,\n  \"value\": \"false\",\n  \"sms\": 1,\n  \"siren\": 1\n}",
-			"folder": "70639567-7b2d-6470-ea03-7aeb535bd4eb"
+			"rawModeData": "{\n  \"class_id\": 37,\n  \"value\": \"false\",\n  \"sms\": 1,\n  \"siren\": 1\n}"
 		},
 		{
 			"id": "0c900ab9-34f3-355d-6a87-beb02cee96ba",
@@ -261,13 +258,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452154049323,
+			"time": 1452581063115,
 			"name": "scenes",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"name\": \"testscene\",\n  \"change_alarm\": 1,\n  \"armed\": 1\n}",
-			"folder": "d5e89443-41a3-eed4-a926-540879f9961c"
+			"rawModeData": "{\n  \"name\": \"testscene\",\n  \"change_alarm\": 1,\n  \"armed\": 1\n}"
 		},
 		{
 			"id": "117a0620-668f-2d21-8665-69d07c59e15a",
@@ -290,27 +286,6 @@
 			"rawModeData": "{\n    \"class_id\": 37,\n    \"instance\": 1,\n    \"index\": 0,\n    \"value\": false\n}"
 		},
 		{
-			"id": "1c7aa771-e063-aa9a-a7e7-7e31cd3f8dc9",
-			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/nodes/scenes/3/delete",
-			"preRequestScript": "",
-			"pathVariables": {},
-			"method": "DELETE",
-			"data": [],
-			"dataMode": "raw",
-			"version": 2,
-			"tests": "",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1452329217898,
-			"name": "nodes/scenes/:id/delete",
-			"description": "",
-			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
-			"responses": [],
-			"rawModeData": "{\n  \"scene_id\": 2\n}",
-			"folder": "70639567-7b2d-6470-ea03-7aeb535bd4eb"
-		},
-		{
 			"id": "20d3e673-8071-55f4-ca2e-8b69d4bd3d90",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
 			"url": "{{server}}/nodes/5",
@@ -323,7 +298,7 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452573943129,
+			"time": 1452582659546,
 			"name": "nodes/:node_id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
@@ -353,7 +328,7 @@
 		{
 			"id": "3af00bac-1c1f-9288-2e2c-073876c4a234",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/nodes/3/alarm",
+			"url": "{{server}}/nodes/5/alarms",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "POST",
@@ -363,13 +338,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452326472451,
-			"name": "nodes/:id/alarm",
+			"time": 1452585201175,
+			"name": "nodes/:id/alarms",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"class_id\": 37,\n  \"value\": \"true\",\n  \"sms\": 1,\n  \"siren\": 1\n}",
-			"folder": "70639567-7b2d-6470-ea03-7aeb535bd4eb"
+			"rawModeData": "{\n  \"class_id\": 37,\n  \"value\": \"true\",\n  \"sms\": 1,\n  \"siren\": 1\n}"
 		},
 		{
 			"id": "4c010268-8d99-ae67-4136-f92ffe22c329",
@@ -463,12 +437,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452578850887,
+			"time": 1452583358367,
 			"name": "nodes/:node_id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"node_id\": 400,\n  \"name\": \"Kitchen Scentsy\",\n  \"type\": \"appliance\"\n}"
+			"rawModeData": "{\n  \"name\": \"Kitchen Scentsy\",\n  \"type\": \"appliance\"\n}"
 		},
 		{
 			"id": "7d3164f1-67ff-8557-31fe-13d3446bad6e",
@@ -493,7 +467,7 @@
 		{
 			"id": "7d9b95ae-0752-ba6a-178f-6cbbe0d5f76f",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/nodes/alarm/9",
+			"url": "{{server}}/nodes/alarms/1",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "DELETE",
@@ -503,18 +477,17 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452326522602,
-			"name": "nodes/alarm/:id",
+			"time": 1452585210895,
+			"name": "nodes/alarms/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "",
-			"folder": "70639567-7b2d-6470-ea03-7aeb535bd4eb"
+			"rawModeData": ""
 		},
 		{
 			"id": "7db6ca24-d60d-bf32-0e5f-5b6cd45c80ae",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/nodes/scenes/2",
+			"url": "{{server}}/nodes/scenes/1",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "PUT",
@@ -524,18 +497,17 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452327116440,
+			"time": 1452585624499,
 			"name": "nodes/scenes/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"class_id\": 37,\n  \"value\": \"false\"\n}",
-			"folder": "70639567-7b2d-6470-ea03-7aeb535bd4eb"
+			"rawModeData": "{\n  \"class_id\": 37,\n  \"value\": \"false\",\n  \"scene_id\": 1\n}"
 		},
 		{
 			"id": "7ef89cd9-de2c-aa0e-2323-d9d354547005",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/nodes/scenes/2",
+			"url": "{{server}}/nodes/scenes/1",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "DELETE",
@@ -545,13 +517,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452327135441,
+			"time": 1452585627423,
 			"name": "nodes/scenes/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "",
-			"folder": "70639567-7b2d-6470-ea03-7aeb535bd4eb"
+			"rawModeData": ""
 		},
 		{
 			"id": "8355eb0c-6b49-5008-b0f4-d6dcab369050",
@@ -669,13 +640,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452152851624,
+			"time": 1452581092478,
 			"name": "scenes/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"name\": \"testscene\",\n  \"change_alarm\": 1,\n  \"armed\": 0\n}",
-			"folder": "d5e89443-41a3-eed4-a926-540879f9961c"
+			"rawModeData": "{\n  \"name\": \"testscene\",\n  \"change_alarm\": 1,\n  \"armed\": 0\n}"
 		},
 		{
 			"id": "99c4e6bc-b715-a880-995e-c8bfa643fa04",
@@ -730,13 +700,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452224002931,
+			"time": 1452581106002,
 			"name": "scenes/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "",
-			"folder": "d5e89443-41a3-eed4-a926-540879f9961c"
+			"rawModeData": ""
 		},
 		{
 			"id": "a8ff70c8-546e-7a4b-2574-f17dfc035db9",
@@ -761,7 +730,7 @@
 		{
 			"id": "ac16252a-a364-9731-8a01-bc06948b0974",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/scenes/3/run",
+			"url": "{{server}}/scenes/1/run",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "GET",
@@ -771,12 +740,11 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452153875989,
+			"time": 1452581189898,
 			"name": "scenes/:id/run",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
-			"responses": [],
-			"folder": "d5e89443-41a3-eed4-a926-540879f9961c"
+			"responses": []
 		},
 		{
 			"id": "ac48e067-c5a7-d57e-6684-5f74d80c376a",
@@ -963,27 +931,6 @@
 			"folder": "d5e89443-41a3-eed4-a926-540879f9961c"
 		},
 		{
-			"id": "ee3cc71a-eab6-d4fa-1ffe-6dbc9795fe36",
-			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/nodes/scenes/3/add",
-			"preRequestScript": "",
-			"pathVariables": {},
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"version": 2,
-			"tests": "",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1452329191013,
-			"name": "nodes/scenes/:id/add",
-			"description": "",
-			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
-			"responses": [],
-			"rawModeData": "{\n  \"scene_id\": 2\n}",
-			"folder": "70639567-7b2d-6470-ea03-7aeb535bd4eb"
-		},
-		{
 			"id": "f7f05774-900e-d213-9dcb-8905698f9b24",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
 			"url": "{{server}}/nodes/3/scenes",
@@ -996,13 +943,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452327064837,
+			"time": 1452585402786,
 			"name": "nodes/:id/scenes",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"class_id\": 37,\n  \"value\": \"true\"\n}",
-			"folder": "70639567-7b2d-6470-ea03-7aeb535bd4eb"
+			"rawModeData": "{\n  \"class_id\": 37,\n  \"value\": \"true\",\n  \"scene_id\": 1\n}"
 		},
 		{
 			"id": "f96cc8ac-8686-a8c9-a160-c5aff797e344",
@@ -1048,7 +994,7 @@
 		{
 			"id": "fae2a510-91e5-7bcf-f515-2f153c73785e",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/scenes/3",
+			"url": "{{server}}/scenes/1",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "GET",
@@ -1058,12 +1004,11 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452324156264,
+			"time": 1452581088397,
 			"name": "scenes/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
-			"responses": [],
-			"folder": "d5e89443-41a3-eed4-a926-540879f9961c"
+			"responses": []
 		},
 		{
 			"id": "ff972e20-d811-89fe-fa95-8ffc0b3849ad",

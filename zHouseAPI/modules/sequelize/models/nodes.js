@@ -3,14 +3,9 @@ module.exports = function(sequelize) {
   
   var Nodes = sequelize.define('Nodes',
     {
-      id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-      },
       node_id: {
         type: Sequelize.INTEGER,
-        unique: true
+        primaryKey: true
       },
       name: {
         type: Sequelize.STRING

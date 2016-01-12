@@ -295,14 +295,20 @@ module.exports = function(schedulesParam, sequelize, zwave) {
       order: [['node_id', 'ASC']],
       include: [
         {
-          model: sequelize.models.nodesAlarm,
-          as: 'alarm',
-          required: false
+          model: sequelize.models.nodesAlarms,
+          as: 'alarms',
+          required: false,
+          attributes: {
+            exclude: ['NodeNodeId']
+          }
         },
         {
           model: sequelize.models.nodesScenes,
           as: 'scenes',
-          required: false
+          required: false,
+          attributes: {
+            exclude: ['NodeNodeId']
+          }
         }
       ],
       attributes: {
@@ -335,14 +341,20 @@ module.exports = function(schedulesParam, sequelize, zwave) {
       },
       include: [
         {
-          model: sequelize.models.nodesAlarm,
-          as: 'alarm',
-          required: false
+          model: sequelize.models.nodesAlarms,
+          as: 'alarms',
+          required: false,
+          attributes: {
+            exclude: ['NodeNodeId']
+          }
         },
         {
           model: sequelize.models.nodesScenes,
           as: 'scenes',
-          required: false
+          required: false,
+          attributes: {
+            exclude: ['NodeNodeId']
+          }
         }
       ],
       attributes: {
@@ -409,6 +421,168 @@ module.exports = function(schedulesParam, sequelize, zwave) {
     });
   });
   
+  router.post('/nodes/:nodeid/alarms', function(req, res) {
+    if(typeof req.body.id !== 'undefined') {
+      res.status(400).json({
+        status: 'error',
+        data: {
+          mesage: 'not allowed to set id'
+        }
+      });
+      return;
+    }
+    
+    req.body.NodeNodeId = req.params.nodeid;
+    
+    sequelize.models.nodesAlarms.create(req.body).then(function(alarm) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          alarm: alarm
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.put('/nodes/alarms/:id', function(req, res) {
+    if(typeof req.body.id !== 'undefined') {
+      res.status(400).json({
+        status: 'error',
+        data: {
+          mesage: 'not allowed to change id'
+        }
+      });
+      return;
+    }
+    
+    sequelize.models.nodesAlarms.update(
+      req.body,
+      {
+        where: {
+          id: req.params.id
+        }
+      }
+    ).then(function(affectedArray) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          affectedCount: affectedArray[0]
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.delete('/nodes/alarms/:id', function(req, res) {
+    sequelize.models.nodesAlarms.destroy({
+      where: {
+        id: req.params.id,
+      }
+    }).then(function(destroyedRows) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          destroyedRows: destroyedRows
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.post('/nodes/:nodeid/scenes', function(req, res) {
+    if(typeof req.body.id !== 'undefined') {
+      res.status(400).json({
+        status: 'error',
+        data: {
+          mesage: 'not allowed to set id'
+        }
+      });
+      return;
+    }
+    
+    req.body.NodeNodeId = req.params.nodeid;
+    
+    sequelize.models.nodesScenes.create(req.body).then(function(scene) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          scene: scene
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.put('/nodes/scenes/:id', function(req, res) {
+    if(typeof req.body.id !== 'undefined') {
+      res.status(400).json({
+        status: 'error',
+        data: {
+          mesage: 'not allowed to change id'
+        }
+      });
+      return;
+    }
+    
+    sequelize.models.nodesScenes.update(
+      req.body,
+      {
+        where: {
+          id: req.params.id
+        }
+      }
+    ).then(function(affectedArray) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          affectedCount: affectedArray[0]
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.delete('/nodes/scenes/:id', function(req, res) {
+    sequelize.models.nodesScenes.destroy({
+      where: {
+        id: req.params.id,
+      }
+    }).then(function(destroyedRows) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          destroyedRows: destroyedRows
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
   router.put('/nodes/:nodeid/command', function(req, res) {
     zwave.setValue(req.params.nodeid, req.body, function(status, message) {
       res.status(status).json({
@@ -432,6 +606,141 @@ module.exports = function(schedulesParam, sequelize, zwave) {
       res.status(status).json({
         status: status === 200 ? 'success' : 'error',
         data:  message
+      });
+    });
+  });
+  
+  //scenes
+  router.post('/scenes', function(req, res) {
+    if(typeof req.body.id !== 'undefined') {
+      res.status(400).json({
+        status: 'error',
+        data: {
+          mesage: 'not allowed to set id'
+        }
+      });
+      return;
+    }
+    
+    sequelize.models.scenes.create(req.body).then(function(scene) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          scene: scene
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.get('/scenes', function(req, res) {
+    sequelize.models.scenes.findAll({}).then(function(scenes) { //sequelize connection success
+      res.status(200).json({
+        status: 'success',
+        data: scenes
+      });
+    }, function(error) { //sequelize connection error
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.get('/scenes/:id', function(req, res) {
+    sequelize.models.scenes.findAll({
+      where: {
+        id: req.params.id
+      }
+    }).then(function(scene) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          scene: scene
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.put('/scenes/:id', function(req, res) {
+    if(typeof req.body.id !== 'undefined') {
+      res.status(400).json({
+        status: 'error',
+        data: {
+          mesage: 'not allowed to change id'
+        }
+      });
+      return;
+    }
+    
+    sequelize.models.scenes.update(
+      req.body,
+      {
+        where: {
+          id: req.params.id
+        }
+      }
+    ).then(function(affectedArray) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          affectedCount: affectedArray[0]
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.delete('/scenes/:id', function(req, res) {
+    sequelize.models.scenes.destroy({
+      where: {
+        id: req.params.id,
+      }
+    }).then(function(destroyedRows) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          destroyedRows: destroyedRows
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.get('/scenes/:id/run', function(req, res) {
+    //TODO: make scene run
+    sequelize.models.scenes.findAll({
+      where: {
+        id: req.params.id
+      }
+    }).then(function(scene) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          scene: scene
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
       });
     });
   });
@@ -850,7 +1159,7 @@ module.exports = function(schedulesParam, sequelize, zwave) {
 /*TODO:
 - nodes alarm endpoints
 - nodes scenes endpoints
-- scenes/scene-action endpoints
+- scenes-action endpoints
 - schedules/schedule-scenes endpoints
 - delete schedule containing a scene and reload schedules when deleting a scene
 */
