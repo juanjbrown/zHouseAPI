@@ -10,7 +10,8 @@ module.exports = function(sequelize) {
       },
       armed: {
         type: Sequelize.BOOLEAN,
-        default: false
+        default: false,
+        allowNull: false
       }
     },
     {

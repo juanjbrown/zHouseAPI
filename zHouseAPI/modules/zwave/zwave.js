@@ -69,7 +69,9 @@ module.exports = function(socket, aws, scenes, sequelize) {
   
   zwave.on('scene event', function(nodeid, sceneid) {
     console.log('scene event');
-    scenes.runScene(sceneid);
+    scenes.runScene(sceneid, function(status, message){
+      console.log(message.message)
+    });
   });
   
   zwave.on('node event', function(nodeid, sceneid) {

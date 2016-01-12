@@ -294,14 +294,24 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
       order: [['node_id', 'ASC']],
       include: [
         {
-          model: sequelize.models.nodesAlarms,
-          as: 'alarms',
+          model: sequelize.models.nodeAlarmTriggers,
+          as: 'alarm-triggers',
           required: false
         },
         {
-          model: sequelize.models.nodesScenes,
-          as: 'scenes',
-          required: false
+          model: sequelize.models.nodeSceneTriggers,
+          as: 'scene-triggers',
+          required: false,
+          include: [
+            {
+              model: sequelize.models.nodeSceneTriggerScenes,
+              as: 'scenes',
+              required: false,
+              attributes: {
+                exclude: ['id', 'nodes_scene_id']
+              }
+            }
+          ]
         }
       ]
     }).then(function(nodes) { //sequelize connection success
@@ -331,14 +341,24 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
       },
       include: [
         {
-          model: sequelize.models.nodesAlarms,
-          as: 'alarms',
+          model: sequelize.models.nodeAlarmTriggers,
+          as: 'alarm-triggers',
           required: false
         },
         {
-          model: sequelize.models.nodesScenes,
-          as: 'scenes',
-          required: false
+          model: sequelize.models.nodeSceneTriggers,
+          as: 'scene-triggers',
+          required: false,
+          include: [
+            {
+              model: sequelize.models.nodeSceneTriggerScenes,
+              as: 'scenes',
+              required: false,
+              attributes: {
+                exclude: ['id', 'nodes_scene_id']
+              }
+            }
+          ]
         }
       ]
     }).then(function(node) {
@@ -402,7 +422,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
     });
   });
   
-  router.post('/nodes/:nodeid/alarms', function(req, res) {
+  router.post('/nodes/:nodeid/alarm-triggers', function(req, res) {
     if(typeof req.body.id !== 'undefined') {
       res.status(400).json({
         status: 'error',
@@ -415,7 +435,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
     
     req.body.node_id = req.params.nodeid;
     
-    sequelize.models.nodesAlarms.create(req.body).then(function(alarm) {
+    sequelize.models.nodeAlarmTriggers.create(req.body).then(function(alarm) {
       res.status(200).json({
         status: 'success',
         data: {
@@ -430,7 +450,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
     });
   });
   
-  router.put('/nodes/alarms/:id', function(req, res) {
+  router.put('/nodes/alarm-triggers/:id', function(req, res) {
     if(typeof req.body.id !== 'undefined') {
       res.status(400).json({
         status: 'error',
@@ -441,7 +461,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
       return;
     }
     
-    sequelize.models.nodesAlarms.update(
+    sequelize.models.nodeAlarmTriggers.update(
       req.body,
       {
         where: {
@@ -463,8 +483,8 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
     });
   });
   
-  router.delete('/nodes/alarms/:id', function(req, res) {
-    sequelize.models.nodesAlarms.destroy({
+  router.delete('/nodes/alarm-triggers/:id', function(req, res) {
+    sequelize.models.nodeAlarmTriggers.destroy({
       where: {
         id: req.params.id,
       }
@@ -483,7 +503,9 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
     });
   });
   
-  router.post('/nodes/:nodeid/scenes', function(req, res) {
+  router.post('/nodes/:nodeid/scene-triggers', function(req, res) {
+    var createError = false;
+    var errorData = [];
     if(typeof req.body.id !== 'undefined') {
       res.status(400).json({
         status: 'error',
@@ -495,8 +517,8 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
     }
     
     req.body.node_id = req.params.nodeid;
-    
-    sequelize.models.nodesScenes.create(req.body).then(function(scene) {
+
+    sequelize.models.nodeSceneTriggers.create(req.body).then(function(scene) {
       res.status(200).json({
         status: 'success',
         data: {
@@ -511,7 +533,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
     });
   });
   
-  router.put('/nodes/scenes/:id', function(req, res) {
+  router.put('/nodes/scene-triggers/:id', function(req, res) {
     if(typeof req.body.id !== 'undefined') {
       res.status(400).json({
         status: 'error',
@@ -522,7 +544,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
       return;
     }
     
-    sequelize.models.nodesScenes.update(
+    sequelize.models.nodeSceneTriggers.update(
       req.body,
       {
         where: {
@@ -544,10 +566,50 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
     });
   });
   
-  router.delete('/nodes/scenes/:id', function(req, res) {
-    sequelize.models.nodesScenes.destroy({
+  router.delete('/nodes/scene-triggers/:id', function(req, res) {
+    sequelize.models.nodeSceneTriggers.destroy({
       where: {
         id: req.params.id,
+      }
+    }).then(function(destroyedRows) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          destroyedRows: destroyedRows
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.post('/nodes/scene-triggers/:id/add-scene', function(req, res) {
+    sequelize.models.nodeSceneTriggerScenes.create({
+      nodes_scene_id: parseInt(req.params.id, 10),
+      scene_id: req.body.scene_id
+    }).then(function(scene){
+      res.status(200).json({
+        status: 'success',
+        data: {
+          scene: scene
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.delete('/nodes/scene-triggers/:id/delete-scene', function(req, res) {
+    sequelize.models.nodesSceneTriggerScenes.destroy({
+      where: {
+        nodes_scene_id: parseInt(req.params.id, 10),
+        scene_id: req.body.scene_id
       }
     }).then(function(destroyedRows) {
       res.status(200).json({
@@ -623,7 +685,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
       order: [['id', 'ASC']],
       include: [
         {
-          model: sequelize.models.scenesActions,
+          model: sequelize.models.sceneActions,
           as: 'actions',
           required: false
         }
@@ -648,7 +710,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
       },
       include: [
         {
-          model: sequelize.models.scenesActions,
+          model: sequelize.models.sceneActions,
           as: 'actions',
           required: false
         }
@@ -730,7 +792,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
     });
   });
   
-  router.post('/scenes/:id/actions', function(req, res) {
+  router.post('/scenes/:id/scene-actions', function(req, res) {
     if(typeof req.body.id !== 'undefined') {
       res.status(400).json({
         status: 'error',
@@ -743,7 +805,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
     
     req.body.scene_id = req.params.id;
     
-    sequelize.models.scenesActions.create(req.body).then(function(action) {
+    sequelize.models.sceneActions.create(req.body).then(function(action) {
       res.status(200).json({
         status: 'success',
         data: {
@@ -758,7 +820,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
     });
   });
   
-  router.put('/scenes/actions/:id', function(req, res) {
+  router.put('/scenes/scene-actions/:id', function(req, res) {
     if(typeof req.body.id !== 'undefined') {
       res.status(400).json({
         status: 'error',
@@ -769,7 +831,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
       return;
     }
     
-    sequelize.models.scenesActions.update(
+    sequelize.models.sceneActions.update(
       req.body,
       {
         where: {
@@ -791,8 +853,8 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
     });
   });
   
-  router.delete('/scenes/actions/:id', function(req, res) {
-    sequelize.models.scenesActions.destroy({
+  router.delete('/scenes/scene-actions/:id', function(req, res) {
+    sequelize.models.sceneActions.destroy({
       where: {
         id: req.params.id,
       }
@@ -1114,7 +1176,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
     });
   });
   
-  router.get('/users/:email/forgotpassword', function(req, res) {
+  router.get('/users/:email/forgot-password', function(req, res) {
     sequelize.models.users.update(
       {
         forgotpasswordkey: uuid.v4()
@@ -1142,7 +1204,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
   });
     });
   
-  router.post('/users/:email/forgotpassword', function(req, res) {
+  router.post('/users/:email/forgot-password', function(req, res) {
     if(req.body.forgotpasswordkey === null) {
       res.status(400).json({
         status: 'error',
@@ -1223,8 +1285,6 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
 }
 
 /*TODO:
-- scenes-action endpoints
 - schedules/schedule-scenes endpoints
 - delete schedule containing a scene and reload schedules when deleting a scene
-- required params :(
 */

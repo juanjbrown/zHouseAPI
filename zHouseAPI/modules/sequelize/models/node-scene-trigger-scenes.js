@@ -1,23 +1,18 @@
 module.exports = function(sequelize) {
   var Sequelize = require('sequelize');
   
-  var Scenes = sequelize.define('Scenes',
+  NodeSceneTriggerScenes = sequelize.define('NodeSceneTriggerScenes',
     {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true
       },
-      name: {
-        type: Sequelize.STRING
+      nodes_scene_id: {
+        type: Sequelize.INTEGER
       },
-      change_alarm: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false
-      },
-      armed: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false
+      scene_id: {
+        type: Sequelize.INTEGER
       }
     },
     {
@@ -26,6 +21,6 @@ module.exports = function(sequelize) {
   );
   
   return {
-    Scenes: Scenes
+    NodeSceneTriggerScenes: NodeSceneTriggerScenes
   }
 }

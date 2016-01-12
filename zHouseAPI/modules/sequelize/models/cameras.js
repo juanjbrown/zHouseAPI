@@ -12,10 +12,12 @@ module.exports = function(sequelize) {
         type: Sequelize.STRING
       },
       url: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       camera_key: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       up_url: {
         type: Sequelize.STRING

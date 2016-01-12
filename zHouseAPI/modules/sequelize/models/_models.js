@@ -8,38 +8,43 @@ module.exports = function(sequelize) {
   var Nodes = require('./nodes.js');
   var nodes = new Nodes(sequelize).Nodes;
   
-  var NodesAlarms = require('./nodes-alarms.js');
-  var nodesAlarms = new NodesAlarms(sequelize).NodesAlarms;
+  var NodeAlarmTriggers = require('./node-alarm-triggers.js');
+  var nodeAlarmTriggers = new NodeAlarmTriggers(sequelize).NodeAlarmTriggers;
   
-  var NodesScenes = require('./nodes-scenes.js');
-  var nodesScenes = new NodesScenes(sequelize).NodesScenes;
+  var NodeSceneTriggers = require('./node-scene-triggers.js');
+  var nodeSceneTriggers = new NodeSceneTriggers(sequelize).NodeSceneTriggers;
+  
+  var NodeSceneTriggerScenes = require('./node-scene-trigger-scenes.js');
+  var nodeSceneTriggerScenes = new NodeSceneTriggerScenes(sequelize).NodeSceneTriggerScenes;
   
   var Scenes = require('./scenes.js');
   var scenes = new Scenes(sequelize).Scenes;
   
-  var ScenesActions = require('./scenes-actions.js');
-  var scenesActions = new ScenesActions(sequelize).ScenesActions;
+  var SceneActions = require('./scene-actions.js');
+  var sceneActions = new SceneActions(sequelize).SceneActions;
   
   var Users = require('./users.js');
   var users = new Users(sequelize).Users;
   
-  nodes.hasMany(nodesAlarms, {as: 'alarms', foreignKey: 'node_id'});  
-  nodes.hasMany(nodesScenes, {as: 'scenes', foreignKey: 'node_id'});
-  nodes.hasMany(scenesActions, {as: 'nodes', foreignKey: 'node_id'});
+  nodes.hasMany(nodeAlarmTriggers, {as: 'alarm-triggers', foreignKey: 'node_id', onDelete: 'CASCADE'});  
+  nodes.hasMany(nodeSceneTriggers, {as: 'scene-triggers', foreignKey: 'node_id', onDelete: 'CASCADE'});
+  nodes.hasMany(sceneActions, {as: 'nodes', foreignKey: 'node_id', onDelete: 'CASCADE'});
   
-  nodesScenes.belongsToMany(nodes, {through: 'NodesNodesScenes'});
-  nodesScenes.belongsToMany(scenes, {through: 'NodesNodesScenes'});
+  nodeSceneTriggers.hasMany(nodeSceneTriggerScenes, {as: 'scenes', foreignKey: 'nodes_scene_id', onDelete: 'CASCADE'});
+  nodeSceneTriggers.belongsToMany(scenes, {through: nodeSceneTriggerScenes, foreignKey: 'scene_id'})
+  scenes.belongsToMany(nodeSceneTriggers, {through: nodeSceneTriggerScenes, foreignKey: 'nodes_scene_id'});
   
-  scenes.hasMany(scenesActions, {as: 'actions', foreignKey: 'scene_id'});
+  scenes.hasMany(sceneActions, {as: 'actions', foreignKey: 'scene_id', onDelete: 'CASCADE'});
   
   return {
     alarm: alarm,
     cameras: cameras,
     nodes: nodes,
-    nodesAlarms: nodesAlarms,
-    nodesScenes: nodesScenes,
+    nodeAlarmTriggers: nodeAlarmTriggers,
+    nodeSceneTriggers: nodeSceneTriggers,
+    nodeSceneTriggerScenes: nodeSceneTriggerScenes,
     scenes: scenes,
-    scenesActions: scenesActions,
+    sceneActions: sceneActions,
     users: users
   }
 }

@@ -1,7 +1,7 @@
 module.exports = function(sequelize) {
   var Sequelize = require('sequelize');
   
-  var NodesScenes = sequelize.define('NodesScenes',
+  var NodeSceneTriggers = sequelize.define('NodeSceneTriggers',
     {
       id: {
         type: Sequelize.INTEGER,
@@ -9,13 +9,12 @@ module.exports = function(sequelize) {
         primaryKey: true
       },
       class_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       value: {
-        type: Sequelize.STRING
-      },
-      scene_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING,
+        allowNull: false
       }
     },
     {
@@ -24,6 +23,6 @@ module.exports = function(sequelize) {
   );
   
   return {
-    NodesScenes: NodesScenes
+    NodeSceneTriggers: NodeSceneTriggers
   }
 }

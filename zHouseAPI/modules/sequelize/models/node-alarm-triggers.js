@@ -1,7 +1,7 @@
 module.exports = function(sequelize) {
   var Sequelize = require('sequelize');
   
-  var NodesAlarms = sequelize.define('NodesAlarms',
+  var NodeAlarmTriggers = sequelize.define('NodeAlarmTriggers',
     {
       id: {
         type: Sequelize.INTEGER,
@@ -9,16 +9,20 @@ module.exports = function(sequelize) {
         primaryKey: true
       },
       class_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       value: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       sms: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        allowNull: false
       },
       siren: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        allowNull: false
       }
     },
     {
@@ -27,6 +31,6 @@ module.exports = function(sequelize) {
   );
   
   return {
-    NodesAlarms: NodesAlarms
+    NodeAlarmTriggers: NodeAlarmTriggers
   }
 }

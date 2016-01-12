@@ -1,41 +1,54 @@
 module.exports = function(sequelize) {
   var zwave;
+  var sceneActions = [];
+  var callback;
+  var actionsRun;
+  var actionError;
   
-  function runScene(id, callback) {
+  function runScene(id, callbackParam) {
+    callback = callbackParam;
     sequelize.models.scenes.findAll({
       where: {
         id: id
       },
       include: [
         {
-          model: sequelize.models.scenesActions,
+          model: sequelize.models.sceneActions,
           as: 'actions',
           required: false
         }
       ]
     }).then(function(scene) {
-      //check if scene actually exists by return length
-      if(scene[0].dataValues.change_alarm) {
-        sequelize.models.alarm.update(
-          {
-            armed: scene[0].dataValues.armed
-          },
-          {
-            where: {
-              id: 1
-            }
+      if(scene.length !== 0) {
+        sceneActions = scene[0].actions;
+        if(sceneActions.length !== 0) {
+          if(scene[0].dataValues.change_alarm) {
+            sequelize.models.alarm.update(
+              {
+                armed: scene[0].dataValues.armed
+              },
+              {
+                where: {
+                  id: 1
+                }
+              }
+            ).then(function(affectedArray) {
+              runSceneActions(scene, function(status, message){
+                callback(status, {message: message});
+              });
+            }, function(error) {
+              callback(400, {message: 'error running scene'});
+            });
+          } else {
+            runSceneActions(scene, function(status, message){
+              callback(status, {message: message});
+            });
           }
-        ).then(function(affectedArray) {
-          runSceneActions(scene, function(status, message){
-            callback(status, {message: message});
-          });
-        }, function(error) {
-          callback(400, {message: 'error running scene'});
-        });
+        } else {
+          callback(200, {message: 'scene executed'});
+        }
       } else {
-        runSceneActions(scene, function(status, message){
-          callback(status, {message: message});
-        });
+        callback(400, {message: 'scene id does not exist'});
       }
     }, function(error) {
       callback(400, {message: 'error running scene'});
@@ -43,19 +56,40 @@ module.exports = function(sequelize) {
   }
   
   function runSceneActions(scene, callback) {
+    actionsRun = 0;
+    actionError = false;
     var data = [];
     for(var i=0;i<scene[0].actions.length;i++) {
       data = {
-        class_id: scene[0].actions[0].dataValues.class_id,
-        instance: scene[0].actions[0].dataValues.instance,
-        index: scene[0].actions[0].dataValues.index,
-        value: scene[0].actions[0].dataValues.value,
+        class_id: scene[0].actions[i].dataValues.class_id,
+        instance: scene[0].actions[i].dataValues.instance,
+        index: scene[0].actions[i].dataValues.index
       }
-      zwave.setValue(scene[0].actions[0].dataValues.node_id, data, function(status, message) {
-        console.log('')
+      if(scene[0].actions[i].dataValues.value === 'true') {
+        data.value = true;
+      } else if(scene[0].actions[i].dataValues.value === 'false') {
+        data.value = false;
+      } else {
+        data.value = parseInt(scene[0].actions[i].dataValues.value, 10);
+      }
+      zwave.setValue(scene[0].actions[i].dataValues.node_id, data, function(status, message) {
+        if(status === 400) {
+          actionError = true;
+        }
+        sceneActionComplete();
       });
     }
-    callback(200, {message: 'scene executed'});
+  }
+  
+  function sceneActionComplete() {
+    actionsRun++;
+    if(actionsRun === sceneActions.length) {
+      if(!actionError) {
+        callback(200, {message: 'scene executed'});
+      } else {
+        callback(400, {message: 'error running scene'});
+      }
+    }
   }
   
   function injectZwave(zwaveParam) {
