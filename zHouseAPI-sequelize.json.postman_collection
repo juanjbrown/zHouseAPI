@@ -129,7 +129,7 @@
 		{
 			"id": "040bf009-9afa-3575-20e9-e8d3c5b73eaf",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/cameras/2",
+			"url": "{{server}}/cameras/1",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "PUT",
@@ -139,13 +139,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1451942326769,
+			"time": 1452579584637,
 			"name": "camera/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"name\": \"Kitchen Camera\",\n  \"url\": \"rtmp://127.0.0.1:1935/kitchen/stream?camerakey=kitchenkey\",\n  \"camerakey\": \"kitchenkey\",\n  \"upUrl\": \"http://192.168.1.7:82/web/cgi-bin/hi3510/ytup.cgi\",\n  \"downUrl\": \"http://192.168.1.7:82/web/cgi-bin/hi3510/ytdown.cgi\",\n  \"leftUrl\": \"http://192.168.1.7:82/web/cgi-bin/hi3510/ytleft.cgi\",\n  \"rightUrl\": \"http://192.168.1.7:82/web/cgi-bin/hi3510/ytright.cgi\"\n}",
-			"folder": "f29fce1c-7ac7-6436-f4fb-016b216097a4"
+			"rawModeData": "{\n  \"name\": \"Kitchen Camera\",\n  \"url\": \"rtmp://127.0.0.1:1935/kitchen/stream?camerakey=kitchenkey\",\n  \"camera_key\": \"kitchenkey\",\n  \"up_url\": \"http://192.168.1.7:82/web/cgi-bin/hi3510/ytup.cgi\",\n  \"down_url\": \"http://192.168.1.7:82/web/cgi-bin/hi3510/ytdown.cgi\",\n  \"left_url\": \"http://192.168.1.7:82/web/cgi-bin/hi3510/ytleft.cgi\",\n  \"right_url\": \"http://192.168.1.7:82/web/cgi-bin/hi3510/ytright.cgi\"\n}"
 		},
 		{
 			"id": "06fcf787-47ed-f9ef-d27b-579c86f0b33a",
@@ -201,13 +200,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1451675587250,
+			"time": 1452580161909,
 			"name": "cameras",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"name\": \"Kitchen Camera\",\n  \"url\": \"rtmp://127.0.0.1:1935/kitchen/stream?camerakey=kitchenkey\",\n  \"camerakey\": \"kitchenkey\"\n}",
-			"folder": "f29fce1c-7ac7-6436-f4fb-016b216097a4"
+			"rawModeData": "{\n  \"name\": \"Kitchen Camera\",\n  \"url\": \"rtmp://127.0.0.1:1935/kitchen/stream?camerakey=kitchenkey\",\n  \"camera_key\": \"kitchenkey\"\n}"
 		},
 		{
 			"id": "0bbaf1cf-842b-cf00-165c-fc7b25002b76",
@@ -284,13 +282,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452232504256,
+			"time": 1452573690763,
 			"name": "nodes/:id/command",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n    \"class_id\": 37,\n    \"instance\": 1,\n    \"index\": 0,\n    \"value\": false\n}",
-			"folder": "70639567-7b2d-6470-ea03-7aeb535bd4eb"
+			"rawModeData": "{\n    \"class_id\": 37,\n    \"instance\": 1,\n    \"index\": 0,\n    \"value\": false\n}"
 		},
 		{
 			"id": "1c7aa771-e063-aa9a-a7e7-7e31cd3f8dc9",
@@ -316,7 +313,7 @@
 		{
 			"id": "20d3e673-8071-55f4-ca2e-8b69d4bd3d90",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/nodes/14",
+			"url": "{{server}}/nodes/5",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "GET",
@@ -326,7 +323,7 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452470994145,
+			"time": 1452573943129,
 			"name": "nodes/:node_id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
@@ -427,7 +424,7 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452492097922,
+			"time": 1452566782817,
 			"name": "users/:username",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
@@ -437,7 +434,7 @@
 		{
 			"id": "6c5090d9-b10a-f625-129a-5de4b516ed48",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/cameras/4",
+			"url": "{{server}}/cameras/1",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "GET",
@@ -447,12 +444,11 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452322927867,
+			"time": 1452579535197,
 			"name": "cameras/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
-			"responses": [],
-			"folder": "f29fce1c-7ac7-6436-f4fb-016b216097a4"
+			"responses": []
 		},
 		{
 			"id": "7d053743-332f-e766-5fe8-e559fca08bd8",
@@ -467,12 +463,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452465164963,
+			"time": 1452578850887,
 			"name": "nodes/:node_id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"name\": \"Kitchen Scentsy\",\n  \"type\": \"appliance\"\n}"
+			"rawModeData": "{\n  \"node_id\": 400,\n  \"name\": \"Kitchen Scentsy\",\n  \"type\": \"appliance\"\n}"
 		},
 		{
 			"id": "7d3164f1-67ff-8557-31fe-13d3446bad6e",
@@ -612,12 +608,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452494777128,
+			"time": 1452575746275,
 			"name": "users/:email/forgotpassword",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"forgotpasswordkey\": \"109156be-c4fb-41ea-b1b4-efe1671c5836\",\n  \"password\": \"password\"\n}"
+			"rawModeData": "{\n  \"forgotpasswordkey\": \"38bc6402-3748-4fd4-90a8-a9cf6c49d142\",\n  \"password\": \"test\"\n}"
 		},
 		{
 			"id": "89819c38-95e4-eaf2-4938-06b3e70f6449",
@@ -653,13 +649,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452059045169,
+			"time": 1452578691890,
 			"name": "alarm",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"armed\": 0\n}",
-			"folder": "f0b634cd-004f-ca79-1613-e5de7f7647f1"
+			"rawModeData": "{\n  \"armed\": 0\n}"
 		},
 		{
 			"id": "97597d0f-0015-e96e-6149-0396a938070c",
@@ -685,7 +680,7 @@
 		{
 			"id": "99c4e6bc-b715-a880-995e-c8bfa643fa04",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/cameras/2",
+			"url": "{{server}}/cameras/1",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "DELETE",
@@ -695,13 +690,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1451678493193,
+			"time": 1452579596918,
 			"name": "camera/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "",
-			"folder": "f29fce1c-7ac7-6436-f4fb-016b216097a4"
+			"rawModeData": ""
 		},
 		{
 			"id": "9e82d28a-5ee7-2b2e-3be0-0621b8a70371",
