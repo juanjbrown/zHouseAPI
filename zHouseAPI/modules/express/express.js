@@ -1,4 +1,4 @@
-module.exports = function(schedulesParam, sequelize, zwave) {
+module.exports = function(schedules, scenes, sequelize, zwave) {
   var config = require('../../config.js')[process.env.NODE_ENV];
   var uuid = require('node-uuid');
   var crypto = require('crypto');
@@ -11,7 +11,6 @@ module.exports = function(schedulesParam, sequelize, zwave) {
   var express = require('express');
   var app = express();
   var bodyParser = require('body-parser');
-  var schedules = schedulesParam;
   var router = express.Router();
   var serversStarted = false;
   
@@ -297,23 +296,14 @@ module.exports = function(schedulesParam, sequelize, zwave) {
         {
           model: sequelize.models.nodesAlarms,
           as: 'alarms',
-          required: false,
-          attributes: {
-            exclude: ['NodeNodeId']
-          }
+          required: false
         },
         {
           model: sequelize.models.nodesScenes,
           as: 'scenes',
-          required: false,
-          attributes: {
-            exclude: ['NodeNodeId']
-          }
+          required: false
         }
-      ],
-      attributes: {
-        exclude: ['id']
-      }
+      ]
     }).then(function(nodes) { //sequelize connection success
       for(var i=0;i<nodes.length;i++) {
         nodes[i].dataValues.zwave_data = zwave.nodes[nodes[i].dataValues.node_id];
@@ -343,23 +333,14 @@ module.exports = function(schedulesParam, sequelize, zwave) {
         {
           model: sequelize.models.nodesAlarms,
           as: 'alarms',
-          required: false,
-          attributes: {
-            exclude: ['NodeNodeId']
-          }
+          required: false
         },
         {
           model: sequelize.models.nodesScenes,
           as: 'scenes',
-          required: false,
-          attributes: {
-            exclude: ['NodeNodeId']
-          }
+          required: false
         }
-      ],
-      attributes: {
-        exclude: ['id']
-      }
+      ]
     }).then(function(node) {
       node[0].dataValues.zwave_data = zwave.nodes[node[0].dataValues.node_id];
       delete node[0].dataValues.zwave_data.name;
@@ -432,7 +413,7 @@ module.exports = function(schedulesParam, sequelize, zwave) {
       return;
     }
     
-    req.body.NodeNodeId = req.params.nodeid;
+    req.body.node_id = req.params.nodeid;
     
     sequelize.models.nodesAlarms.create(req.body).then(function(alarm) {
       res.status(200).json({
@@ -513,7 +494,7 @@ module.exports = function(schedulesParam, sequelize, zwave) {
       return;
     }
     
-    req.body.NodeNodeId = req.params.nodeid;
+    req.body.node_id = req.params.nodeid;
     
     sequelize.models.nodesScenes.create(req.body).then(function(scene) {
       res.status(200).json({
@@ -638,7 +619,16 @@ module.exports = function(schedulesParam, sequelize, zwave) {
   });
   
   router.get('/scenes', function(req, res) {
-    sequelize.models.scenes.findAll({}).then(function(scenes) { //sequelize connection success
+    sequelize.models.scenes.findAll({
+      order: [['id', 'ASC']],
+      include: [
+        {
+          model: sequelize.models.scenesActions,
+          as: 'actions',
+          required: false
+        }
+      ]
+    }).then(function(scenes) { //sequelize connection success
       res.status(200).json({
         status: 'success',
         data: scenes
@@ -655,7 +645,14 @@ module.exports = function(schedulesParam, sequelize, zwave) {
     sequelize.models.scenes.findAll({
       where: {
         id: req.params.id
-      }
+      },
+      include: [
+        {
+          model: sequelize.models.scenesActions,
+          as: 'actions',
+          required: false
+        }
+      ]
     }).then(function(scene) {
       res.status(200).json({
         status: 'success',
@@ -725,16 +722,32 @@ module.exports = function(schedulesParam, sequelize, zwave) {
   });
   
   router.get('/scenes/:id/run', function(req, res) {
-    //TODO: make scene run
-    sequelize.models.scenes.findAll({
-      where: {
-        id: req.params.id
-      }
-    }).then(function(scene) {
+    scenes.runScene(req.params.id, function(status, message) {
+      res.status(status).json({
+        status: status === 200 ? 'success' : 'error',
+        data:  message
+      });
+    });
+  });
+  
+  router.post('/scenes/:id/actions', function(req, res) {
+    if(typeof req.body.id !== 'undefined') {
+      res.status(400).json({
+        status: 'error',
+        data: {
+          mesage: 'not allowed to set id'
+        }
+      });
+      return;
+    }
+    
+    req.body.scene_id = req.params.id;
+    
+    sequelize.models.scenesActions.create(req.body).then(function(action) {
       res.status(200).json({
         status: 'success',
         data: {
-          scene: scene
+          actions: action
         }
       });
     }, function(error) {
@@ -744,7 +757,60 @@ module.exports = function(schedulesParam, sequelize, zwave) {
       });
     });
   });
-
+  
+  router.put('/scenes/actions/:id', function(req, res) {
+    if(typeof req.body.id !== 'undefined') {
+      res.status(400).json({
+        status: 'error',
+        data: {
+          mesage: 'not allowed to change id'
+        }
+      });
+      return;
+    }
+    
+    sequelize.models.scenesActions.update(
+      req.body,
+      {
+        where: {
+          id: req.params.id
+        }
+      }
+    ).then(function(affectedArray) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          affectedCount: affectedArray[0]
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.delete('/scenes/actions/:id', function(req, res) {
+    sequelize.models.scenesActions.destroy({
+      where: {
+        id: req.params.id,
+      }
+    }).then(function(destroyedRows) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          destroyedRows: destroyedRows
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
   //users
   router.post('/users', function(req, res) {
     sequelize.models.users.findOne({
@@ -1157,9 +1223,8 @@ module.exports = function(schedulesParam, sequelize, zwave) {
 }
 
 /*TODO:
-- nodes alarm endpoints
-- nodes scenes endpoints
 - scenes-action endpoints
 - schedules/schedule-scenes endpoints
 - delete schedule containing a scene and reload schedules when deleting a scene
+- required params :(
 */

@@ -258,12 +258,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452581063115,
+			"time": 1452588465684,
 			"name": "scenes",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"name\": \"testscene\",\n  \"change_alarm\": 1,\n  \"armed\": 1\n}"
+			"rawModeData": "{\n  \"name\": \"testscene\",\n  \"change_alarm\": true,\n  \"armed\": true\n}"
 		},
 		{
 			"id": "117a0620-668f-2d21-8665-69d07c59e15a",
@@ -620,12 +620,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452578691890,
+			"time": 1452588471096,
 			"name": "alarm",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"armed\": 0\n}"
+			"rawModeData": "{\n  \"armed\": false\n}"
 		},
 		{
 			"id": "97597d0f-0015-e96e-6149-0396a938070c",
@@ -640,12 +640,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452581092478,
+			"time": 1452588636849,
 			"name": "scenes/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"name\": \"testscene\",\n  \"change_alarm\": 1,\n  \"armed\": 0\n}"
+			"rawModeData": "{\n  \"name\": \"testscene\",\n  \"change_alarm\": false,\n  \"armed\": false\n}"
 		},
 		{
 			"id": "99c4e6bc-b715-a880-995e-c8bfa643fa04",
@@ -809,7 +809,7 @@
 		{
 			"id": "b3755f0e-dd63-4cb0-5088-df8999055ba5",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/scenes/action/1",
+			"url": "{{server}}/scenes/actions/1",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "PUT",
@@ -819,18 +819,17 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452325874663,
-			"name": "scenes/action/:id",
+			"time": 1452592366089,
+			"name": "scenes/actions/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"node_id\": 1,\n  \"class_id\": 37,\n  \"instance\": 1,\n  \"index\": 0,\n  \"value\": \"true\"\n}",
-			"folder": "d5e89443-41a3-eed4-a926-540879f9961c"
+			"rawModeData": "{\n  \"node_id\": 5,\n  \"class_id\": 37,\n  \"instance\": 1,\n  \"index\": 0,\n  \"value\": \"false\"\n}"
 		},
 		{
 			"id": "bafad96b-e16a-135c-b78c-2b7b8359d234",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/scenes/action/1",
+			"url": "{{server}}/scenes/actions/1",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "DELETE",
@@ -840,13 +839,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452325889256,
-			"name": "scenes/action/:id",
+			"time": 1452586215948,
+			"name": "scenes/actions/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "",
-			"folder": "d5e89443-41a3-eed4-a926-540879f9961c"
+			"rawModeData": ""
 		},
 		{
 			"id": "c592e2f6-000e-1875-804a-62861cdf7ced",
@@ -912,7 +910,7 @@
 		{
 			"id": "e98ce63a-092c-383f-6798-22c904ded4f6",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/scenes/1/action",
+			"url": "{{server}}/scenes/1/actions",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "POST",
@@ -922,18 +920,17 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452154172541,
-			"name": "scenes/:id/action",
+			"time": 1452592361836,
+			"name": "scenes/:id/actions",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"node_id\": 1,\n  \"class_id\": 37,\n  \"instance\": 1,\n  \"index\": 0,\n  \"value\": \"true\"\n}",
-			"folder": "d5e89443-41a3-eed4-a926-540879f9961c"
+			"rawModeData": "{\n  \"node_id\": 5,\n  \"class_id\": 37,\n  \"instance\": 1,\n  \"index\": 0,\n  \"value\": \"true\"\n}"
 		},
 		{
 			"id": "f7f05774-900e-d213-9dcb-8905698f9b24",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/nodes/3/scenes",
+			"url": "{{server}}/nodes/5/scenes",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "POST",
@@ -943,7 +940,7 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452585402786,
+			"time": 1452592661868,
 			"name": "nodes/:id/scenes",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",

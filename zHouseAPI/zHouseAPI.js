@@ -1,30 +1,31 @@
 var config = require('./config.js')[process.env.NODE_ENV];
 
 var Aws = require('./modules/aws/aws.js');
+var Socket = require('./modules/socket/socket.js');
+var Sequelize = require('./modules/sequelize/sequelize.js');
 var Scenes = require('./modules/scenes/scenes.js');
 var Schedules = require('./modules/schedules/schedules.js');
-var Socket = require('./modules/socket/socket.js');
-var SequelizeModule = require('./modules/sequelize/sequelize.js');
-var ZWaveModule = require('./modules/zwave/zwave.js');
-var ExpressModule = require('./modules/express/express.js');
+var ZWave = require('./modules/zwave/zwave.js');
+var Express = require('./modules/express/express.js');
 
 var aws = new Aws();
-var scenes = new Scenes();
-var schedules = new Schedules(scenes);
 var socket = new Socket();
-var sequelizeModule = new SequelizeModule();
-var zwaveModule = new ZWaveModule(socket, aws, scenes, sequelizeModule);
-var expressModule = new ExpressModule(schedules, sequelizeModule, zwaveModule);
+var sequelize = new Sequelize();
+var scenes = new Scenes(sequelize);
+var schedules = new Schedules(scenes);
+var zwave = new ZWave(socket, aws, scenes, sequelize);
+var express = new Express(schedules, scenes, sequelize, zwave);
 
 
-sequelizeModule.initialize(function() {
-  sequelizeModule.models.alarm.create({id: 1, armed: false}).then(function(user) {
-    zwaveModule.connect();
+sequelize.initialize(function() {
+  scenes.injectZwave(zwave);
+  sequelize.models.alarm.create({id: 1, armed: false}).then(function(user) {
+    zwave.connect();
   }, function(error) {
     console.log('error setting up application');
   });
 });
 
-zwaveModule.zwave.on('scan complete', function () {
-  expressModule.initialize();
+zwave.zwave.on('scan complete', function () {
+  express.initialize();
 });

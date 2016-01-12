@@ -8,9 +8,6 @@ module.exports = function(sequelize) {
         autoIncrement: true,
         primaryKey: true
       },
-      name: {
-        type: Sequelize.STRING
-      },
       class_id: {
         type: Sequelize.INTEGER
       },

@@ -1,8 +1,4 @@
-module.exports = function(socketParam, awsParam, scenesParam, sequelizeParam) {
-  var sequelize = sequelizeParam;
-  var scenes = scenesParam;
-  var socket = socketParam;
-  var aws = awsParam;
+module.exports = function(socket, aws, scenes, sequelize) {
   var ZWave = require('../../node_modules/openzwave-shared/lib/openzwave-shared.js');
   var os = require('os');
   var zwave = new ZWave({ConsoleOutput: false});
@@ -73,7 +69,7 @@ module.exports = function(socketParam, awsParam, scenesParam, sequelizeParam) {
   
   zwave.on('scene event', function(nodeid, sceneid) {
     console.log('scene event');
-    //scenes.runScene(sceneid);
+    scenes.runScene(sceneid);
   });
   
   zwave.on('node event', function(nodeid, sceneid) {

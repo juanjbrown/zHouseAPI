@@ -23,12 +23,14 @@ module.exports = function(sequelize) {
   var Users = require('./users.js');
   var users = new Users(sequelize).Users;
   
-  nodes.hasMany(nodesAlarms, {as: 'alarms'});  
-  nodes.hasMany(nodesScenes, {as: 'scenes'});
-  nodesScenes.belongsToMany(nodes, {through: 'NodesNodesScenes'});
+  nodes.hasMany(nodesAlarms, {as: 'alarms', foreignKey: 'node_id'});  
+  nodes.hasMany(nodesScenes, {as: 'scenes', foreignKey: 'node_id'});
+  nodes.hasMany(scenesActions, {as: 'nodes', foreignKey: 'node_id'});
   
-  scenes.hasMany(scenesActions, {as: 'scenes_actions'});
+  nodesScenes.belongsToMany(nodes, {through: 'NodesNodesScenes'});
   nodesScenes.belongsToMany(scenes, {through: 'NodesNodesScenes'});
+  
+  scenes.hasMany(scenesActions, {as: 'actions', foreignKey: 'scene_id'});
   
   return {
     alarm: alarm,

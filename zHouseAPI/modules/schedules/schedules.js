@@ -1,5 +1,4 @@
-module.exports = function(scenesParam) {
-  var scenes = scenesParam;
+module.exports = function(scenes) {
   var CronJob = require('cron').CronJob;
   var schedules = [];
   var scheduleContext = [];
