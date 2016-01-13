@@ -1,5 +1,4 @@
 module.exports = function(scenes) {
-  //TODO: fix this
   var CronJob = require('cron').CronJob;
   var schedules = [];
   var scheduleContext = [];

@@ -46,3 +46,10 @@ sequelize.initialize(function() {
 zwave.zwave.on('scan complete', function () {
   express.initialize();
 });
+
+/*TODO:
+- fix run schedule
+- reload/delete schedule when deleting a schedule from database
+- record camera on alarm
+- socket
+*/

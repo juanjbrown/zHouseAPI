@@ -258,12 +258,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452640035642,
+			"time": 1452646278367,
 			"name": "scenes",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"id\": 1,\n  \"name\": \"testscene\",\n  \"change_alarm\": true,\n  \"armed\": true\n}"
+			"rawModeData": "{\n  \"id\": 1,\n  \"name\": \"Right Family Room Light On\",\n  \"change_alarm\": false,\n  \"armed\": false\n}"
 		},
 		{
 			"id": "117a0620-668f-2d21-8665-69d07c59e15a",

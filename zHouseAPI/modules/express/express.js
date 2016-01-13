@@ -37,9 +37,6 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
       return next();
     }
     
-    //TODO: remove this line because this skips authentication
-    //return next();
-    
     sequelize.models.users.findOne({
       where: {
         username: req.headers.username,
@@ -70,14 +67,14 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
       attributes: {
         exclude: ['id']
       }
-    }).then(function(alarm) { //sequelize connection success
+    }).then(function(alarm) {
       res.status(200).json({
         status: 'success',
         data: {
           armed: alarm[0].armed
         }
       });
-    }, function(error) { //sequelize connection error
+    }, function(error) {
       res.status(400).json({
         status: 'error',
         data: error
@@ -146,12 +143,12 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
   });
   
   router.get('/cameras', function(req, res) {
-    sequelize.models.cameras.findAll({}).then(function(cameras) { //sequelize connection success
+    sequelize.models.cameras.findAll({}).then(function(cameras) {
       res.status(200).json({
         status: 'success',
         data: cameras
       });
-    }, function(error) { //sequelize connection error
+    }, function(error) {
       res.status(400).json({
         status: 'error',
         data: error
@@ -264,7 +261,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
       attributes: {
         exclude: ['password', 'forgotpasswordkey']
       }
-    }).then(function(user) { //sequelize connection success
+    }).then(function(user) {
       if(user) {
         res.status(200).json({
           status: 'success',
@@ -280,7 +277,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
           }
         });
       }
-    }, function(error) { //sequelize connection error
+    }, function(error) {
       res.status(400).json({
         status: 'error',
         data: error
@@ -314,7 +311,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
           ]
         }
       ]
-    }).then(function(nodes) { //sequelize connection success
+    }).then(function(nodes) {
       for(var i=0;i<nodes.length;i++) {
         nodes[i].dataValues.zwave_data = zwave.nodes[nodes[i].dataValues.node_id];
         delete nodes[i].dataValues.zwave_data.name;
@@ -326,7 +323,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
           nodes: nodes
         }
       });
-    }, function(error) { //sequelize connection error
+    }, function(error) {
       res.status(400).json({
         status: 'error',
         data: error
@@ -680,12 +677,12 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
           required: false
         }
       ]
-    }).then(function(scenes) { //sequelize connection success
+    }).then(function(scenes) {
       res.status(200).json({
         status: 'success',
         data: scenes
       });
-    }, function(error) { //sequelize connection error
+    }, function(error) {
       res.status(400).json({
         status: 'error',
         data: error
@@ -893,12 +890,12 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
           }
         }
       ]
-    }).then(function(schedules) { //sequelize connection success
+    }).then(function(schedules) {
       res.status(200).json({
         status: 'success',
         data: schedules
       });
-    }, function(error) { //sequelize connection error
+    }, function(error) {
       res.status(400).json({
         status: 'error',
         data: error
@@ -1036,11 +1033,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
         username: req.headers.username,
         apikey: req.headers.apikey
       }
-    }).then(function(user) { //sequelize connection success
-      //TODO: delete this
-      //var user = [];
-      //user.role = 0;
-      
+    }).then(function(user) {
       if(typeof req.body.password !== 'undefined') {
         req.body.password = getsha256(req.body.password);
       }
@@ -1095,7 +1088,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
           data: 'not authorized'
         });
       }
-    }, function(error) { //sequelize connection error
+    }, function(error) {
       res.status(400).json({
         status: 'error',
         data: error
@@ -1109,11 +1102,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
         username: req.headers.username,
         apikey: req.headers.apikey
       }
-    }).then(function(user) { //sequelize connection success
-      //TODO: delete this
-      //var user = [];
-      //user.role = 0;
-      
+    }).then(function(user) {
       if(user.role === 0) {
         sequelize.models.users.findAll({
           attributes: {
@@ -1138,7 +1127,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
           data: 'not authorized'
         });
       }
-    }, function(error) { //sequelize connection error
+    }, function(error) {
       res.status(400).json({
         status: 'error',
         data: error
@@ -1152,11 +1141,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
         username: req.headers.username,
         apikey: req.headers.apikey
       }
-    }).then(function(user) { //sequelize connection success
-      //TODO: delete this
-      //var user = [];
-      //user.role = 0;
-      
+    }).then(function(user) {
       if((user.role === 0) || (user.username === req.headers.username)){
         sequelize.models.users.findOne({
           where: {
@@ -1184,7 +1169,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
           data: 'not authorized'
         });
       }
-    }, function(error) { //sequelize connection error
+    }, function(error) {
       res.status(400).json({
         status: 'error',
         data: error
@@ -1208,11 +1193,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
         username: req.headers.username,
         apikey: req.headers.apikey
       }
-    }).then(function(user) { //sequelize connection success
-      //TODO: delete this
-      //var user = [];
-      //user.role = 0;
-      
+    }).then(function(user) {
       if(typeof req.body.password !== 'undefined') {
         req.body.password = getsha256(req.body.password);
       }
@@ -1284,7 +1265,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
           data: 'not authorized'
         });
       }
-    }, function(error) { //sequelize connection error
+    }, function(error) {
       res.status(400).json({
         status: 'error',
         data: error
@@ -1298,11 +1279,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
         username: req.headers.username,
         apikey: req.headers.apikey
       }
-    }).then(function(user) { //sequelize connection success
-      //TODO: delete this
-      //var user = [];
-      //user.role = 0;
-      
+    }).then(function(user) {
       if(user.role === 0) {
         sequelize.models.users.destroy({
           where: {
@@ -1327,7 +1304,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
           data: 'not authorized'
         });
       }
-    }, function(error) { //sequelize connection error
+    }, function(error) {
       res.status(400).json({
         status: 'error',
         data: error
@@ -1345,7 +1322,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
           email: req.params.email
         }
       }
-    ).then(function() { //sequelize connection success
+    ).then(function() {
       //TODO: send email
       res.status(200).json({
         status: 'success',
@@ -1353,7 +1330,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
           message: 'check your email for instructions on how to change your password'
         }
       });
-    }, function() { //sequlize connection error
+    }, function() {
       res.status(200).json({
         status: 'success',
         data: {
@@ -1385,7 +1362,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
           forgotpasswordkey: req.body.forgotpasswordkey
         }
       }
-    ).then(function(affectedArray) { //sequelize connection success
+    ).then(function(affectedArray) {
       if(affectedArray[0] === 1) {
         res.status(200).json({
           status: 'success',
@@ -1401,7 +1378,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
           }
         });
       }
-    }, function(error) { //sequelize connection error
+    }, function(error) {
       res.status(400).json({
         status: 'error',
         data: {
@@ -1442,10 +1419,3 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
     initialize: initialize
   }
 }
-
-/*TODO:
-- fix run schedule
-- reload/delete schedule when deleting a schedule from database
-- record camera on alarm
-- socket
-*/

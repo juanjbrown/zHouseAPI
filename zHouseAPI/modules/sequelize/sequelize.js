@@ -28,7 +28,6 @@ module.exports = function() {
   
   function initialize(callback) {
     sequelize.sync({
-      //TODO: set force to false
       force: false
     }).then(function() {
       callback();
