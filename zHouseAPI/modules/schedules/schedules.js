@@ -1,30 +1,57 @@
-module.exports = function(scenes) {
+module.exports = function(sequelize, scenes) {
   var CronJob = require('cron').CronJob;
   var schedules = [];
   var scheduleContext = [];
 
 
-  function initSchedules() {
-    GLOBAL.mysqlGlobal.getSchedules(function(status, response){
-      for(var i=0;i<response.data.length;i++) {
-        createJob(response.data[i].id, response.data[i].cron, response.data[i].sceneids)
+  function initialize() {
+    sequelize.models.schedules.findAll({
+      order: [['id', 'ASC']],
+      include: [
+        {
+          model: sequelize.models.scheduleScenes,
+          as: 'scenes',
+          required: false,
+          attributes: {
+            exclude: ['id', 'schedule_id']
+          }
+        }
+      ]
+    }).then(function(schedules) {
+      if(schedules.length !== 0) {
+        for(var i=0;i<schedules.length;i++) {
+          createJob(schedules[i].dataValues.id, schedules[i].dataValues.cron);
+        }
       }
     });
   }
 
-  function createJob(id, cron, sceneids) {
-    scheduleContext[id] = {"sceneids": sceneids};
+  function createJob(id, cron) {
+    scheduleContext[id] = {"id": id};
     schedules[id] = new CronJob(cron, runJob, null, true, "America/New_York", scheduleContext[id]);
+  }
+  
+  function deleteJob(id) {
+    if(typeof schedules[id] !== 'undefined') {
+      //TODO: this is not working :(
+      schedules[id].stop();
+    }
   }
 
   function runJob() {
-    var scenesArray = this.sceneids.split(',');
-    for(var i=0;i<scenesArray.length;i++) {
-      scenes.runScene(scenesArray[i]);
-    }
+    var scheduleid = this.id;
+    sequelize.models.scheduleScenes.findAll({
+      where: {
+        schedule_id: scheduleid
+      }
+    }).then(function(scheduleScene) {
+      for(var i=0;i<scheduleScene.length;i++) {
+        scenes.runScene(scheduleScene[i].dataValues.scene_id);
+      }
+    });
   }
   
-  function reloadSchedules() {
+  function reload() {
     for(var i=0;i<schedules.length;i++) {
       if(typeof schedules[i] !== 'undefined') {
         schedules[i].stop();
@@ -34,8 +61,15 @@ module.exports = function(scenes) {
     initSchedules();
   }
   
+  function createSchedule(id, cron) {
+    scheduleContext[id] = {"id": id};
+    schedules[id] = new CronJob(cron, runJob, null, true, "America/New_York", scheduleContext[id]);
+  }
+  
   return {
-    initSchedules: initSchedules,
-    reloadSchedules: reloadSchedules
+    initialize: initialize,
+    reload: reload,
+    createJob: createJob,
+    deleteJob: deleteJob
   }
 }

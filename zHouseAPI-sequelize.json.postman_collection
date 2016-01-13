@@ -278,12 +278,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452641334488,
+			"time": 1452663972605,
 			"name": "nodes/:id/command",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n    \"class_id\": 37,\n    \"instance\": 1,\n    \"index\": 0,\n    \"value\": true\n}"
+			"rawModeData": "{\n    \"class_id\": 37,\n    \"instance\": 1,\n    \"index\": 0,\n    \"value\": false\n}"
 		},
 		{
 			"id": "20d3e673-8071-55f4-ca2e-8b69d4bd3d90",
@@ -317,12 +317,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452643687834,
+			"time": 1452665081977,
 			"name": "schedules/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"name\": \"testschedule\",\n  \"cron\": \"*/30 * * * *\"\n}"
+			"rawModeData": "{\n  \"name\": \"testschedule\",\n  \"cron\": \"*/45 * * * * *\"\n}"
 		},
 		{
 			"id": "3af00bac-1c1f-9288-2e2c-073876c4a234",
@@ -975,13 +975,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452152888564,
+			"time": 1452663797689,
 			"name": "schedules",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"name\": \"test\",\n  \"cron\": \"0 0 1 1 *\"\n}",
-			"folder": "4996cbc0-20be-3db2-377e-5d1dffbad789"
+			"rawModeData": "{\n  \"name\": \"test\",\n  \"cron\": \"0 0 1 1 * *\"\n}"
 		},
 		{
 			"id": "fa6ed686-1679-f903-d778-aa11f49504cf",

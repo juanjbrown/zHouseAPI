@@ -10,7 +10,8 @@ module.exports = function() {
       max: 10,
       min: 0,
       idle: 10000
-    }
+    },
+    logging: false
   });
 
   var models = new Models(sequelize);

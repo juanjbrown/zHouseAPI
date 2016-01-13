@@ -863,6 +863,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
     }
     
     sequelize.models.schedules.create(req.body).then(function(schedule) {
+      schedules.createJob(schedule.dataValues.id, schedule.dataValues.cron);
       res.status(200).json({
         status: 'success',
         data: {
@@ -952,6 +953,12 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
         }
       }
     ).then(function(affectedArray) {
+      if(typeof req.body.cron !== 'undefined') {
+        if(affectedArray[0] === 1) {
+          schedules.deleteJob(req.params.id);
+          schedules.createJob(req.params.id, req.body.cron);
+        }
+      }
       res.status(200).json({
         status: 'success',
         data: {
@@ -1012,6 +1019,9 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
         scene_id: req.body.scene_id
       }
     }).then(function(destroyedRows) {
+      if(destroyedRows === 1) {
+        schedules.deleteJob(parseInt(req.params.id, 10));
+      }
       res.status(200).json({
         status: 'success',
         data: {

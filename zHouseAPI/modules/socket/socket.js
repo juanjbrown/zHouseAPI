@@ -1,13 +1,20 @@
-module.exports = function() {
-  //TODO: fix this
+module.exports = function(sequelize) {
   var io = require('socket.io')();  
   io.listen(3001);
   
   io.on('connection', function(client) {
     var username = getCookie('username', client.handshake.headers.cookie);
     var apikey = getCookie('apikey', client.handshake.headers.cookie);
-    GLOBAL.mysqlGlobal.authenticate(username, apikey, function(status, response) {
-      if(status === 403) {
+    
+    sequelize.models.users.findOne({
+      where: {
+        username: username,
+        apikey: apikey
+      }
+    }).then(function(user) {
+      if(user) {
+        //authenticated
+      } else {
         console.log('disconnecting');
         client.disconnect();
       }

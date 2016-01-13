@@ -21,13 +21,13 @@ module.exports = function(socket, aws, scenes, sequelize) {
       nodes[nodeid]['classes'][comclass] = {};
     }
     nodes[nodeid]['classes'][comclass][value.index] = value;
-    //TODO: socket.updateNodes(nodes);
+    socket.updateNodes(nodes);
   });
 
   zwave.on('value changed', function (nodeid, comclass, value) {
     if(nodes[nodeid]['classes'][comclass][value.index].value !== value.value) {
       nodes[nodeid]['classes'][comclass][value.index] = value;
-      //TODO: socket.updateNodes(nodes);
+      socket.updateNodes(nodes);
       if(scanComplete) {
         checkAlarm(nodeid, comclass, value);
       }
@@ -38,7 +38,7 @@ module.exports = function(socket, aws, scenes, sequelize) {
     if (nodes[nodeid]['classes'][comclass] && nodes[nodeid]['classes'][comclass][index]) {
       delete nodes[nodeid]['classes'][comclass][index];
     }
-    //TODO: socket.updateNodes(nodes);
+    socket.updateNodes(nodes);
   });
 
   zwave.on('node ready', function (nodeid, nodeinfo) {
@@ -51,7 +51,7 @@ module.exports = function(socket, aws, scenes, sequelize) {
     nodes[nodeid]['name'] = nodeinfo.name;
     nodes[nodeid]['loc'] = nodeinfo.loc;
     nodes[nodeid]['ready'] = true;
-    //TODO: socket.updateNodes(nodes);
+    socket.updateNodes(nodes);
   });  
   
   zwave.on('scan complete', function () {

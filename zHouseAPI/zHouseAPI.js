@@ -10,12 +10,11 @@ var Express = require('./modules/express/express.js');
 
 var aws = new Aws();
 var sequelize = new Sequelize();
-var socket = new Socket();
+var socket = new Socket(sequelize);
 var scenes = new Scenes(sequelize);
-var schedules = new Schedules(scenes);
+var schedules = new Schedules(sequelize, scenes);
 var zwave = new ZWave(socket, aws, scenes, sequelize);
 var express = new Express(schedules, scenes, sequelize, zwave);
-
 
 sequelize.initialize(function() {
   scenes.injectZwave(zwave);
@@ -45,11 +44,10 @@ sequelize.initialize(function() {
 
 zwave.zwave.on('scan complete', function () {
   express.initialize();
+  schedules.initialize();
 });
 
 /*TODO:
-- fix run schedule
 - reload/delete schedule when deleting a schedule from database
 - record camera on alarm
-- socket
 */
