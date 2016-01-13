@@ -1,4 +1,5 @@
 module.exports = function() {
+  //TODO: fix this
   var io = require('socket.io')();  
   io.listen(3001);
   

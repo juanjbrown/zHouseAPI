@@ -38,7 +38,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
     }
     
     //TODO: remove this line because this skips authentication
-    return next();
+    //return next();
     
     sequelize.models.users.findOne({
       where: {
@@ -1038,8 +1038,8 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
       }
     }).then(function(user) { //sequelize connection success
       //TODO: delete this
-      var user = [];
-      user.role = 0;
+      //var user = [];
+      //user.role = 0;
       
       if(typeof req.body.password !== 'undefined') {
         req.body.password = getsha256(req.body.password);
@@ -1111,8 +1111,9 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
       }
     }).then(function(user) { //sequelize connection success
       //TODO: delete this
-      var user = [];
-      user.role = 0;
+      //var user = [];
+      //user.role = 0;
+      
       if(user.role === 0) {
         sequelize.models.users.findAll({
           attributes: {
@@ -1153,8 +1154,9 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
       }
     }).then(function(user) { //sequelize connection success
       //TODO: delete this
-      var user = [];
-      user.role = 0;
+      //var user = [];
+      //user.role = 0;
+      
       if((user.role === 0) || (user.username === req.headers.username)){
         sequelize.models.users.findOne({
           where: {
@@ -1208,8 +1210,8 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
       }
     }).then(function(user) { //sequelize connection success
       //TODO: delete this
-      var user = [];
-      user.role = 0;
+      //var user = [];
+      //user.role = 0;
       
       if(typeof req.body.password !== 'undefined') {
         req.body.password = getsha256(req.body.password);
@@ -1298,8 +1300,9 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
       }
     }).then(function(user) { //sequelize connection success
       //TODO: delete this
-      var user = [];
-      user.role = 0;
+      //var user = [];
+      //user.role = 0;
+      
       if(user.role === 0) {
         sequelize.models.users.destroy({
           where: {
@@ -1441,7 +1444,8 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
 }
 
 /*TODO:
-- schedules/schedule-scenes endpoints
-- delete schedule containing a scene and reload schedules when deleting a scene
+- fix run schedule
+- reload/delete schedule when deleting a schedule from database
 - record camera on alarm
+- socket
 */
