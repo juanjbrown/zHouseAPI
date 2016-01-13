@@ -23,11 +23,17 @@ module.exports = function(sequelize) {
   var SceneActions = require('./scene-actions.js');
   var sceneActions = new SceneActions(sequelize).SceneActions;
   
+  var Schedules = require('./schedules.js');
+  var schedules = new Schedules(sequelize).Schedules;
+  
+  var ScheduleScenes = require('./schedule-scenes.js');
+  var scheduleScenes = new ScheduleScenes(sequelize).ScheduleScenes;
+  
   var Users = require('./users.js');
   var users = new Users(sequelize).Users;
   
-  nodes.hasMany(nodeAlarmTriggers, {as: 'alarm-triggers', foreignKey: 'node_id', onDelete: 'CASCADE'});  
-  nodes.hasMany(nodeSceneTriggers, {as: 'scene-triggers', foreignKey: 'node_id', onDelete: 'CASCADE'});
+  nodes.hasMany(nodeAlarmTriggers, {as: 'alarm_triggers', foreignKey: 'node_id', onDelete: 'CASCADE'});  
+  nodes.hasMany(nodeSceneTriggers, {as: 'scene_triggers', foreignKey: 'node_id', onDelete: 'CASCADE'});
   nodes.hasMany(sceneActions, {as: 'nodes', foreignKey: 'node_id', onDelete: 'CASCADE'});
   
   nodeSceneTriggers.hasMany(nodeSceneTriggerScenes, {as: 'scenes', foreignKey: 'nodes_scene_id', onDelete: 'CASCADE'});
@@ -35,6 +41,10 @@ module.exports = function(sequelize) {
   scenes.belongsToMany(nodeSceneTriggers, {through: nodeSceneTriggerScenes, foreignKey: 'nodes_scene_id'});
   
   scenes.hasMany(sceneActions, {as: 'actions', foreignKey: 'scene_id', onDelete: 'CASCADE'});
+  
+  schedules.hasMany(scheduleScenes, {as: 'scenes', foreignKey: 'schedule_id', onDelete: 'CASCADE'});
+  schedules.belongsToMany(scenes, {through: scheduleScenes, foreignKey: 'scene_id'})
+  scenes.belongsToMany(schedules, {through: scheduleScenes, foreignKey: 'schedule_id'});
   
   return {
     alarm: alarm,
@@ -45,6 +55,8 @@ module.exports = function(sequelize) {
     nodeSceneTriggerScenes: nodeSceneTriggerScenes,
     scenes: scenes,
     sceneActions: sceneActions,
+    schedules: schedules,
+    scheduleScenes: scheduleScenes,
     users: users
   }
 }

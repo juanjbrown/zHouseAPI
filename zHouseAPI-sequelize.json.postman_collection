@@ -98,7 +98,6 @@
 				"28e70332-16bd-7417-3223-3cfa9d37a868",
 				"8355eb0c-6b49-5008-b0f4-d6dcab369050",
 				"89819c38-95e4-eaf2-4938-06b3e70f6449",
-				"83c72be0-3e81-2d80-9e32-b200a7858a1e",
 				"ac48e067-c5a7-d57e-6684-5f74d80c376a"
 			],
 			"owner": 0,
@@ -149,7 +148,7 @@
 		{
 			"id": "06fcf787-47ed-f9ef-d27b-579c86f0b33a",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/schedules/4",
+			"url": "{{server}}/schedules/1",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "GET",
@@ -159,12 +158,11 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452320209586,
+			"time": 1452643684534,
 			"name": "schedules/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
-			"responses": [],
-			"folder": "4996cbc0-20be-3db2-377e-5d1dffbad789"
+			"responses": []
 		},
 		{
 			"id": "085239aa-4556-5ed1-f6e1-b4c341b5eb81",
@@ -260,17 +258,17 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452588465684,
+			"time": 1452640035642,
 			"name": "scenes",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"name\": \"testscene\",\n  \"change_alarm\": true,\n  \"armed\": true\n}"
+			"rawModeData": "{\n  \"id\": 1,\n  \"name\": \"testscene\",\n  \"change_alarm\": true,\n  \"armed\": true\n}"
 		},
 		{
 			"id": "117a0620-668f-2d21-8665-69d07c59e15a",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/nodes/3/command",
+			"url": "{{server}}/nodes/5/command",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "PUT",
@@ -280,12 +278,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452573690763,
+			"time": 1452641334488,
 			"name": "nodes/:id/command",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n    \"class_id\": 37,\n    \"instance\": 1,\n    \"index\": 0,\n    \"value\": false\n}"
+			"rawModeData": "{\n    \"class_id\": 37,\n    \"instance\": 1,\n    \"index\": 0,\n    \"value\": true\n}"
 		},
 		{
 			"id": "20d3e673-8071-55f4-ca2e-8b69d4bd3d90",
@@ -309,7 +307,7 @@
 		{
 			"id": "28e70332-16bd-7417-3223-3cfa9d37a868",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/schedules/4",
+			"url": "{{server}}/schedules/1",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "PUT",
@@ -319,13 +317,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452152901992,
+			"time": 1452643687834,
 			"name": "schedules/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"name\": \"testschedule\",\n  \"cron\": \"*/30 * * * *\"\n}",
-			"folder": "4996cbc0-20be-3db2-377e-5d1dffbad789"
+			"rawModeData": "{\n  \"name\": \"testschedule\",\n  \"cron\": \"*/30 * * * *\"\n}"
 		},
 		{
 			"id": "3af00bac-1c1f-9288-2e2c-073876c4a234",
@@ -549,7 +546,7 @@
 		{
 			"id": "8355eb0c-6b49-5008-b0f4-d6dcab369050",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/schedules/5",
+			"url": "{{server}}/schedules/1",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "DELETE",
@@ -559,34 +556,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452319950197,
+			"time": 1452643697386,
 			"name": "schedules/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "",
-			"folder": "4996cbc0-20be-3db2-377e-5d1dffbad789"
-		},
-		{
-			"id": "83c72be0-3e81-2d80-9e32-b200a7858a1e",
-			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/schedules/scene/4",
-			"preRequestScript": "",
-			"pathVariables": {},
-			"method": "PUT",
-			"data": [],
-			"dataMode": "raw",
-			"version": 2,
-			"tests": "",
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1452325957906,
-			"name": "schedules/scene/:id",
-			"description": "",
-			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
-			"responses": [],
-			"rawModeData": "{\n  \"scene_id\": 1\n}",
-			"folder": "4996cbc0-20be-3db2-377e-5d1dffbad789"
+			"rawModeData": ""
 		},
 		{
 			"id": "8436c96d-7f35-5e30-bb9f-323beaf8d461",
@@ -611,7 +586,7 @@
 		{
 			"id": "89819c38-95e4-eaf2-4938-06b3e70f6449",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/schedules/4/scene",
+			"url": "{{server}}/schedules/1/add-scene",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "POST",
@@ -621,13 +596,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452320610273,
-			"name": "schedules/:id/scene",
+			"time": 1452643701904,
+			"name": "schedules/:id/add-scene",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"name\": \"testschedule\",\n  \"cron\": \"*/30 * * * *\"\n}",
-			"folder": "4996cbc0-20be-3db2-377e-5d1dffbad789"
+			"rawModeData": "{\n  \"scene_id\": 1\n}"
 		},
 		{
 			"id": "935b340c-cdb2-1ccd-a6ad-f4422e36e267",
@@ -642,12 +616,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452615004829,
+			"time": 1452639687051,
 			"name": "alarm",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"armed\": false\n}"
+			"rawModeData": "{\n  \"armed\": true\n}"
 		},
 		{
 			"id": "97597d0f-0015-e96e-6149-0396a938070c",
@@ -771,7 +745,7 @@
 		{
 			"id": "ac48e067-c5a7-d57e-6684-5f74d80c376a",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/schedules/scene/4",
+			"url": "{{server}}/schedules/1/delete-scene",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "DELETE",
@@ -781,13 +755,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452325964803,
-			"name": "schedules/scene/:id",
+			"time": 1452643706458,
+			"name": "schedules/:id/delete-scene",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "",
-			"folder": "4996cbc0-20be-3db2-377e-5d1dffbad789"
+			"rawModeData": "{\n  \"scene_id\": 1\n}"
 		},
 		{
 			"id": "ae7a8e40-cf80-5022-f3b2-7887f70dd6be",
@@ -962,7 +935,7 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452639586684,
+			"time": 1452639843956,
 			"name": "scenes/:id/scene-actions",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",

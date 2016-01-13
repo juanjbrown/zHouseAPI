@@ -295,12 +295,12 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
       include: [
         {
           model: sequelize.models.nodeAlarmTriggers,
-          as: 'alarm-triggers',
+          as: 'alarm_triggers',
           required: false
         },
         {
           model: sequelize.models.nodeSceneTriggers,
-          as: 'scene-triggers',
+          as: 'scene_triggers',
           required: false,
           include: [
             {
@@ -342,12 +342,12 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
       include: [
         {
           model: sequelize.models.nodeAlarmTriggers,
-          as: 'alarm-triggers',
+          as: 'alarm_triggers',
           required: false
         },
         {
           model: sequelize.models.nodeSceneTriggers,
-          as: 'scene-triggers',
+          as: 'scene_triggers',
           required: false,
           include: [
             {
@@ -654,17 +654,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
   });
   
   //scenes
-  router.post('/scenes', function(req, res) {
-    if(typeof req.body.id !== 'undefined') {
-      res.status(400).json({
-        status: 'error',
-        data: {
-          mesage: 'not allowed to set id'
-        }
-      });
-      return;
-    }
-    
+  router.post('/scenes', function(req, res) {  
     sequelize.models.scenes.create(req.body).then(function(scene) {
       res.status(200).json({
         status: 'success',
@@ -730,17 +720,7 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
     });
   });
   
-  router.put('/scenes/:id', function(req, res) {
-    if(typeof req.body.id !== 'undefined') {
-      res.status(400).json({
-        status: 'error',
-        data: {
-          mesage: 'not allowed to change id'
-        }
-      });
-      return;
-    }
-    
+  router.put('/scenes/:id', function(req, res) {    
     sequelize.models.scenes.update(
       req.body,
       {
@@ -857,6 +837,182 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
     sequelize.models.sceneActions.destroy({
       where: {
         id: req.params.id,
+      }
+    }).then(function(destroyedRows) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          destroyedRows: destroyedRows
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  //schedules
+  router.post('/schedules', function(req, res) {
+    if(typeof req.body.id !== 'undefined') {
+      res.status(400).json({
+        status: 'error',
+        data: {
+          mesage: 'not allowed to set id'
+        }
+      });
+      return;
+    }
+    
+    sequelize.models.schedules.create(req.body).then(function(schedule) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          scene: schedule
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.get('/schedules', function(req, res) {
+    sequelize.models.schedules.findAll({
+      order: [['id', 'ASC']],
+      include: [
+        {
+          model: sequelize.models.scheduleScenes,
+          as: 'scenes',
+          required: false,
+          attributes: {
+            exclude: ['id', 'schedule_id']
+          }
+        }
+      ]
+    }).then(function(schedules) { //sequelize connection success
+      res.status(200).json({
+        status: 'success',
+        data: schedules
+      });
+    }, function(error) { //sequelize connection error
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.get('/schedules/:id', function(req, res) {
+    sequelize.models.schedules.findAll({
+      where: {
+        id: req.params.id
+      },
+      include: [
+        {
+          model: sequelize.models.scheduleScenes,
+          as: 'scenes',
+          required: false,
+          attributes: {
+            exclude: ['id', 'schedule_id']
+          }
+        }
+      ]
+    }).then(function(schedule) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          schedule: schedule
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.put('/schedules/:id', function(req, res) {
+    if(typeof req.body.id !== 'undefined') {
+      res.status(400).json({
+        status: 'error',
+        data: {
+          mesage: 'not allowed to change id'
+        }
+      });
+      return;
+    }
+    
+    sequelize.models.schedules.update(
+      req.body,
+      {
+        where: {
+          id: req.params.id
+        }
+      }
+    ).then(function(affectedArray) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          affectedCount: affectedArray[0]
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.delete('/schedules/:id', function(req, res) {
+    sequelize.models.schedules.destroy({
+      where: {
+        id: req.params.id,
+      }
+    }).then(function(destroyedRows) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          destroyedRows: destroyedRows
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.post('/schedules/:id/add-scene', function(req, res) {    
+    sequelize.models.scheduleScenes.create({
+      schedule_id: parseInt(req.params.id, 10),
+      scene_id: req.body.scene_id
+    }).then(function(scene){
+      res.status(200).json({
+        status: 'success',
+        data: {
+          scene: scene
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.delete('/schedules/:id/delete-scene', function(req, res) {
+    sequelize.models.scheduleScenes.destroy({
+      where: {
+        schedule_id: parseInt(req.params.id, 10),
+        scene_id: req.body.scene_id
       }
     }).then(function(destroyedRows) {
       res.status(200).json({
@@ -1287,4 +1443,5 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
 /*TODO:
 - schedules/schedule-scenes endpoints
 - delete schedule containing a scene and reload schedules when deleting a scene
+- record camera on alarm
 */

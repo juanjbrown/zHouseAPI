@@ -21,13 +21,13 @@ module.exports = function(socket, aws, scenes, sequelize) {
       nodes[nodeid]['classes'][comclass] = {};
     }
     nodes[nodeid]['classes'][comclass][value.index] = value;
-    //socket.updateNodes(nodes);
+    //TODO: socket.updateNodes(nodes);
   });
 
   zwave.on('value changed', function (nodeid, comclass, value) {
     if(nodes[nodeid]['classes'][comclass][value.index].value !== value.value) {
       nodes[nodeid]['classes'][comclass][value.index] = value;
-      //socket.updateNodes(nodes);
+      //TODO: socket.updateNodes(nodes);
       if(scanComplete) {
         checkAlarm(nodeid, comclass, value);
       }
@@ -38,7 +38,7 @@ module.exports = function(socket, aws, scenes, sequelize) {
     if (nodes[nodeid]['classes'][comclass] && nodes[nodeid]['classes'][comclass][index]) {
       delete nodes[nodeid]['classes'][comclass][index];
     }
-    //socket.updateNodes(nodes);
+    //TODO: socket.updateNodes(nodes);
   });
 
   zwave.on('node ready', function (nodeid, nodeinfo) {
@@ -51,7 +51,7 @@ module.exports = function(socket, aws, scenes, sequelize) {
     nodes[nodeid]['name'] = nodeinfo.name;
     nodes[nodeid]['loc'] = nodeinfo.loc;
     nodes[nodeid]['ready'] = true;
-    //socket.updateNodes(nodes);
+    //TODO: socket.updateNodes(nodes);
   });  
   
   zwave.on('scan complete', function () {
@@ -139,30 +139,62 @@ module.exports = function(socket, aws, scenes, sequelize) {
   }
   
   function checkAlarm(nodeid, comclass, value) {
-    /*GLOBAL.mysqlGlobal.getAlarm(function(status, response) {
-      if(response.data[0].armed) {
-        GLOBAL.mysqlGlobal.getNode(nodeid, function(status, response) {
-          if(typeof response.data.nodes_alarm !== 'undefined') {
-            for(var i=0;i<response.data.nodes_alarm.length;i++) {
-              if(response.data.nodes_alarm[i].class_id === comclass) {
-                if((response.data.nodes_alarm[i].value == 'true') === value.value) {
-                  if(response.data.nodes_alarm[i].sms) {
-                    //TODO: send real sms
-                    //aws.sendSMS(response.data.name+' alarm!');
-                    console.log(response.data.name+' alarm!');
+    sequelize.models.alarm.findAll({
+      attributes: {
+        exclude: ['id']
+      }
+    }).then(function(alarm) {
+      if(alarm[0].dataValues.armed) {
+        sequelize.models.nodes.findAll({
+          where: {
+            node_id: nodeid
+          },
+          include: [
+            {
+              model: sequelize.models.nodeAlarmTriggers,
+              as: 'alarm_triggers',
+              required: false
+            },
+            {
+              model: sequelize.models.nodeSceneTriggers,
+              as: 'scene_triggers',
+              required: false,
+              include: [
+                {
+                  model: sequelize.models.nodeSceneTriggerScenes,
+                  as: 'scenes',
+                  required: false,
+                  attributes: {
+                    exclude: ['id', 'nodes_scene_id']
                   }
+                }
+              ]
+            }
+          ]
+        }).then(function(node) {
+          for(var i=0;i<node[0].dataValues.alarm_triggers.length;i++) {
+            if(node[0].dataValues.alarm_triggers[i].class_id === comclass) {
+              if((node[0].dataValues.alarm_triggers[i].value == 'true') === value.value) {
+                if(node[0].dataValues.alarm_triggers[i].sms) {
+                  //TODO: send real sms
+                  //aws.sendSMS(node[0].dataValues.name+' alarm!');
+                  console.log(node[0].dataValues.name+' alarm!');
+                }
 
-                  if(response.data.nodes_alarm[i].siren) {
-                    //TODO: sound siren
-                    console.log('siren!');
-                  }
+                if(node[0].dataValues.alarm_triggers[i].siren) {
+                  //TODO: sound siren
+                  console.log('siren!');
                 }
               }
             }
           }
+        }, function(error) {
+          console.log('error getting alarm triggers');
         });
       }
-    });*/
+    }, function(error) {
+      console.log('error getting alarm values');
+    });
   }
   
   return {
