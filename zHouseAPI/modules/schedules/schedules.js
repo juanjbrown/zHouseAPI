@@ -38,6 +38,7 @@ module.exports = function(sequelize, scenes) {
   }
 
   function runJob() {
+    console.log('running schedule'+this.id);
     var scheduleid = this.id;
     sequelize.models.scheduleScenes.findAll({
       where: {

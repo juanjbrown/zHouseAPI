@@ -23,6 +23,10 @@ module.exports = function(sequelize) {
       siren: {
         type: Sequelize.BOOLEAN,
         allowNull: false
+      },
+      record_cameras: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
       }
     },
     {

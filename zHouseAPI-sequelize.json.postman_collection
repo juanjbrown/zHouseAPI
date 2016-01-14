@@ -139,12 +139,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452579584637,
+			"time": 1452753459479,
 			"name": "camera/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"name\": \"Kitchen Camera\",\n  \"url\": \"rtmp://127.0.0.1:1935/kitchen/stream?camerakey=kitchenkey\",\n  \"camera_key\": \"kitchenkey\",\n  \"up_url\": \"http://192.168.1.7:82/web/cgi-bin/hi3510/ytup.cgi\",\n  \"down_url\": \"http://192.168.1.7:82/web/cgi-bin/hi3510/ytdown.cgi\",\n  \"left_url\": \"http://192.168.1.7:82/web/cgi-bin/hi3510/ytleft.cgi\",\n  \"right_url\": \"http://192.168.1.7:82/web/cgi-bin/hi3510/ytright.cgi\"\n}"
+			"rawModeData": "{\n  \"name\": \"Family Room Camera\",\n  \"url\": \"rtmp://127.0.0.1:1935/familyroom/stream?camerakey=familyroom&databasename=Family%20Room%20Camera\",\n  \"camera_key\": \"familyroom\",\n  \"up_url\": \"http://192.168.1.7:82/web/cgi-bin/hi3510/ytup.cgi\",\n  \"down_url\": \"http://192.168.1.7:82/web/cgi-bin/hi3510/ytdown.cgi\",\n  \"left_url\": \"http://192.168.1.7:82/web/cgi-bin/hi3510/ytleft.cgi\",\n  \"right_url\": \"http://192.168.1.7:82/web/cgi-bin/hi3510/ytright.cgi\",\n  \"record_on_alarm\": true\n}"
 		},
 		{
 			"id": "06fcf787-47ed-f9ef-d27b-579c86f0b33a",
@@ -199,12 +199,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452615030489,
+			"time": 1452753466879,
 			"name": "cameras",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"name\": \"Kitchen Camera\",\n  \"url\": \"rtmp://127.0.0.1:1935/kitchen/stream?camerakey=kitchenkey\",\n  \"camera_key\": \"kitchenkey\"\n}"
+			"rawModeData": "{\n  \"name\": \"Family Room Camera\",\n  \"url\": \"rtmp://127.0.0.1:1935/familyroom/stream?camerakey=familyroom&databasename=Family%20Room%20Camera\",\n  \"camera_key\": \"familyroom\",\n  \"record_on_alarm\": true\n}"
 		},
 		{
 			"id": "0bbaf1cf-842b-cf00-165c-fc7b25002b76",
@@ -219,12 +219,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452639489303,
+			"time": 1452750187377,
 			"name": "nodes/alarm-triggers/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"class_id\": 37,\n  \"value\": \"false\",\n  \"sms\": 1,\n  \"siren\": 1\n}"
+			"rawModeData": "{\n  \"class_id\": 37,\n  \"value\": \"false\",\n  \"sms\": 1,\n  \"siren\": 1,\n  \"record_cameras\": 1\n}"
 		},
 		{
 			"id": "0c900ab9-34f3-355d-6a87-beb02cee96ba",
@@ -338,12 +338,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452639494763,
+			"time": 1452750181061,
 			"name": "nodes/:id/alarm-triggers",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"class_id\": 37,\n  \"value\": \"true\",\n  \"sms\": 1,\n  \"siren\": 1\n}"
+			"rawModeData": "{\n  \"class_id\": 37,\n  \"value\": \"true\",\n  \"sms\": 1,\n  \"siren\": 1,\n  \"record_cameras\": 1\n}"
 		},
 		{
 			"id": "4c010268-8d99-ae67-4136-f92ffe22c329",
@@ -996,12 +996,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452663797689,
+			"time": 1452747086316,
 			"name": "schedules",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"name\": \"test\",\n  \"cron\": \"0 0 1 1 * *\"\n}"
+			"rawModeData": "{\n  \"name\": \"test\",\n  \"cron\": \"* * * * * *\"\n}"
 		},
 		{
 			"id": "fa6ed686-1679-f903-d778-aa11f49504cf",

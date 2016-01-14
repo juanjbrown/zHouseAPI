@@ -18,6 +18,7 @@ var express = new Express(aws, schedules, scenes, sequelize, zwave);
 
 sequelize.initialize(function() {
   scenes.injectZwave(zwave);
+  //TODO: fix this so it doesnt update if it already exists
   sequelize.models.alarm.upsert({id: 1, armed: false}).then(function() {
     sequelize.models.users.findOrCreate(
       {
@@ -50,4 +51,6 @@ zwave.zwave.on('scan complete', function () {
 /*TODO:
 - verify email sending
 - record camera on alarm
+- specify cameras to record on alarm
+- siren
 */

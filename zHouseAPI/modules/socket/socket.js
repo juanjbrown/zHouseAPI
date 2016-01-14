@@ -15,13 +15,14 @@ module.exports = function(sequelize) {
       if(user) {
         //authenticated
       } else {
-        console.log('disconnecting');
+        console.log('disconnecting unauthorized user');
         client.disconnect();
       }
     });
   });
   
   function updateNodes(nodes) {
+    console.log('sending socket node update');
     io.emit('updateNodes', nodes);
   }
   

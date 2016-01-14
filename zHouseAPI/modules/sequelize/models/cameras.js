@@ -30,6 +30,10 @@ module.exports = function(sequelize) {
       },
       right_url: {
         type: Sequelize.STRING
+      },
+      record_on_alarm: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
       }
     },
     {

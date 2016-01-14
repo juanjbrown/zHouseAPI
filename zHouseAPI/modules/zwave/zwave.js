@@ -1,10 +1,13 @@
 module.exports = function(socket, aws, scenes, sequelize) {
+  var childProcess = require('child_process');
+  var config = require('../../config.js')[process.env.NODE_ENV];
   var ZWave = require('../../node_modules/openzwave-shared/lib/openzwave-shared.js');
   var os = require('os');
   var zwave = new ZWave({ConsoleOutput: false});
   var nodes = [];
   var zwavedriverpaths = {'darwin': '/dev/cu.usbmodem1411', 'linux': '/dev/ttyUSB0', 'windows': '\\\\.\\COM3'};
   var scanComplete = false;
+  var camerasRecording = false;
 
   zwave.on('driver failed', function () {
     zwave.disconnect();
@@ -176,14 +179,38 @@ module.exports = function(socket, aws, scenes, sequelize) {
             if(node[0].dataValues.alarm_triggers[i].class_id === comclass) {
               if((node[0].dataValues.alarm_triggers[i].value == 'true') === value.value) {
                 if(node[0].dataValues.alarm_triggers[i].sms) {
+                  console.log('sending alarm sms for '+node[0].dataValues.name);
                   //TODO: send real sms
                   //aws.sendSMS(node[0].dataValues.name+' alarm!');
-                  console.log(node[0].dataValues.name+' alarm!');
                 }
 
                 if(node[0].dataValues.alarm_triggers[i].siren) {
-                  //TODO: sound siren
-                  console.log('siren!');
+                  console.log('sounding siren for '+node[0].dataValues.name);
+                  setSiren(true);
+                }
+                
+                if(node[0].dataValues.alarm_triggers[i].record_cameras) {
+                  sequelize.models.cameras.findAll({}).then(function(cameras){
+                    for(var i=0;i<cameras.length;i++) {
+                      if((cameras[i].dataValues.record_on_alarm) && (!camerasRecording)) {
+                        console.log('recording cameras');
+                        camerasRecording = true;
+                        setTimeout(function(){
+                          camerasRecording = false;
+                        }, parseInt(config.cameras.alarm_record_time+'000',10));
+                        childProcess.exec('/record-camera.sh '+cameras[i].dataValues.name.replace(/\s+/g, '')+' "'+cameras[i].dataValues.url+'" '+config.cameras.alarm_record_time,
+                          function (error, stdout, stderr) {
+                            console.log('stdout: ' + stdout);
+                            console.log('stderr: ' + stderr);
+                            if (error !== null) {
+                              console.log('exec error: ' + error);
+                            }
+                        });
+                      }
+                    }
+                  }, function(error){
+                    console.log('error getting cameras for alarm');
+                  });
                 }
               }
             }
@@ -197,6 +224,10 @@ module.exports = function(socket, aws, scenes, sequelize) {
     });
   }
   
+  function setSiren(value) {
+    //TODO: set siren
+  }
+  
   return {
     zwave: zwave,
     connect: connect,
@@ -206,6 +237,7 @@ module.exports = function(socket, aws, scenes, sequelize) {
     changePolling: changePolling,
     setValue: setValue,
     setConfigParam: setConfigParam,
-    controllerReset: controllerReset
+    controllerReset: controllerReset,
+    setSiren: setSiren
   }
 }

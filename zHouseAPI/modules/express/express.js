@@ -101,6 +101,7 @@ module.exports = function(aws, schedules, scenes, sequelize, zwave) {
         }
       }
     ).then(function(affectedArray) {
+      zwave.setSiren(false);
       res.status(200).json({
         status: 'success',
         data: {
@@ -979,8 +980,7 @@ module.exports = function(aws, schedules, scenes, sequelize, zwave) {
         id: req.params.id,
       }
     }).then(function(destroyedRows) {
-      //TODO: make sure i need to have [0] here
-      if(destroyedRows[0] === 1) {
+      if(destroyedRows === 1) {
         schedules.deleteJob(req.params.id);
       }
       res.status(200).json({

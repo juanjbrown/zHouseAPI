@@ -6,6 +6,7 @@ module.exports = function(sequelize) {
   var actionError;
   
   function runScene(id, callbackParam) {
+    console.log('running scene '+id);
     callback = callbackParam;
     sequelize.models.scenes.findAll({
       where: {
