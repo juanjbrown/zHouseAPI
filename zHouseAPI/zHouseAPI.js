@@ -58,6 +58,7 @@ zwave.zwave.on('scan complete', function () {
 });
 
 /*TODO:
+- endpoint for verifying admin password has been changed
 - verify email sending
 - send real sms
 - siren
