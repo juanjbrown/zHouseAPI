@@ -457,12 +457,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452583358367,
+			"time": 1452808811754,
 			"name": "nodes/:node_id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"name\": \"Kitchen Scentsy\",\n  \"type\": \"appliance\"\n}"
+			"rawModeData": "{\n  \"name\": \"Left Family Room Light\",\n  \"type\": \"light\"\n}"
 		},
 		{
 			"id": "7d3164f1-67ff-8557-31fe-13d3446bad6e",
@@ -567,7 +567,7 @@
 		{
 			"id": "8436c96d-7f35-5e30-bb9f-323beaf8d461",
 			"headers": "Content-Type: application/json\n",
-			"url": "{{server}}/users/{{email}}/forgot-password",
+			"url": "{{server}}/users/forgot-password/change-password",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "POST",
@@ -577,12 +577,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452743152873,
-			"name": "users/:email/forgot-password",
+			"time": 1452812672677,
+			"name": "users/forgot-password/change-password",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"forgotpasswordkey\": \"38bc6402-3748-4fd4-90a8-a9cf6c49d142\",\n  \"password\": \"test\"\n}"
+			"rawModeData": "{\n  \"email\": \"{{email}}\",\n  \"forgotpasswordkey\": \"ce8537a4-bd95-46e0-813e-ce9a7baf2346\",\n  \"password\": \"{{password}}\"\n}"
 		},
 		{
 			"id": "89819c38-95e4-eaf2-4938-06b3e70f6449",
@@ -785,22 +785,23 @@
 		},
 		{
 			"id": "afa5a16e-a196-9edd-dd6a-4b40126afa40",
-			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/users/{{email}}/forgot-password",
+			"headers": "Content-Type: application/json\n",
+			"url": "{{server}}/users/forgot-password",
 			"preRequestScript": "",
 			"pathVariables": {},
-			"method": "GET",
+			"method": "POST",
 			"data": [],
-			"dataMode": "params",
+			"dataMode": "raw",
 			"version": 2,
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452743146331,
-			"name": "users/:email/forgot-password",
+			"time": 1452812278329,
+			"name": "users/forgot-password",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
-			"responses": []
+			"responses": [],
+			"rawModeData": "{\n  \"email\": \"{{email}}\"\n}"
 		},
 		{
 			"id": "b3755f0e-dd63-4cb0-5088-df8999055ba5",
@@ -886,7 +887,7 @@
 		{
 			"id": "ca53a73a-ee95-7007-4ea5-07b8b6b37509",
 			"headers": "Content-Type: application/json\n",
-			"url": "{{server}}/users/{{email}}/register",
+			"url": "{{server}}/users/register",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "POST",
@@ -896,12 +897,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452746975820,
-			"name": "users/:email/register",
+			"time": 1452812583914,
+			"name": "users/activate",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"registerkey\": \"38bc6402-3748-4fd4-90a8-a9cf6c49d142\",\n  \"password\": \"test\"\n}"
+			"rawModeData": "{\n  \"email\": \"{{email}}\",\n  \"activatekey\": \"38bc6402-3748-4fd4-90a8-a9cf6c49d142\",\n  \"password\": \"{{password}}\"\n}"
 		},
 		{
 			"id": "ca7676e6-3287-c0b8-2cf6-cab9bddcf44d",

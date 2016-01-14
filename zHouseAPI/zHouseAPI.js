@@ -58,8 +58,8 @@ zwave.zwave.on('scan complete', function () {
 });
 
 /*TODO:
-- endpoint for verifying admin password has been changed
-- verify email sending
+- send alarm value in socket
+- endpoint so the frontend can verify the admin password has been changed
 - send real sms
 - siren
 */

@@ -28,10 +28,10 @@ module.exports = function() {
       Message: {
         Body: {
           Html: {
-            Data: emailParams.message
+            Data: emailParams.htmlMessage
           },
           Text: {
-            Data: emailParams.message
+            Data: emailParams.ptMessage
           }
         },
         Subject: {
@@ -43,6 +43,7 @@ module.exports = function() {
 
     ses.sendEmail(params, function(error, data) {
       if (error) {
+        console.log(error);
         callback(false);
       } else {
         callback(true);

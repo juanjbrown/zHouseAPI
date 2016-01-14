@@ -25,11 +25,15 @@ module.exports = function(aws, schedules, scenes, sequelize, zwave) {
       return next();
     }
     
-    if(req.path === '/users/forgotpassword') {
+    if(req.path === '/users/activate') {
       return next();
     }
     
-    if(req.path === '/users/forgotpassword/changepassword') {
+    if(req.path === '/users/forgot-password') {
+      return next();
+    }
+    
+    if(req.path === '/users/forgot-password/change-password') {
       return next();
     }
     
@@ -1098,7 +1102,8 @@ module.exports = function(aws, schedules, scenes, sequelize, zwave) {
           var emailParams = {
             toAddress: user.email,
             subject: 'zHouse Activate Account',
-            message: user.email+', please visit: '+config.frontend.url+'/activate-account/'+user.forgotpasswordkey+'/?email='+user.email+' to activate your account.'
+            ptMessage: user.email+',\n\nPlease visit:\n\n\n'+config.frontend.url+'/activate-account/'+user.forgotpasswordkey+'/?email='+user.email+'\n\n\nto activate your account.',
+            htmlMessage: user.email+',<br><br>Please visit:<br><br><a href="'+config.frontend.url+'/activate-account/'+user.forgotpasswordkey+'/?email='+user.email+'">'+config.frontend.url+'/activate-account/'+user.forgotpasswordkey+'/?email='+user.email+'</a><br><br>to activate your account.'
           }
           aws.sendEmail(emailParams, function() {
             res.status(200).json({
@@ -1344,7 +1349,7 @@ module.exports = function(aws, schedules, scenes, sequelize, zwave) {
     });
   });
   
-  router.get('/users/:email/forgot-password', function(req, res) {
+  router.post('/users/forgot-password', function(req, res) {
     var key = uuid.v4();
     sequelize.models.users.update(
       {
@@ -1352,14 +1357,15 @@ module.exports = function(aws, schedules, scenes, sequelize, zwave) {
       },
       {
         where: {
-          email: req.params.email
+          email: req.body.email
         }
       }
     ).then(function() {
       var emailParams = {
-        toAddress: req.params.email,
+        toAddress: req.body.email,
         subject: 'zHouse Forgot Password',
-        message: req.params.email+', please visit: '+config.frontend.url+'/forgot-password/'+key+'/?email='+req.params.email+' to create a new password.'
+        ptMessage: req.body.email+',\n\nPlease visit:\n\n\n'+config.frontend.url+'/forgot-password/'+key+'/?email='+req.body.email+'\n\n\nto create a new password.',
+        htmlMessage: req.body.email+',<br><br>Please visit:<br><br><a href="'+config.frontend.url+'/forgot-password/'+key+'/?email='+req.body.email+'">'+config.frontend.url+'/forgot-password/'+key+'/?email='+req.body.email+'</a><br><br>to create a new password.'
       }
       aws.sendEmail(emailParams, function() {
         res.status(200).json({
@@ -1379,7 +1385,7 @@ module.exports = function(aws, schedules, scenes, sequelize, zwave) {
     });
   });
   
-  router.post('/users/:email/forgot-password', function(req, res) {
+  router.post('/users/forgot-password/change-password', function(req, res) {
     if(req.body.forgotpasswordkey === null) {
       res.status(400).json({
         status: 'error',
@@ -1397,7 +1403,7 @@ module.exports = function(aws, schedules, scenes, sequelize, zwave) {
       },
       {
         where: {
-          email: req.params.email,
+          email: req.body.email,
           forgotpasswordkey: req.body.forgotpasswordkey
         }
       }
@@ -1427,8 +1433,8 @@ module.exports = function(aws, schedules, scenes, sequelize, zwave) {
     });
   });
   
-  router.post('/users/:email/register', function(req, res) {
-    if(req.body.registerkey === null) {
+  router.post('/users/activate', function(req, res) {
+    if(req.body.activatekey === null) {
       res.status(400).json({
         status: 'error',
         data: {
@@ -1445,8 +1451,8 @@ module.exports = function(aws, schedules, scenes, sequelize, zwave) {
       },
       {
         where: {
-          email: req.params.email,
-          forgotpasswordkey: req.body.registerkey
+          email: req.body.email,
+          forgotpasswordkey: req.body.activatekey
         }
       }
     ).then(function(affectedArray) {
