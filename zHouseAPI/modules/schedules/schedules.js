@@ -33,7 +33,6 @@ module.exports = function(sequelize, scenes) {
   
   function deleteJob(id) {
     if(typeof schedules[id] !== 'undefined') {
-      //TODO: this is not working :(
       schedules[id].stop();
     }
   }

@@ -15,8 +15,43 @@ module.exports = function() {
 
     sns.publish(params, function(error, data) {});
   }
+  
+  var ses = new AWS.SES({apiVersion: '2010-12-01'});
+
+  function sendEmail(emailParams, callback) {
+    var params = {
+      Destination: {
+        ToAddresses: [
+          emailParams.toAddress,
+        ]
+      },
+      Message: {
+        Body: {
+          Html: {
+            Data: emailParams.message
+          },
+          Text: {
+            Data: emailParams.message
+          }
+        },
+        Subject: {
+          Data: emailParams.subject
+        }
+      },
+      Source: config.aws.zhouseEmailAddress
+    };
+
+    ses.sendEmail(params, function(error, data) {
+      if (error) {
+        callback(false);
+      } else {
+        callback(true);
+      }
+    });
+  }
 
   return{
-    sendSMS: sendSMS
+    sendSMS: sendSMS,
+    sendEmail: sendEmail
   }
 }

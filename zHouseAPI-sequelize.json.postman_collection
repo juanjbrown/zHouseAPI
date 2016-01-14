@@ -114,7 +114,8 @@
 				"4c010268-8d99-ae67-4136-f92ffe22c329",
 				"57880221-0843-df60-3d85-0a9abb193da8",
 				"afa5a16e-a196-9edd-dd6a-4b40126afa40",
-				"8436c96d-7f35-5e30-bb9f-323beaf8d461"
+				"8436c96d-7f35-5e30-bb9f-323beaf8d461",
+				"ca53a73a-ee95-7007-4ea5-07b8b6b37509"
 			],
 			"owner": 0,
 			"collectionId": "d1450aa4-a40b-81a7-8ce3-bf35cd88b50a"
@@ -566,7 +567,7 @@
 		{
 			"id": "8436c96d-7f35-5e30-bb9f-323beaf8d461",
 			"headers": "Content-Type: application/json\n",
-			"url": "{{server}}/users/{{email}}/forgotpassword",
+			"url": "{{server}}/users/{{email}}/forgot-password",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "POST",
@@ -576,8 +577,8 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452575746275,
-			"name": "users/:email/forgotpassword",
+			"time": 1452743152873,
+			"name": "users/:email/forgot-password",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
@@ -785,7 +786,7 @@
 		{
 			"id": "afa5a16e-a196-9edd-dd6a-4b40126afa40",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/users/{{email}}/forgotpassword",
+			"url": "{{server}}/users/{{email}}/forgot-password",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "GET",
@@ -795,8 +796,8 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452419370149,
-			"name": "users/:email/forgotpassword",
+			"time": 1452743146331,
+			"name": "users/:email/forgot-password",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": []
@@ -881,6 +882,26 @@
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
 			"folder": "5938e15c-1613-ec2a-fc1e-c9dc29e48f81"
+		},
+		{
+			"id": "ca53a73a-ee95-7007-4ea5-07b8b6b37509",
+			"headers": "Content-Type: application/json\n",
+			"url": "{{server}}/users/{{email}}/register",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1452746975820,
+			"name": "users/:email/register",
+			"description": "",
+			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
+			"responses": [],
+			"rawModeData": "{\n  \"registerkey\": \"38bc6402-3748-4fd4-90a8-a9cf6c49d142\",\n  \"password\": \"test\"\n}"
 		},
 		{
 			"id": "ca7676e6-3287-c0b8-2cf6-cab9bddcf44d",

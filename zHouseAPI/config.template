@@ -1,4 +1,7 @@
 var development = {
+  frontend: {
+    url: 'http://zhouse.com'
+  },
   server: {
     host: 'localhost',
     port: 3000
@@ -13,11 +16,15 @@ var development = {
   aws: {
     accessKeyId: 'accessKeyId',
     secretAccessKey: 'secretAccessKey',
-    topicArn: 'topicArn'
+    topicArn: 'topicArn',
+    zhouseEmailAddress: 'zhouse@zhouse.com'
   }
 };
 
 var production = {
+  frontend: {
+    url: 'http://zhouse.com'
+  },
   server: {
     host: 'localhost',
     port: 3000
@@ -32,7 +39,8 @@ var production = {
   aws: {
     accessKeyId: 'accessKeyId',
     secretAccessKey: 'secretAccessKey',
-    topicArn: 'topicArn'
+    topicArn: 'topicArn',
+    zhouseEmailAddress: 'zhouse@zhouse.com'
   }
 };
 

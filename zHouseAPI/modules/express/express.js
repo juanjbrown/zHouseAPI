@@ -1,4 +1,4 @@
-module.exports = function(schedules, scenes, sequelize, zwave) {
+module.exports = function(aws, schedules, scenes, sequelize, zwave) {
   var config = require('../../config.js')[process.env.NODE_ENV];
   var uuid = require('node-uuid');
   var crypto = require('crypto');
@@ -979,6 +979,10 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
         id: req.params.id,
       }
     }).then(function(destroyedRows) {
+      //TODO: make sure i need to have [0] here
+      if(destroyedRows[0] === 1) {
+        schedules.deleteJob(req.params.id);
+      }
       res.status(200).json({
         status: 'success',
         data: {
@@ -1058,6 +1062,16 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
         return;
       }
       
+      if(typeof req.body.password !== 'undefined') {
+        res.status(400).json({
+          status: 'error',
+          data: {
+            mesage: 'not allowed to set password'
+          }
+        });
+        return;
+      }
+      
       if(typeof req.body.apikey !== 'undefined') {
         res.status(400).json({
           status: 'error',
@@ -1079,13 +1093,21 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
       }
       
       if(user.role === 0) {
+        req.body.forgotpaswordkey = uuid.v4();
         sequelize.models.users.create(req.body).then(function(user) {
-          res.status(200).json({
-            status: 'success',
-            data: {
-              user: user
-            }
-          });
+          var emailParams = {
+            toAddress: user.email,
+            subject: 'zHouse Activate Account',
+            message: user.email+', please visit: '+config.frontend.url+'/activate-account/'+user.forgotpasswordkey+'/?email='+user.email+' to activate your account.'
+          }
+          aws.sendEmail(emailParams, function() {
+            res.status(200).json({
+              status: 'success',
+              data: {
+                message: 'user created. a registration email will be sent to the email provided.'
+              }
+            });
+          });          
         }, function(error) {
           res.status(400).json({
             status: 'error',
@@ -1323,9 +1345,10 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
   });
   
   router.get('/users/:email/forgot-password', function(req, res) {
+    var key = uuid.v4();
     sequelize.models.users.update(
       {
-        forgotpasswordkey: uuid.v4()
+        forgotpasswordkey: key
       },
       {
         where: {
@@ -1333,12 +1356,18 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
         }
       }
     ).then(function() {
-      //TODO: send email
-      res.status(200).json({
-        status: 'success',
-        data: {
-          message: 'check your email for instructions on how to change your password'
-        }
+      var emailParams = {
+        toAddress: req.params.email,
+        subject: 'zHouse Forgot Password',
+        message: req.params.email+', please visit: '+config.frontend.url+'/forgot-password/'+key+'/?email='+req.params.email+' to create a new password.'
+      }
+      aws.sendEmail(emailParams, function() {
+        res.status(200).json({
+          status: 'success',
+          data: {
+            message: 'check your email for instructions on how to change your password'
+          }
+        });
       });
     }, function() {
       res.status(200).json({
@@ -1347,8 +1376,8 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
           message: 'check your email for instructions on how to change your password'
         }
       });
-  });
     });
+  });
   
   router.post('/users/:email/forgot-password', function(req, res) {
     if(req.body.forgotpasswordkey === null) {
@@ -1370,6 +1399,54 @@ module.exports = function(schedules, scenes, sequelize, zwave) {
         where: {
           email: req.params.email,
           forgotpasswordkey: req.body.forgotpasswordkey
+        }
+      }
+    ).then(function(affectedArray) {
+      if(affectedArray[0] === 1) {
+        res.status(200).json({
+          status: 'success',
+          data: {
+            message: 'your password has been updated'
+          }
+        });
+      } else {
+        res.status(400).json({
+          status: 'error',
+          data: {
+            message: 'there was an error updating your password'
+          }
+        });
+      }
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: {
+          message: 'there was an error updating your password'
+        }
+      });
+    });
+  });
+  
+  router.post('/users/:email/register', function(req, res) {
+    if(req.body.registerkey === null) {
+      res.status(400).json({
+        status: 'error',
+        data: {
+          message: 'there was an error updating your password'
+        }
+      });
+      return;
+    }
+    
+    sequelize.models.users.update(
+      {
+        password: getsha256(req.body.password),
+        forgotpasswordkey: null
+      },
+      {
+        where: {
+          email: req.params.email,
+          forgotpasswordkey: req.body.registerkey
         }
       }
     ).then(function(affectedArray) {
