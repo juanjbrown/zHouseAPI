@@ -1,4 +1,4 @@
-module.exports = function(aws, schedules, scenes, sequelize, zwave) {
+module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
   var config = require('../../config.js')[process.env.NODE_ENV];
   var uuid = require('node-uuid');
   var crypto = require('crypto');
@@ -105,7 +105,10 @@ module.exports = function(aws, schedules, scenes, sequelize, zwave) {
         }
       }
     ).then(function(affectedArray) {
-      zwave.setSiren(false);
+      if(!req.body.armed) {
+        zwave.setSiren(false);
+      }
+      socket.updateAlarm(req.body.armed);
       res.status(200).json({
         status: 'success',
         data: {

@@ -11,10 +11,10 @@ var Express = require('./modules/express/express.js');
 var aws = new Aws();
 var sequelize = new Sequelize();
 var socket = new Socket(sequelize);
-var scenes = new Scenes(sequelize);
+var scenes = new Scenes(sequelize, socket);
 var schedules = new Schedules(sequelize, scenes);
 var zwave = new ZWave(socket, aws, scenes, sequelize);
-var express = new Express(aws, schedules, scenes, sequelize, zwave);
+var express = new Express(aws, socket, schedules, scenes, sequelize, zwave);
 
 sequelize.initialize(function() {
   scenes.injectZwave(zwave);

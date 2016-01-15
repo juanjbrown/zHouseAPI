@@ -617,12 +617,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452639687051,
+			"time": 1452821660677,
 			"name": "alarm",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"armed\": true\n}"
+			"rawModeData": "{\n  \"armed\": false\n}"
 		},
 		{
 			"id": "97597d0f-0015-e96e-6149-0396a938070c",
@@ -637,12 +637,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452588636849,
+			"time": 1452823620862,
 			"name": "scenes/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"name\": \"testscene\",\n  \"change_alarm\": false,\n  \"armed\": false\n}"
+			"rawModeData": "{\n  \"name\": \"Left Family Room Light On\",\n  \"change_alarm\": true,\n  \"armed\": true\n}"
 		},
 		{
 			"id": "99c4e6bc-b715-a880-995e-c8bfa643fa04",

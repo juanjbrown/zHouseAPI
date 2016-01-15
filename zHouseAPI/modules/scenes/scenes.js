@@ -1,4 +1,4 @@
-module.exports = function(sequelize) {
+module.exports = function(sequelize, socket) {
   var zwave;
   var sceneActions = [];
   var callback;
@@ -34,6 +34,7 @@ module.exports = function(sequelize) {
                 }
               }
             ).then(function(affectedArray) {
+              socket.updateAlarm(scene[0].dataValues.armed);
               runSceneActions(scene, function(status, message){
                 callback(status, {message: message});
               });

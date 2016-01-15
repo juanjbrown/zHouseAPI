@@ -26,6 +26,11 @@ module.exports = function(sequelize) {
     io.emit('updateNodes', nodes);
   }
   
+  function updateAlarm(armed) {
+    console.log('sending socket alarm update');
+    io.emit('updateAlarm', armed);
+  }
+  
   function getCookie(c_name, cookies) {
     var c_value = " " + cookies;
     var c_start = c_value.indexOf(" " + c_name + "=");
@@ -43,6 +48,7 @@ module.exports = function(sequelize) {
   }
   
   return {
-    updateNodes: updateNodes
+    updateNodes: updateNodes,
+    updateAlarm: updateAlarm
   }
 }
