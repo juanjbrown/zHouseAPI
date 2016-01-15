@@ -37,6 +37,10 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
       return next();
     }
     
+    if(req.path === '/users/admin-password-changed') {
+      return next();
+    }
+    
     if(req.method === 'OPTIONS') {
       return next();
     }
@@ -1048,6 +1052,45 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
   });
   
   //users
+  router.get('/users/admin-password-changed', function(req, res) {
+    sequelize.models.users.findOne({
+      where: {
+        username: 'admin',
+      }
+    }).then(function(user) {
+      console.log(user);
+      if(user) {
+        if(user.password_has_changed)
+          res.status(200).json({
+            status: 'success',
+            data: {
+              password_has_changed: true
+            }
+          });
+        else {
+          res.status(200).json({
+            status: 'success',
+            data: {
+              password_has_changed: false
+            }
+          });
+        }
+      } else {
+        res.status(200).json({
+          status: 'success',
+          data: {
+            password_has_changed: true
+          }
+        });
+      }
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
   router.post('/users', function(req, res) {
     sequelize.models.users.findOne({
       where: {
@@ -1146,7 +1189,7 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
       if(user.role === 0) {
         sequelize.models.users.findAll({
           attributes: {
-            exclude: ['password', 'forgotpasswordkey']
+            exclude: ['password', 'forgotpasswordkey', 'password_has_changed']
           }
         }).then(function(users) {
           res.status(200).json({
@@ -1188,7 +1231,7 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
             username: req.params.username
           },
           attributes: {
-            exclude: ['password', 'forgotpasswordkey']
+            exclude: ['password', 'forgotpasswordkey', 'password_has_changed']
           }
         }).then(function(user) {
           res.status(200).json({
@@ -1402,7 +1445,8 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
     sequelize.models.users.update(
       {
         password: getsha256(req.body.password),
-        forgotpasswordkey: null
+        forgotpasswordkey: null,
+        password_has_changed: true
       },
       {
         where: {
@@ -1450,7 +1494,8 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
     sequelize.models.users.update(
       {
         password: getsha256(req.body.password),
-        forgotpasswordkey: null
+        forgotpasswordkey: null,
+        password_has_changed: true
       },
       {
         where: {

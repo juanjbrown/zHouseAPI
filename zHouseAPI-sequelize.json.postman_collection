@@ -115,7 +115,8 @@
 				"57880221-0843-df60-3d85-0a9abb193da8",
 				"afa5a16e-a196-9edd-dd6a-4b40126afa40",
 				"8436c96d-7f35-5e30-bb9f-323beaf8d461",
-				"ca53a73a-ee95-7007-4ea5-07b8b6b37509"
+				"ca53a73a-ee95-7007-4ea5-07b8b6b37509",
+				"5e5372e4-cfeb-b895-4739-6346dfac3f37"
 			],
 			"owner": 0,
 			"collectionId": "d1450aa4-a40b-81a7-8ce3-bf35cd88b50a"
@@ -404,6 +405,25 @@
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
 			"rawModeData": ""
+		},
+		{
+			"id": "5e5372e4-cfeb-b895-4739-6346dfac3f37",
+			"headers": "Content-Type: application/json\n",
+			"url": "{{server}}/users/admin-password-changed",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1452835991157,
+			"name": "users/admin-password-changed",
+			"description": "",
+			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
+			"responses": []
 		},
 		{
 			"id": "5ebf2fe0-ec51-bdf9-f801-0ab14249744f",
