@@ -72,8 +72,17 @@ module.exports = function(socket, aws, scenes, sequelize) {
   
   zwave.on('scene event', function(nodeid, sceneid) {
     console.log('scene event');
-    scenes.runScene(sceneid, function(status, message){
-      console.log(message.message)
+    sequelize.models.nodeSceneMaps.findAll({
+      where: {
+        node_id: nodeid,
+        transmitted_scene_id: sceneid
+      }
+    }).then(function(maps) {
+      for(var i=0;i<maps.length;i++) {
+        scenes.runScene(maps[i].scene_id, function(status, message){
+          console.log(message.message);
+        });
+      }
     });
   });
   
@@ -168,7 +177,7 @@ module.exports = function(socket, aws, scenes, sequelize) {
                   as: 'scenes',
                   required: false,
                   attributes: {
-                    exclude: ['id', 'nodes_scene_id']
+                    exclude: ['id', 'scene_trigger_id']
                   }
                 }
               ]

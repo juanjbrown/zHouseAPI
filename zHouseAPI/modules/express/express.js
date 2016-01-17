@@ -317,11 +317,19 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
               as: 'scenes',
               required: false,
               attributes: {
-                exclude: ['id', 'nodes_scene_id']
+                exclude: ['id', 'scene_trigger_id']
               }
             }
           ]
-        }
+        },
+        {
+          model: sequelize.models.nodeSceneMaps,
+          as: 'scene_maps',
+          required: false,
+          attributes: {
+            exclude: ['id', 'node_id']
+          }
+        },
       ]
     }).then(function(nodes) {
       for(var i=0;i<nodes.length;i++) {
@@ -364,11 +372,19 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
               as: 'scenes',
               required: false,
               attributes: {
-                exclude: ['id', 'nodes_scene_id']
+                exclude: ['id', 'scene_trigger_id']
               }
             }
           ]
-        }
+        },
+        {
+          model: sequelize.models.nodeSceneMaps,
+          as: 'scene_maps',
+          required: false,
+          attributes: {
+            exclude: ['id', 'node_id']
+          }
+        },
       ]
     }).then(function(node) {
       node[0].dataValues.zwave_data = zwave.nodes[node[0].dataValues.node_id];
@@ -597,7 +613,7 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
   
   router.post('/nodes/scene-triggers/:id/add-scene', function(req, res) {
     sequelize.models.nodeSceneTriggerScenes.create({
-      nodes_scene_id: parseInt(req.params.id, 10),
+      scene_trigger_id: parseInt(req.params.id, 10),
       scene_id: req.body.scene_id
     }).then(function(scene){
       res.status(200).json({
@@ -617,7 +633,49 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
   router.delete('/nodes/scene-triggers/:id/delete-scene', function(req, res) {
     sequelize.models.nodesSceneTriggerScenes.destroy({
       where: {
-        nodes_scene_id: parseInt(req.params.id, 10),
+        scene_trigger_id: parseInt(req.params.id, 10),
+        scene_id: req.body.scene_id
+      }
+    }).then(function(destroyedRows) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          destroyedRows: destroyedRows
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.post('/nodes/scene-maps/:id/add-scene-map', function(req, res) {
+    sequelize.models.nodeSceneMaps.create({
+      node_id: parseInt(req.params.id, 10),
+      transmitted_scene_id: req.body.transmitted_scene_id,
+      scene_id: req.body.scene_id
+    }).then(function(sceneMap){
+      res.status(200).json({
+        status: 'success',
+        data: {
+          scene_map: sceneMap
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.delete('/nodes/scene-maps/:id/delete-scene-map', function(req, res) {
+    sequelize.models.nodeSceneMaps.destroy({
+      where: {
+        node_id: parseInt(req.params.id, 10),
+        transmitted_scene_id: req.body.transmitted_scene_id,
         scene_id: req.body.scene_id
       }
     }).then(function(destroyedRows) {

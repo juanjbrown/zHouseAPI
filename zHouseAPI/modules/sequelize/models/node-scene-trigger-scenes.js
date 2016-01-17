@@ -8,7 +8,7 @@ module.exports = function(sequelize) {
         autoIncrement: true,
         primaryKey: true
       },
-      nodes_scene_id: {
+      scene_trigger_id: {
         type: Sequelize.INTEGER
       },
       scene_id: {

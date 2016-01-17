@@ -62,6 +62,8 @@
 				"7ef89cd9-de2c-aa0e-2323-d9d354547005",
 				"ca7676e6-3287-c0b8-2cf6-cab9bddcf44d",
 				"5ebf2fe0-ec51-bdf9-f801-0ab14249744f",
+				"b4ae3b48-5aa5-2135-dbb6-3556ab669880",
+				"feaf860f-fa83-9b2b-b365-de16a2ce859d",
 				"117a0620-668f-2d21-8665-69d07c59e15a",
 				"085239aa-4556-5ed1-f6e1-b4c341b5eb81",
 				"c592e2f6-000e-1875-804a-62861cdf7ced"
@@ -844,6 +846,26 @@
 			"rawModeData": "{\n  \"node_id\": 5,\n  \"class_id\": 37,\n  \"instance\": 1,\n  \"index\": 0,\n  \"value\": \"false\"\n}"
 		},
 		{
+			"id": "b4ae3b48-5aa5-2135-dbb6-3556ab669880",
+			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
+			"url": "{{server}}/nodes/scene-maps/14/add-scene-map",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1452997248680,
+			"name": "nodes/scene-maps/:id/add-scene-map",
+			"description": "",
+			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
+			"responses": [],
+			"rawModeData": "{\n  \"transmitted_scene_id\": 6,\n  \"scene_id\": 6\n}"
+		},
+		{
 			"id": "bafad96b-e16a-135c-b78c-2b7b8359d234",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
 			"url": "{{server}}/scenes/scene-actions/1",
@@ -1062,6 +1084,26 @@
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": []
+		},
+		{
+			"id": "feaf860f-fa83-9b2b-b365-de16a2ce859d",
+			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
+			"url": "{{server}}/nodes/scene-maps/14/delete-scene-map",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "DELETE",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1452993222443,
+			"name": "nodes/scene-maps/:id/delete-scene-map",
+			"description": "",
+			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
+			"responses": [],
+			"rawModeData": "{\n  \"transmitted_scene_id\": 1,\n  \"scene_id\": 1\n}"
 		},
 		{
 			"id": "ff972e20-d811-89fe-fa95-8ffc0b3849ad",

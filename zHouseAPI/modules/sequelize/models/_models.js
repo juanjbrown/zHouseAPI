@@ -8,6 +8,9 @@ module.exports = function(sequelize) {
   var Nodes = require('./nodes.js');
   var nodes = new Nodes(sequelize).Nodes;
   
+  var NodeSceneMaps = require('./node-scene-maps.js');
+  var nodeSceneMaps = new NodeSceneMaps(sequelize).NodeSceneMaps;
+  
   var NodeAlarmTriggers = require('./node-alarm-triggers.js');
   var nodeAlarmTriggers = new NodeAlarmTriggers(sequelize).NodeAlarmTriggers;
   
@@ -32,15 +35,17 @@ module.exports = function(sequelize) {
   var Users = require('./users.js');
   var users = new Users(sequelize).Users;
   
+  nodes.hasMany(nodeSceneMaps, {as: 'scene_maps', foreignKey: 'node_id', onDelete: 'CASCADE'});
   nodes.hasMany(nodeAlarmTriggers, {as: 'alarm_triggers', foreignKey: 'node_id', onDelete: 'CASCADE'});  
   nodes.hasMany(nodeSceneTriggers, {as: 'scene_triggers', foreignKey: 'node_id', onDelete: 'CASCADE'});
   nodes.hasMany(sceneActions, {as: 'nodes', foreignKey: 'node_id', onDelete: 'CASCADE'});
   
-  nodeSceneTriggers.hasMany(nodeSceneTriggerScenes, {as: 'scenes', foreignKey: 'nodes_scene_id', onDelete: 'CASCADE'});
+  nodeSceneTriggers.hasMany(nodeSceneTriggerScenes, {as: 'scenes', foreignKey: 'scene_trigger_id', onDelete: 'CASCADE'});
   nodeSceneTriggers.belongsToMany(scenes, {through: nodeSceneTriggerScenes, foreignKey: 'scene_id'})
-  scenes.belongsToMany(nodeSceneTriggers, {through: nodeSceneTriggerScenes, foreignKey: 'nodes_scene_id'});
+  scenes.belongsToMany(nodeSceneTriggers, {through: nodeSceneTriggerScenes, foreignKey: 'scene_trigger_id'});
   
   scenes.hasMany(sceneActions, {as: 'actions', foreignKey: 'scene_id', onDelete: 'CASCADE'});
+  scenes.hasMany(nodeSceneMaps, {as: 'scene_maps', foreignKey: 'scene_id', onDelete: 'CASCADE'});
   
   schedules.hasMany(scheduleScenes, {as: 'scenes', foreignKey: 'schedule_id', onDelete: 'CASCADE'});
   schedules.belongsToMany(scenes, {through: scheduleScenes, foreignKey: 'scene_id'})
@@ -50,6 +55,7 @@ module.exports = function(sequelize) {
     alarm: alarm,
     cameras: cameras,
     nodes: nodes,
+    nodeSceneMaps: nodeSceneMaps,
     nodeAlarmTriggers: nodeAlarmTriggers,
     nodeSceneTriggers: nodeSceneTriggers,
     nodeSceneTriggerScenes: nodeSceneTriggerScenes,
