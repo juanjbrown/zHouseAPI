@@ -64,9 +64,15 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
   
   //proxy
   router.post('/proxy', function(req, res) {
-    http.request(req.body.url, function(){
+    var req = http.request(req.body.url, function(){
       res.status(200).json({status:'success'});
-    }).end();
+    })
+    
+    req.on('error', function(e) {
+      res.status(200).json({status:'success'});
+    });
+    
+    req.end();
   });
   
   //alarm
