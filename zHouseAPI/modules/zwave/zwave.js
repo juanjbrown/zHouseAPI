@@ -141,9 +141,40 @@ module.exports = function(socket, aws, scenes, sequelize) {
   }
 
   function controllerReset(callback) {
+    //TODO: need to delete all node related tables and delete zwconfig.xml
     try {
       zwave.hardReset();
-      callback(200, {message: 'performing hard reset on the controller'});
+      callback(200, {message: 'controller reset'});
+    }
+    catch (error) {
+      callback(400, {message: String(error)});
+    }
+  }
+  
+  function hasNodeFailed(nodeid, callback) {
+    try {
+      var nodeFailed = zwave.hasNodeFailed(nodeid);
+      callback(200, {message: nodeFailed});
+    }
+    catch (error) {
+      callback(400, {message: String(error)});
+    }
+  }
+  
+  function removeFailedNode(nodeid, callback) {
+    try {
+      zwave.removeFailedNode(nodeid);
+      callback(200, {message: 'failed node removed'});
+    }
+    catch (error) {
+      callback(400, {message: String(error)});
+    }
+  }
+  
+  function replaceFailedNode(nodeid, callback) {
+    try {
+      zwave.replaceFailedNode(nodeid);
+      callback(200, {message: 'failed node replaced'});
     }
     catch (error) {
       callback(400, {message: String(error)});
@@ -247,6 +278,9 @@ module.exports = function(socket, aws, scenes, sequelize) {
     setValue: setValue,
     setConfigParam: setConfigParam,
     controllerReset: controllerReset,
-    setSiren: setSiren
+    setSiren: setSiren,
+    removeFailedNode: removeFailedNode,
+    hasNodeFailed: hasNodeFailed,
+    replaceFailedNode: replaceFailedNode
   }
 }

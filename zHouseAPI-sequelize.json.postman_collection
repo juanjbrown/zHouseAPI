@@ -66,7 +66,10 @@
 				"feaf860f-fa83-9b2b-b365-de16a2ce859d",
 				"117a0620-668f-2d21-8665-69d07c59e15a",
 				"085239aa-4556-5ed1-f6e1-b4c341b5eb81",
-				"c592e2f6-000e-1875-804a-62861cdf7ced"
+				"c592e2f6-000e-1875-804a-62861cdf7ced",
+				"2e068e08-4419-3fd1-a48a-80da26f07e93",
+				"a7117a35-2ebc-9e67-471d-a80a03dcfec3",
+				"05a2e4e4-b384-79b0-9b03-8ec41add203d"
 			],
 			"owner": 0,
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698"
@@ -150,6 +153,25 @@
 			"rawModeData": "{\n  \"name\": \"Family Room Camera\",\n  \"url\": \"rtmp://127.0.0.1:1935/familyroom/stream?camerakey=familyroom&databasename=Family%20Room%20Camera\",\n  \"camera_key\": \"familyroom\",\n  \"up_url\": \"http://192.168.1.7:82/web/cgi-bin/hi3510/ytup.cgi\",\n  \"down_url\": \"http://192.168.1.7:82/web/cgi-bin/hi3510/ytdown.cgi\",\n  \"left_url\": \"http://192.168.1.7:82/web/cgi-bin/hi3510/ytleft.cgi\",\n  \"right_url\": \"http://192.168.1.7:82/web/cgi-bin/hi3510/ytright.cgi\",\n  \"record_on_alarm\": true\n}"
 		},
 		{
+			"id": "05a2e4e4-b384-79b0-9b03-8ec41add203d",
+			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
+			"url": "{{server}}/nodes/7/replace-failed",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1453066462447,
+			"name": "nodes/:id/replace-failed",
+			"description": "",
+			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
+			"responses": []
+		},
+		{
 			"id": "06fcf787-47ed-f9ef-d27b-579c86f0b33a",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
 			"url": "{{server}}/schedules/1",
@@ -171,7 +193,7 @@
 		{
 			"id": "085239aa-4556-5ed1-f6e1-b4c341b5eb81",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/nodes/14/config",
+			"url": "{{server}}/nodes/2/config",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "PUT",
@@ -181,13 +203,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452231833687,
+			"time": 1453058901141,
 			"name": "nodes/:id/config",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n    \"paramid\": 250,\n    \"paramvalue\": \"1\"\n}",
-			"folder": "70639567-7b2d-6470-ea03-7aeb535bd4eb"
+			"rawModeData": "{\n    \"paramid\": 250,\n    \"paramvalue\": \"1\"\n}"
 		},
 		{
 			"id": "0b040058-38d8-7ce8-2b53-7207f4ed2b34",
@@ -292,7 +313,7 @@
 		{
 			"id": "20d3e673-8071-55f4-ca2e-8b69d4bd3d90",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/nodes/5",
+			"url": "{{server}}/nodes/8",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "GET",
@@ -302,7 +323,7 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452582659546,
+			"time": 1453063942841,
 			"name": "nodes/:node_id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
@@ -327,6 +348,25 @@
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
 			"rawModeData": "{\n  \"name\": \"testschedule\",\n  \"cron\": \"*/45 * * * * *\"\n}"
+		},
+		{
+			"id": "2e068e08-4419-3fd1-a48a-80da26f07e93",
+			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
+			"url": "{{server}}/nodes/7/has-failed",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1453066440709,
+			"name": "nodes/:id/has-failed",
+			"description": "",
+			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
+			"responses": []
 		},
 		{
 			"id": "3af00bac-1c1f-9288-2e2c-073876c4a234",
@@ -370,8 +410,8 @@
 		},
 		{
 			"id": "4cef8449-e288-aad4-9d6a-ce8bed084242",
-			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: WARNING WILL ERASE NODE DATA\n",
-			"url": "{{server}}/controller/reset",
+			"headers": "Content-Type: application/json\nusername: DO NOT DO\napikey: {{apikey}}\n",
+			"url": "{{server}}/controler/reset",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "GET",
@@ -381,12 +421,11 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1451600326148,
+			"time": 1453058913398,
 			"name": "controller/reset - unpairs all nodes",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
-			"responses": [],
-			"folder": "09a6b30c-39cf-a234-fa3f-edb1cce63038"
+			"responses": []
 		},
 		{
 			"id": "57880221-0843-df60-3d85-0a9abb193da8",
@@ -725,6 +764,25 @@
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
 			"rawModeData": ""
+		},
+		{
+			"id": "a7117a35-2ebc-9e67-471d-a80a03dcfec3",
+			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
+			"url": "{{server}}/nodes/7/remove-failed",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1453063631963,
+			"name": "nodes/:id/remove-failed",
+			"description": "",
+			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
+			"responses": []
 		},
 		{
 			"id": "a8ff70c8-546e-7a4b-2574-f17dfc035db9",

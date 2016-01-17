@@ -340,8 +340,10 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
     }).then(function(nodes) {
       for(var i=0;i<nodes.length;i++) {
         nodes[i].dataValues.zwave_data = zwave.nodes[nodes[i].dataValues.node_id];
-        delete nodes[i].dataValues.zwave_data.name;
-        delete nodes[i].dataValues.zwave_data.loc;
+        if (typeof nodes[i].dataValues.zwave_data !== 'undefined') {
+          delete nodes[i].dataValues.zwave_data.name;
+          delete nodes[i].dataValues.zwave_data.loc;
+        }
       }
       res.status(200).json({
         status: 'success',
@@ -393,15 +395,24 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
         },
       ]
     }).then(function(node) {
-      node[0].dataValues.zwave_data = zwave.nodes[node[0].dataValues.node_id];
-      delete node[0].dataValues.zwave_data.name;
-      delete node[0].dataValues.zwave_data.loc;
-      res.status(200).json({
-        status: 'success',
-        data: {
-          node: node
-        }
-      });
+      if(node.length === 0) {
+        res.status(400).json({
+          status: 'error',
+          data: {
+            message: 'node id does not exist'
+          }
+        });
+      } else {
+        node[0].dataValues.zwave_data = zwave.nodes[node[0].dataValues.node_id];
+        delete node[0].dataValues.zwave_data.name;
+        delete node[0].dataValues.zwave_data.loc;
+        res.status(200).json({
+          status: 'success',
+          data: {
+            node: node
+          }
+        });
+      }
     }, function(error) {
       res.status(400).json({
         status: 'error',
@@ -719,6 +730,34 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
   
   router.put('/nodes/:nodeid/polling', function(req, res) {
     zwave.changePolling(req.params.nodeid, req.body, function(status, message) {
+      res.status(status).json({
+        status: status === 200 ? 'success' : 'error',
+        data:  message
+      });
+    });
+  });
+  
+  router.get('/nodes/:nodeid/remove-failed', function(req, res) {
+    //TODO: remove from nodes table in database
+    zwave.removeFailedNode(req.params.nodeid, function(status, message) {
+      res.status(status).json({
+        status: status === 200 ? 'success' : 'error',
+        data:  message
+      });
+    });
+  });
+  
+  router.get('/nodes/:nodeid/has-failed', function(req, res) {
+    zwave.hasNodeFailed(req.params.nodeid, function(status, message) {
+      res.status(status).json({
+        status: status === 200 ? 'success' : 'error',
+        data:  message
+      });
+    });
+  });
+  
+  router.get('/nodes/:nodeid/replace-failed', function(req, res) {
+    zwave.replaceFailedNode(req.params.nodeid, function(status, message) {
       res.status(status).json({
         status: status === 200 ? 'success' : 'error',
         data:  message
