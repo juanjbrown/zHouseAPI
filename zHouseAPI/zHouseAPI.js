@@ -58,6 +58,5 @@ zwave.zwave.on('scan complete', function () {
 });
 
 /*TODO:
-- send real sms
-- siren
+- ?
 */

@@ -249,6 +249,7 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
   
   //controller
   router.get('/controller/reset', function(req, res) {
+    //TODO: need to delete all nodes
     zwave.controllerReset(function(status, message) {
       res.status(status).json({
         status: status === 200 ? 'success' : 'error',

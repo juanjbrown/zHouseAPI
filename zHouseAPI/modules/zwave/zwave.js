@@ -141,7 +141,6 @@ module.exports = function(socket, aws, scenes, sequelize) {
   }
 
   function controllerReset(callback) {
-    //TODO: need to delete all node related tables and delete zwconfig.xml
     try {
       zwave.hardReset();
       callback(200, {message: 'controller reset'});
@@ -220,8 +219,7 @@ module.exports = function(socket, aws, scenes, sequelize) {
               if((node[0].dataValues.alarm_triggers[i].value == 'true') === value.value) {
                 if(node[0].dataValues.alarm_triggers[i].sms) {
                   console.log('sending alarm sms for '+node[0].dataValues.name);
-                  //TODO: send real sms
-                  //aws.sendSMS(node[0].dataValues.name+' alarm!');
+                  aws.sendSMS(node[0].dataValues.name+' alarm!');
                 }
 
                 if(node[0].dataValues.alarm_triggers[i].siren) {
