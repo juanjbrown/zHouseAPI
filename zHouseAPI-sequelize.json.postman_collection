@@ -313,7 +313,7 @@
 		{
 			"id": "20d3e673-8071-55f4-ca2e-8b69d4bd3d90",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/nodes/9",
+			"url": "{{server}}/nodes/10",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "GET",
@@ -323,7 +323,7 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1453071876809,
+			"time": 1453086344712,
 			"name": "nodes/:node_id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",

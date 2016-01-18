@@ -249,8 +249,8 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
   
   //controller
   router.get('/controller/reset', function(req, res) {
-    //TODO: need to delete all nodes
     zwave.controllerReset(function(status, message) {
+      sequelize.models.nodes.destroy({});
       res.status(status).json({
         status: status === 200 ? 'success' : 'error',
         data:  message
@@ -739,8 +739,14 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
   });
   
   router.get('/nodes/:nodeid/remove-failed', function(req, res) {
-    //TODO: remove from nodes table in database
     zwave.removeFailedNode(req.params.nodeid, function(status, message) {
+      if(status === 200) {
+        sequelize.models.nodes.destroy({
+          where: {
+            node_id: req.params.node_id,
+          }
+        });
+      }
       res.status(status).json({
         status: status === 200 ? 'success' : 'error',
         data:  message
