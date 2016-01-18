@@ -116,7 +116,7 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
       }
     ).then(function(affectedArray) {
       if(!req.body.armed) {
-        zwave.setSiren(false);
+        zwave.cancelSiren(false);
       }
       socket.updateAlarm(req.body.armed);
       res.status(200).json({

@@ -86,8 +86,8 @@ module.exports = function(socket, aws, scenes, sequelize) {
     });
   });
   
-  zwave.on('node event', function(nodeid, sceneid) {
-    console.log('node event '+nodeid+' '+sceneid);
+  zwave.on('node event', function(nodeid, event, valueid) {
+    console.log('node event '+nodeid+' '+event+' '+JSON.stringify(valueid));
   });
   
   function connect() {
@@ -132,7 +132,7 @@ module.exports = function(socket, aws, scenes, sequelize) {
 
   function setValue(nodeid, data, callback) {
     try {
-      zwave.setValue({nodeid: nodeid, class_id: data.class_id, instance: data.instance, inded: data.index}, data.value);
+      zwave.setValue({nodeid: nodeid, class_id: data.class_id, instance: data.instance, index: data.index}, data.value);
       callback(200, {message: 'node successfully updated'});
     }
     catch (error) {
@@ -226,7 +226,7 @@ module.exports = function(socket, aws, scenes, sequelize) {
 
                 if(node[0].dataValues.alarm_triggers[i].siren) {
                   console.log('sounding siren for '+node[0].dataValues.name);
-                  setSiren(true);
+                  soundSiren();
                 }
                 
                 if(node[0].dataValues.alarm_triggers[i].record_cameras) {
@@ -264,8 +264,42 @@ module.exports = function(socket, aws, scenes, sequelize) {
     });
   }
   
-  function setSiren(value) {
-    //TODO: set siren
+  function soundSiren() {
+    sequelize.models.nodes.findAll({
+      where: {
+        type: 'siren'
+      }
+    }).then(function(sirens) {
+      var data = {
+        class_id: 37,
+        instance: 1,
+        index: 0,
+        value: true
+      }
+      for(var i=0;i<sirens.length;i++) {
+        setValue(sirens[i].dataValues.node_id, data, function() {
+          setTimeout(cancelSiren, 60000);
+        });
+      }
+    });
+  }
+  
+  function cancelSiren() {
+    sequelize.models.nodes.findAll({
+      where: {
+        type: 'siren'
+      }
+    }).then(function(sirens) {
+      var data = {
+        class_id: 37,
+        instance: 1,
+        index: 0,
+        value: false
+      }
+      for(var i=0;i<sirens.length;i++) {
+        setValue(sirens[i].dataValues.node_id, data, function() {});
+      }
+    });
   }
   
   return {
@@ -278,7 +312,8 @@ module.exports = function(socket, aws, scenes, sequelize) {
     setValue: setValue,
     setConfigParam: setConfigParam,
     controllerReset: controllerReset,
-    setSiren: setSiren,
+    soundSiren: soundSiren,
+    cancelSiren: cancelSiren,
     removeFailedNode: removeFailedNode,
     hasNodeFailed: hasNodeFailed,
     replaceFailedNode: replaceFailedNode
