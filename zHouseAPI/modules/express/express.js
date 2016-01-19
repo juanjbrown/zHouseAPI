@@ -1168,7 +1168,6 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
         username: 'admin',
       }
     }).then(function(user) {
-      console.log(user);
       if(user) {
         if(user.password_has_changed)
           res.status(200).json({

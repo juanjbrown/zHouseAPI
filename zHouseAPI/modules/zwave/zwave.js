@@ -8,6 +8,7 @@ module.exports = function(socket, aws, scenes, sequelize) {
   var zwavedriverpaths = {'darwin': '/dev/cu.usbmodem1411', 'linux': '/dev/ttyUSB0', 'windows': '\\\\.\\COM3'};
   var scanComplete = false;
   var camerasRecording = false;
+  var sirenOn = false;
 
   zwave.on('driver failed', function () {
     zwave.disconnect();
@@ -276,6 +277,7 @@ module.exports = function(socket, aws, scenes, sequelize) {
       }
       for(var i=0;i<sirens.length;i++) {
         setValue(sirens[i].dataValues.node_id, data, function() {
+          sirenOn = true;
           setTimeout(cancelSiren, 60000);
         });
       }
@@ -283,21 +285,24 @@ module.exports = function(socket, aws, scenes, sequelize) {
   }
   
   function cancelSiren() {
-    sequelize.models.nodes.findAll({
-      where: {
-        type: 'siren'
-      }
-    }).then(function(sirens) {
-      var data = {
-        class_id: 37,
-        instance: 1,
-        index: 0,
-        value: false
-      }
-      for(var i=0;i<sirens.length;i++) {
-        setValue(sirens[i].dataValues.node_id, data, function() {});
-      }
-    });
+    if(sirenOn) {
+      sirenOn = false;
+      sequelize.models.nodes.findAll({
+        where: {
+          type: 'siren'
+        }
+      }).then(function(sirens) {
+        var data = {
+          class_id: 37,
+          instance: 1,
+          index: 0,
+          value: false
+        }
+        for(var i=0;i<sirens.length;i++) {
+          setValue(sirens[i].dataValues.node_id, data, function() {});
+        }
+      });
+    }
   }
   
   return {

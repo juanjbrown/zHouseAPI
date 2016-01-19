@@ -5,7 +5,6 @@ module.exports = function(sequelize) {
   io.on('connection', function(client) {
     var username = getCookie('username', client.handshake.headers.cookie);
     var apikey = getCookie('apikey', client.handshake.headers.cookie);
-    
     sequelize.models.users.findOne({
       where: {
         username: username,
@@ -13,7 +12,7 @@ module.exports = function(sequelize) {
       }
     }).then(function(user) {
       if(user) {
-        //authenticated
+        console.log('user connected to socket');
       } else {
         console.log('disconnecting unauthorized user');
         client.disconnect();

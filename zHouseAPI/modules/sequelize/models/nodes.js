@@ -12,6 +12,9 @@ module.exports = function(sequelize) {
       },
       type: {
         type: Sequelize.STRING
+      },
+      room: {
+        type: Sequelize.STRING
       }
     },
     {
