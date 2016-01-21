@@ -20,6 +20,9 @@ module.exports = function(sequelize) {
   var NodeSceneTriggerScenes = require('./node-scene-trigger-scenes.js');
   var nodeSceneTriggerScenes = new NodeSceneTriggerScenes(sequelize).NodeSceneTriggerScenes;
   
+  var NodeCategories = require('./node-categories.js');
+  var nodeCategories = new NodeCategories(sequelize).NodeCategories;
+  
   var Scenes = require('./scenes.js');
   var scenes = new Scenes(sequelize).Scenes;
   
@@ -39,6 +42,7 @@ module.exports = function(sequelize) {
   nodes.hasMany(nodeAlarmTriggers, {as: 'alarm_triggers', foreignKey: 'node_id', onDelete: 'CASCADE'});  
   nodes.hasMany(nodeSceneTriggers, {as: 'scene_triggers', foreignKey: 'node_id', onDelete: 'CASCADE'});
   nodes.hasMany(sceneActions, {as: 'nodes', foreignKey: 'node_id', onDelete: 'CASCADE'});
+  nodes.hasMany(nodeCategories, {as: 'categories', foreignKey: 'node_id', onDelete: 'CASCADE'});
   
   nodeSceneTriggers.hasMany(nodeSceneTriggerScenes, {as: 'scenes', foreignKey: 'scene_trigger_id', onDelete: 'CASCADE'});
   nodeSceneTriggers.belongsToMany(scenes, {through: nodeSceneTriggerScenes, foreignKey: 'scene_id'})
@@ -59,6 +63,7 @@ module.exports = function(sequelize) {
     nodeAlarmTriggers: nodeAlarmTriggers,
     nodeSceneTriggers: nodeSceneTriggers,
     nodeSceneTriggerScenes: nodeSceneTriggerScenes,
+    nodeCategories: nodeCategories,
     scenes: scenes,
     sceneActions: sceneActions,
     schedules: schedules,

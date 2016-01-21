@@ -337,6 +337,14 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
             exclude: ['id', 'node_id']
           }
         },
+        {
+          model: sequelize.models.nodeCategories,
+          as: 'categories',
+          required: false,
+          attributes: {
+            exclude: ['id', 'node_id']
+          }
+        }
       ]
     }).then(function(nodes) {
       for(var i=0;i<nodes.length;i++) {
@@ -394,6 +402,14 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
             exclude: ['id', 'node_id']
           }
         },
+        {
+          model: sequelize.models.nodeCategories,
+          as: 'categories',
+          required: false,
+          attributes: {
+            exclude: ['id', 'node_id']
+          }
+        }
       ]
     }).then(function(node) {
       if(node.length === 0) {

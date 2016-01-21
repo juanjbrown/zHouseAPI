@@ -10,11 +10,16 @@ module.exports = function(sequelize) {
       name: {
         type: Sequelize.STRING
       },
-      type: {
-        type: Sequelize.STRING
+      floor: {
+        type: Sequelize.INTEGER
       },
       room: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        default: null
+      },
+      type: {
+        type: Sequelize.STRING,
+        default: null
       }
     },
     {
