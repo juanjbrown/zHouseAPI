@@ -15,10 +15,6 @@ module.exports = function(sequelize) {
         type: Sequelize.STRING,
         allowNull: false
       },
-      camera_key: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
       up_url: {
         type: Sequelize.STRING
       },
