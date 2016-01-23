@@ -31,4 +31,4 @@ RUN npm install
 COPY scripts/docker-internal/init.sh /
 COPY scripts/docker-internal/record-camera.sh /
 
-CMD ./init.sh && node /zHouseAPI/zHouseAPI.js
+CMD ./init.sh && ./zHouseAPI/zHouseAPI.sh
