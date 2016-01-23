@@ -15,6 +15,14 @@
 			"owner": 0
 		},
 		{
+			"id": "f5075848-44b9-acf9-e7ea-a3be9a9f25c2",
+			"name": "auth",
+			"description": "",
+			"order": [
+				"6e9ff9b0-8b46-0bf3-a051-80ea6970bffb"
+			]
+		},
+		{
 			"id": "f29fce1c-7ac7-6436-f4fb-016b216097a4",
 			"name": "cameras",
 			"description": "",
@@ -501,6 +509,25 @@
 			"helperAttributes": {},
 			"time": 1452579535197,
 			"name": "cameras/:id",
+			"description": "",
+			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
+			"responses": []
+		},
+		{
+			"id": "6e9ff9b0-8b46-0bf3-a051-80ea6970bffb",
+			"headers": "Content-Type: application/json\n",
+			"url": "{{server}}/auth?username={{username}}&apikey={{apikey}}",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1453509315958,
+			"name": "auth",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": []
@@ -1117,7 +1144,7 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452497342550,
+			"time": 1453507563009,
 			"name": "login",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
