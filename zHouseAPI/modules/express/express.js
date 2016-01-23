@@ -25,10 +25,6 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
       return next();
     }
     
-    if(req.path === '/auth') {
-      return next();
-    }
-    
     if(req.path === '/users/activate') {
       return next();
     }
@@ -67,46 +63,11 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
   }
   
   router.get('/auth', function(req, res) {
-    console.log(req);
-    if((typeof req.query.username === 'undefined') || (typeof req.query.apikey === 'undefined')){
-      res.status(400).json({
-        status: 'error',
-        data: {
-          mesage: 'please provide all credentials'
-        }
-      });
-      return;
-    }
-    
-    sequelize.models.users.findOne({
-      where: {
-        username: req.query.username,
-        apikey: req.query.apikey
-      },
-      attributes: {
-        exclude: ['password', 'forgotpasswordkey']
+    res.status(200).json({
+      status: 'success',
+      data: {
+        authed: true
       }
-    }).then(function(user) {
-      if(user) {
-        res.status(200).json({
-          status: 'success',
-          data: {
-            user: user
-          }
-        });
-      } else {
-        res.status(400).json({
-          status: 'error',
-          data: {
-            message: 'incorrect credentials'
-          }
-        });
-      }
-    }, function(error) {
-      res.status(400).json({
-        status: 'error',
-        data: error
-      });
     });
   });
   
@@ -1702,7 +1663,7 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
     });
   });
   
-  //setting up app  
+  //setting up app
   app.use(authenticate);
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
@@ -1730,6 +1691,7 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
   }
   
   return {
-    initialize: initialize
+    initialize: initialize,
+    getsha256: getsha256
   }
 }

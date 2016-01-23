@@ -1,3 +1,3 @@
 #!/bin/bash
 
-export NODE_ENV=development && node zHouseAPI.js
+export NODE_ENV=production && node zHouseAPI.js

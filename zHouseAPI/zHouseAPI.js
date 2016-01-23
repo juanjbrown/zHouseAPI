@@ -36,7 +36,7 @@ sequelize.initialize(function() {
         },
         defaults: {
           username: 'admin',
-          password: '8bf53de6670377b209c010e8339515b52f31d8b262b0bb6630cc5be67496f3a9',
+          password: express.getsha256('password'),
           email: 'zhouseapi@zhouseapi.com',
           role: 0,
           apikey: '73e40425-33f6-400d-82c4-a39c4f65ae98'
