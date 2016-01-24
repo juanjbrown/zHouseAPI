@@ -301,7 +301,7 @@
 		{
 			"id": "117a0620-668f-2d21-8665-69d07c59e15a",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/nodes/5/command",
+			"url": "{{server}}/nodes/3/command",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "PUT",
@@ -311,12 +311,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452755474138,
+			"time": 1453618025608,
 			"name": "nodes/:id/command",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n    \"class_id\": 37,\n    \"instance\": 1,\n    \"index\": 0,\n    \"value\": true\n}"
+			"rawModeData": "{\n    \"class_id\": 37,\n    \"instance\": 1,\n    \"index\": 0,\n    \"value\": false\n}"
 		},
 		{
 			"id": "20d3e673-8071-55f4-ca2e-8b69d4bd3d90",
@@ -409,12 +409,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452493426349,
+			"time": 1453623125231,
 			"name": "users/:username",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"username\": \"paul@pauljdehmer.com\",\n  \"email\": \"paul@pauljdehmer.com\",\n  \"password\": \"asdf\",\n  \"role\": 0\n}"
+			"rawModeData": "{\n  \"username\": \"{{username}}\",\n  \"email\": \"{{email}}\",\n  \"password\": \"password\",\n  \"role\": 0\n}"
 		},
 		{
 			"id": "4cef8449-e288-aad4-9d6a-ce8bed084242",
@@ -1144,7 +1144,7 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1453507563009,
+			"time": 1453623420672,
 			"name": "login",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",

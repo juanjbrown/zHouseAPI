@@ -1191,24 +1191,16 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
     sequelize.models.users.findOne({
       where: {
         username: 'admin',
+        apikey: '73e40425-33f6-400d-82c4-a39c4f65ae98'
       }
     }).then(function(user) {
       if(user) {
-        if(user.password_has_changed)
-          res.status(200).json({
-            status: 'success',
-            data: {
-              password_has_changed: true
-            }
-          });
-        else {
-          res.status(200).json({
-            status: 'success',
-            data: {
-              password_has_changed: false
-            }
-          });
-        }
+        res.status(200).json({
+          status: 'success',
+          data: {
+            password_has_changed: false
+          }
+        });
       } else {
         res.status(200).json({
           status: 'success',
@@ -1323,7 +1315,7 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
       if(user.role === 0) {
         sequelize.models.users.findAll({
           attributes: {
-            exclude: ['password', 'forgotpasswordkey', 'password_has_changed']
+            exclude: ['password', 'forgotpasswordkey']
           }
         }).then(function(users) {
           res.status(200).json({
@@ -1365,7 +1357,7 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
             username: req.params.username
           },
           attributes: {
-            exclude: ['password', 'forgotpasswordkey', 'password_has_changed']
+            exclude: ['password', 'forgotpasswordkey']
           }
         }).then(function(user) {
           res.status(200).json({
@@ -1405,6 +1397,26 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
       return;
     }
     
+    if(typeof req.body.apikey !== 'undefined') {
+      res.status(400).json({
+        status: 'error',
+        data: {
+          mesage: 'not allowed to change apikey'
+        }
+      });
+      return;
+    }
+          
+    if(typeof req.body.forgotpasswordkey !== 'undefined') {
+      res.status(400).json({
+        status: 'error',
+        data: {
+          mesage: 'not allowed to change forgotpasswordkey'
+        }
+      });
+      return;
+    }
+    
     sequelize.models.users.findOne({
       where: {
         username: req.headers.username,
@@ -1413,26 +1425,6 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
     }).then(function(user) {
       if(typeof req.body.password !== 'undefined') {
         req.body.password = getsha256(req.body.password);
-      }
-      
-      if(typeof req.body.id !== 'undefined') {
-        res.status(400).json({
-          status: 'error',
-          data: {
-            mesage: 'not allowed to change id'
-          }
-        });
-        return;
-      }
-      
-      if(typeof req.body.apikey !== 'undefined') {
-        res.status(400).json({
-          status: 'error',
-          data: {
-            mesage: 'not allowed to change apikey'
-          }
-        });
-        return;
       }
       
       if((user.role !== 0) && (typeof req.body.role !== 'undefined')){
@@ -1445,17 +1437,10 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
         return;
       }
       
-      if(typeof req.body.forgotpasswordkey !== 'undefined') {
-        res.status(400).json({
-          status: 'error',
-          data: {
-            mesage: 'not allowed to change forgotpasswordkey'
-          }
-        });
-        return;
-      }
-      
       if((user.role === 0) || (user.username === req.headers.username)){
+        if(typeof req.body.password !== 'undefined') {
+          req.body.apikey = uuid.v4();
+        }
         sequelize.models.users.update(
           req.body,
           {
@@ -1464,12 +1449,22 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
             }
           }
         ).then(function(affectedArray) {
-          res.status(200).json({
-            status: 'success',
-            data: {
-              affectedCount: affectedArray[0]
-            }
-          });
+          if(typeof req.body.password !== 'undefined') {
+            res.status(200).json({
+              status: 'success',
+              data: {
+                affectedCount: affectedArray[0],
+                apikey: req.body.apikey
+              }
+            });
+          } else {
+            res.status(200).json({
+              status: 'success',
+              data: {
+                affectedCount: affectedArray[0]
+              }
+            });
+          }
         }, function(error) {
           res.status(400).json({
             status: 'error',
@@ -1576,11 +1571,13 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
       return;
     }
     
+    var apikey = uuid.v4();
+    
     sequelize.models.users.update(
       {
         password: getsha256(req.body.password),
         forgotpasswordkey: null,
-        password_has_changed: true
+        apikey: apikey
       },
       {
         where: {
@@ -1593,7 +1590,8 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
         res.status(200).json({
           status: 'success',
           data: {
-            message: 'your password has been updated'
+            message: 'your password has been updated',
+            apikey: apikey
           }
         });
       } else {
@@ -1628,8 +1626,7 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
     sequelize.models.users.update(
       {
         password: getsha256(req.body.password),
-        forgotpasswordkey: null,
-        password_has_changed: true
+        forgotpasswordkey: null
       },
       {
         where: {

@@ -37,11 +37,6 @@ module.exports = function(sequelize) {
       forgotpasswordkey: {
         type: Sequelize.UUID,
         unique: true
-      },
-      password_has_changed: {
-        type: Sequelize.BOOLEAN,
-        required: false,
-        defaultValue: false
       }
     },
     {
