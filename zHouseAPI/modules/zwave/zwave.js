@@ -181,6 +181,26 @@ module.exports = function(socket, aws, scenes, sequelize) {
     }
   }
   
+  function healNetworkNode(nodeid, callback) {
+    try {
+      zwave.healNetworkNode(nodeid);
+      callback(200, {message: 'node healed'});
+    }
+    catch (error) {
+      callback(400, {message: String(error)});
+    }
+  }
+  
+  function healNetwork(callback) {
+    try {
+      zwave.healNetwork();
+      callback(200, {message: 'network healed'});
+    }
+    catch (error) {
+      callback(400, {message: String(error)});
+    }
+  }
+  
   function checkAlarm(nodeid, comclass, value) {
     sequelize.models.alarm.findAll({
       attributes: {
@@ -319,6 +339,8 @@ module.exports = function(socket, aws, scenes, sequelize) {
     cancelSiren: cancelSiren,
     removeFailedNode: removeFailedNode,
     hasNodeFailed: hasNodeFailed,
-    replaceFailedNode: replaceFailedNode
+    replaceFailedNode: replaceFailedNode,
+    healNetworkNode: healNetworkNode,
+    healNetwork: healNetwork
   }
 }

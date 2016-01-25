@@ -797,6 +797,24 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
     });
   });
   
+  router.get('/nodes/:nodeid/heal-node', function(req, res) {
+    zwave.healNetworkNode(req.params.nodeid, function(status, message) {
+      res.status(status).json({
+        status: status === 200 ? 'success' : 'error',
+        data:  message
+      });
+    });
+  });
+  
+  router.get('/nodes/heal-network', function(req, res) {
+    zwave.replaceFailedNode(function(status, message) {
+      res.status(status).json({
+        status: status === 200 ? 'success' : 'error',
+        data:  message
+      });
+    });
+  });
+  
   //scenes
   router.post('/scenes', function(req, res) {  
     sequelize.models.scenes.create(req.body).then(function(scene) {

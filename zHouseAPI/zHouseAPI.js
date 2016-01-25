@@ -61,4 +61,5 @@ zwave.zwave.on('scan complete', function () {
 - alexa voice integration
 - control panel mode?
 - no logs
+- delete failed node from database on set failed node or replace failed node
 */
