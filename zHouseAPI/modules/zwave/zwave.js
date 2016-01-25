@@ -183,7 +183,7 @@ module.exports = function(socket, aws, scenes, sequelize) {
   
   function healNetworkNode(nodeid, callback) {
     try {
-      zwave.healNetworkNode(nodeid);
+      zwave.healNetworkNode(nodeid, true);
       callback(200, {message: 'node healed'});
     }
     catch (error) {
