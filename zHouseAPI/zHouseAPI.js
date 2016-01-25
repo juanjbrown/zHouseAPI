@@ -60,4 +60,5 @@ zwave.zwave.on('scan complete', function () {
 /*TODO:
 - alexa voice integration
 - control panel mode?
+- no logs
 */
