@@ -806,7 +806,8 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
     });
   });
   
-  router.get('/nodes/heal-network', function(req, res) {
+  //network
+  router.get('/network/heal-network', function(req, res) {
     zwave.replaceFailedNode(function(status, message) {
       res.status(status).json({
         status: status === 200 ? 'success' : 'error',
