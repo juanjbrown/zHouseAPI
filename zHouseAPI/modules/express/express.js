@@ -256,17 +256,6 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
     });
   });
   
-  //controller
-  router.get('/controller/reset', function(req, res) {
-    zwave.controllerReset(function(status, message) {
-      sequelize.models.nodes.destroy({});
-      res.status(status).json({
-        status: status === 200 ? 'success' : 'error',
-        data:  message
-      });
-    });
-  });
-  
   //login
   router.post('/login', bruteforce.prevent, function(req, res) {
     if((typeof req.body.username === 'undefined') || (typeof req.body.password === 'undefined')){
@@ -779,7 +768,7 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
     });
   });
   
-  router.get('/nodes/:nodeid/has-failed', function(req, res) {
+  router.get('/nodes/:nodeid/has-node-failed', function(req, res) {
     zwave.hasNodeFailed(req.params.nodeid, function(status, message) {
       res.status(status).json({
         status: status === 200 ? 'success' : 'error',

@@ -140,16 +140,6 @@ module.exports = function(socket, aws, scenes, sequelize) {
       callback(400, {message: String(error)});
     }
   }
-
-  function controllerReset(callback) {
-    try {
-      zwave.hardReset();
-      callback(200, {message: 'controller reset'});
-    }
-    catch (error) {
-      callback(400, {message: String(error)});
-    }
-  }
   
   function hasNodeFailed(nodeid, callback) {
     try {
@@ -334,7 +324,6 @@ module.exports = function(socket, aws, scenes, sequelize) {
     changePolling: changePolling,
     setValue: setValue,
     setConfigParam: setConfigParam,
-    controllerReset: controllerReset,
     soundSiren: soundSiren,
     cancelSiren: cancelSiren,
     removeFailedNode: removeFailedNode,

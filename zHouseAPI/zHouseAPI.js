@@ -1,3 +1,5 @@
+console.log = function(){};
+
 var config = require('./config.js')[process.env.NODE_ENV];
 
 var Aws = require('./modules/aws/aws.js');
@@ -61,5 +63,5 @@ zwave.zwave.on('scan complete', function () {
 - alexa voice integration
 - control panel mode?
 - no logs
-- delete failed node from database on set failed node or replace failed node
+- delete failed node from database on remove failed node and replace failed node
 */
