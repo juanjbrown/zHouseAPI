@@ -1231,11 +1231,7 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
         username: req.headers.username,
         apikey: req.headers.apikey
       }
-    }).then(function(user) {
-      if(typeof req.body.password !== 'undefined') {
-        req.body.password = getsha256(req.body.password);
-      }
-      
+    }).then(function(user) {      
       if(typeof req.body.id !== 'undefined') {
         res.status(400).json({
           status: 'error',
@@ -1277,6 +1273,7 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
       }
       
       if(user.role === 0) {
+        req.body.password = getsha256(uuid.v4());
         req.body.forgotpaswordkey = uuid.v4();
         sequelize.models.users.create(req.body).then(function(user) {
           var emailParams = {
@@ -1433,6 +1430,7 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
     }).then(function(user) {
       if(typeof req.body.password !== 'undefined') {
         req.body.password = getsha256(req.body.password);
+        req.body.apikey = uuid.v4();
       }
       
       if((user.role !== 0) && (typeof req.body.role !== 'undefined')){
@@ -1446,9 +1444,6 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
       }
       
       if((user.role === 0) || (user.username === req.headers.username)){
-        if(typeof req.body.password !== 'undefined') {
-          req.body.apikey = uuid.v4();
-        }
         sequelize.models.users.update(
           req.body,
           {

@@ -923,12 +923,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452497197250,
+			"time": 1453793278745,
 			"name": "users",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"username\": \"{{username}}\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"role\": 0\n}"
+			"rawModeData": "{\n  \"username\": \"newuser\",\n  \"email\": \"new@user.com\",\n  \"role\": 0\n}"
 		},
 		{
 			"id": "afa5a16e-a196-9edd-dd6a-4b40126afa40",

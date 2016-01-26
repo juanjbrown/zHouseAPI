@@ -64,4 +64,5 @@ zwave.zwave.on('scan complete', function () {
 - control panel mode?
 - no logs
 - delete failed node from database on remove failed node and replace failed node
+- email isnt working :(
 */
