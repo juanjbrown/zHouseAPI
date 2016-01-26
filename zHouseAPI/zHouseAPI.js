@@ -63,6 +63,7 @@ zwave.zwave.on('scan complete', function () {
 - alexa voice integration
 - control panel mode?
 - no logs
-- delete failed node from database on remove failed node and replace failed node
+- delete failed node from database on remove failed node and replace failed node remove it from the zwave.nodes object too
 - no forgot password key on user creation post
+- node has failed always reporting true
 */
