@@ -1275,6 +1275,7 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
       if(user.role === 0) {
         req.body.password = getsha256(uuid.v4());
         req.body.forgotpaswordkey = uuid.v4();
+        console.log(req.body);
         sequelize.models.users.create(req.body).then(function(user) {
           var emailParams = {
             toAddress: user.email,

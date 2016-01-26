@@ -1,4 +1,4 @@
-console.log = function(){};
+//console.log = function(){};
 
 var config = require('./config.js')[process.env.NODE_ENV];
 
@@ -64,5 +64,5 @@ zwave.zwave.on('scan complete', function () {
 - control panel mode?
 - no logs
 - delete failed node from database on remove failed node and replace failed node
-- email isnt working :(
+- registration email not sending and no forgot password key is created
 */
