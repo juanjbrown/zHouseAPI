@@ -1232,9 +1232,6 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
         scene_id: req.body.scene_id
       }
     }).then(function(destroyedRows) {
-      if(destroyedRows === 1) {
-        schedules.deleteJob(parseInt(req.params.id, 10));
-      }
       res.status(200).json({
         status: 'success',
         data: {
