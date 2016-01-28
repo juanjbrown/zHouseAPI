@@ -952,12 +952,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1453951218344,
+			"time": 1453951594498,
 			"name": "location",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"latitude\": 0,\n  \"longitude\": 0\n}"
+			"rawModeData": "{\n  \"latitude\": 39.137763,\n  \"longitude\": -84.607635\n}"
 		},
 		{
 			"id": "ae7a8e40-cf80-5022-f3b2-7887f70dd6be",
