@@ -15,16 +15,6 @@
 			"owner": 0
 		},
 		{
-			"id": "9b7bc978-e91f-93f1-c615-721e275eec2d",
-			"name": "location",
-			"description": "",
-			"order": [
-				"0bf52153-46f4-be03-d933-1a30a1f8b892",
-				"ace264ac-1f0e-8aed-99fc-72e93216237a"
-			],
-			"owner": 0
-		},
-		{
 			"id": "f5075848-44b9-acf9-e7ea-a3be9a9f25c2",
 			"name": "auth",
 			"description": "",
@@ -44,7 +34,7 @@
 				"99c4e6bc-b715-a880-995e-c8bfa643fa04"
 			],
 			"owner": 0,
-			"collectionId": "e892f992-68b7-4d4b-d509-152154cab09c"
+			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698"
 		},
 		{
 			"id": "09a6b30c-39cf-a234-fa3f-edb1cce63038",
@@ -54,6 +44,17 @@
 				"4cef8449-e288-aad4-9d6a-ce8bed084242"
 			],
 			"owner": 0
+		},
+		{
+			"id": "9b7bc978-e91f-93f1-c615-721e275eec2d",
+			"name": "location",
+			"description": "",
+			"order": [
+				"0bf52153-46f4-be03-d933-1a30a1f8b892",
+				"ace264ac-1f0e-8aed-99fc-72e93216237a"
+			],
+			"owner": 0,
+			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698"
 		},
 		{
 			"id": "406f16f6-336e-3395-f62c-dd18d409ceb1",
@@ -371,7 +372,7 @@
 		{
 			"id": "28e70332-16bd-7417-3223-3cfa9d37a868",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/schedules/1",
+			"url": "{{server}}/schedules/5",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "PUT",
@@ -381,12 +382,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452665081977,
+			"time": 1453965321441,
 			"name": "schedules/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"name\": \"testschedule\",\n  \"cron\": \"*/45 * * * * *\"\n}"
+			"rawModeData": "{\n  \"cron\": \"0 3 * * *\"\n}"
 		},
 		{
 			"id": "2e068e08-4419-3fd1-a48a-80da26f07e93",
@@ -685,7 +686,7 @@
 		{
 			"id": "8355eb0c-6b49-5008-b0f4-d6dcab369050",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/schedules/1",
+			"url": "{{server}}/schedules/5",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "DELETE",
@@ -695,7 +696,7 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452643697386,
+			"time": 1453967989460,
 			"name": "schedules/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
@@ -725,7 +726,7 @@
 		{
 			"id": "89819c38-95e4-eaf2-4938-06b3e70f6449",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/schedules/1/add-scene",
+			"url": "{{server}}/schedules/4/add-scene",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "POST",
@@ -735,7 +736,7 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452643701904,
+			"time": 1453964343474,
 			"name": "schedules/:id/add-scene",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
@@ -1213,12 +1214,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452747086316,
+			"time": 1453963966580,
 			"name": "schedules",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"name\": \"test\",\n  \"cron\": \"* * * * * *\"\n}"
+			"rawModeData": "{\n  \"name\": \"test\",\n  \"cron\": \"* * * * *\"\n}"
 		},
 		{
 			"id": "fa6ed686-1679-f903-d778-aa11f49504cf",
