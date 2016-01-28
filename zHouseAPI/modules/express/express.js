@@ -256,6 +256,61 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
     });
   });
   
+  //location
+  router.get('/location', function(req, res) {
+    sequelize.models.location.findAll({
+      attributes: {
+        exclude: ['id']
+      }
+    }).then(function(location) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          latitude: location[0].latitude,
+          longitude: location[0].longitude
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
+  router.put('/location', function(req, res) {
+    if(typeof req.body.id !== 'undefined') {
+      res.status(400).json({
+        status: 'error',
+        data: {
+          mesage: 'not allowed to change id'
+        }
+      });
+      return;
+    }
+    
+    sequelize.models.location.update(
+      req.body,
+      {
+        where: {
+          id: 1
+        }
+      }
+    ).then(function(affectedArray) {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          affectedCount: affectedArray[0]
+        }
+      });
+    }, function(error) {
+      res.status(400).json({
+        status: 'error',
+        data: error
+      });
+    });
+  });
+  
   //login
   router.post('/login', bruteforce.prevent, function(req, res) {
     if((typeof req.body.username === 'undefined') || (typeof req.body.password === 'undefined')){
@@ -1274,8 +1329,7 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
       
       if(user.role === 0) {
         req.body.password = getsha256(uuid.v4());
-        req.body.forgotpaswordkey = uuid.v4();
-        console.log(req.body);
+        req.body.forgotpasswordkey = uuid.v4();
         sequelize.models.users.create(req.body).then(function(user) {
           var emailParams = {
             toAddress: user.email,

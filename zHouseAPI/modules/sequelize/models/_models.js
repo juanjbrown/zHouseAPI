@@ -5,6 +5,9 @@ module.exports = function(sequelize) {
   var Cameras = require('./cameras.js');
   var cameras = new Cameras(sequelize).Cameras;
   
+  var Location = require('./location.js');
+  var location = new Location(sequelize).Location;
+  
   var Nodes = require('./nodes.js');
   var nodes = new Nodes(sequelize).Nodes;
   
@@ -58,6 +61,7 @@ module.exports = function(sequelize) {
   return {
     alarm: alarm,
     cameras: cameras,
+    location: location,
     nodes: nodes,
     nodeSceneMaps: nodeSceneMaps,
     nodeAlarmTriggers: nodeAlarmTriggers,

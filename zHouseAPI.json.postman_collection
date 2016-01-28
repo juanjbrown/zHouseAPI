@@ -15,6 +15,16 @@
 			"owner": 0
 		},
 		{
+			"id": "9b7bc978-e91f-93f1-c615-721e275eec2d",
+			"name": "location",
+			"description": "",
+			"order": [
+				"0bf52153-46f4-be03-d933-1a30a1f8b892",
+				"ace264ac-1f0e-8aed-99fc-72e93216237a"
+			],
+			"owner": 0
+		},
+		{
 			"id": "f5075848-44b9-acf9-e7ea-a3be9a9f25c2",
 			"name": "auth",
 			"description": "",
@@ -259,6 +269,25 @@
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
 			"rawModeData": "{\n  \"class_id\": 37,\n  \"value\": \"false\",\n  \"sms\": 1,\n  \"siren\": 1,\n  \"record_cameras\": 1\n}"
+		},
+		{
+			"id": "0bf52153-46f4-be03-d933-1a30a1f8b892",
+			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
+			"url": "{{server}}/location",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1453951202572,
+			"name": "location",
+			"description": "",
+			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
+			"responses": []
 		},
 		{
 			"id": "0c900ab9-34f3-355d-6a87-beb02cee96ba",
@@ -911,6 +940,26 @@
 			"rawModeData": "{\n  \"scene_id\": 1\n}"
 		},
 		{
+			"id": "ace264ac-1f0e-8aed-99fc-72e93216237a",
+			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
+			"url": "{{server}}/location",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1453951218344,
+			"name": "location",
+			"description": "",
+			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
+			"responses": [],
+			"rawModeData": "{\n  \"latitude\": 0,\n  \"longitude\": 0\n}"
+		},
+		{
 			"id": "ae7a8e40-cf80-5022-f3b2-7887f70dd6be",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
 			"url": "{{server}}/users/",
@@ -923,7 +972,7 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1453793278745,
+			"time": 1453825988245,
 			"name": "users",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
