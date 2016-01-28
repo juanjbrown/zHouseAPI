@@ -48,15 +48,15 @@ module.exports = function(sequelize) {
   nodes.hasMany(nodeCategories, {as: 'categories', foreignKey: 'node_id', onDelete: 'CASCADE'});
   
   nodeSceneTriggers.hasMany(nodeSceneTriggerScenes, {as: 'scenes', foreignKey: 'scene_trigger_id', onDelete: 'CASCADE'});
-  nodeSceneTriggers.belongsToMany(scenes, {through: nodeSceneTriggerScenes, foreignKey: 'scene_id'})
-  scenes.belongsToMany(nodeSceneTriggers, {through: nodeSceneTriggerScenes, foreignKey: 'scene_trigger_id'});
+  nodeSceneTriggers.belongsToMany(scenes, {through: nodeSceneTriggerScenes, foreignKey: 'scene_trigger_id'})
+  scenes.belongsToMany(nodeSceneTriggers, {through: nodeSceneTriggerScenes, foreignKey: 'scene_id'});
   
   scenes.hasMany(sceneActions, {as: 'actions', foreignKey: 'scene_id', onDelete: 'CASCADE'});
   scenes.hasMany(nodeSceneMaps, {as: 'scene_maps', foreignKey: 'scene_id', onDelete: 'CASCADE'});
   
   schedules.hasMany(scheduleScenes, {as: 'scenes', foreignKey: 'schedule_id', onDelete: 'CASCADE'});
-  schedules.belongsToMany(scenes, {through: scheduleScenes, foreignKey: 'scene_id'})
-  scenes.belongsToMany(schedules, {through: scheduleScenes, foreignKey: 'schedule_id'});
+  schedules.belongsToMany(scenes, {through: scheduleScenes, foreignKey: 'schedule_id'})
+  scenes.belongsToMany(schedules, {through: scheduleScenes, foreignKey: 'scene_id'});
   
   return {
     alarm: alarm,
