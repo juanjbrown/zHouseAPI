@@ -220,8 +220,6 @@ module.exports = function(socket, aws, scenes, sequelize) {
         }
       ]
     }).then(function(node) {
-      console.log('checking scene triggers');
-      console.log(node);
       for(var i=0;i<node[0].dataValues.scene_triggers.length;i++) {
         if(node[0].dataValues.scene_triggers[i].class_id === comclass) {
           if(node[0].dataValues.scene_triggers[i].index === value.index) {
@@ -274,13 +272,11 @@ module.exports = function(socket, aws, scenes, sequelize) {
             }
           ]
         }).then(function(node) {
-          console.log('checking alarm triggers');
-          console.log(node);
+          console.log('database value: '+String(node[0].dataValues.alarm_triggers[i].value));
+          console.log('zwave transmitted value'+String(value.value));
           for(var i=0;i<node[0].dataValues.alarm_triggers.length;i++) {
             if(node[0].dataValues.alarm_triggers[i].class_id === comclass) {
               if(node[0].dataValues.alarm_triggers[i].index === value.index) {
-                console.log('database value: '+String(node[0].dataValues.alarm_triggers[i].value));
-                console.log('zwave transmitted value'+String(value.value));
                 if(String(node[0].dataValues.alarm_triggers[i].value) === String(value.value)) {
                   if(node[0].dataValues.alarm_triggers[i].sms) {
                     console.log('sending alarm sms for '+node[0].dataValues.name);
