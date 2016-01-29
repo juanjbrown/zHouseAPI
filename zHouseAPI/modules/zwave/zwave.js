@@ -193,7 +193,6 @@ module.exports = function(socket, aws, scenes, sequelize) {
   }
   
   function checkSceneTriggers(nodeid, comclass, value) {
-    console.log('checking scene triggers');
     sequelize.models.nodes.findAll({
       where: {
         node_id: nodeid
@@ -216,6 +215,8 @@ module.exports = function(socket, aws, scenes, sequelize) {
         }
       ]
     }).then(function(node) {
+      console.log('checking scene triggers');
+      console.log(node);
       for(var i=0;i<node[0].dataValues.scene_triggers.length;i++) {
         if(node[0].dataValues.scene_triggers[i].class_id === comclass) {
           if(node[0].dataValues.scene_triggers[i].index === value.index) {
@@ -235,7 +236,6 @@ module.exports = function(socket, aws, scenes, sequelize) {
   }
   
   function checkAlarmTriggers(nodeid, comclass, value) {
-    console.log('checking alarm triggers');
     sequelize.models.alarm.findAll({
       attributes: {
         exclude: ['id']
@@ -254,7 +254,8 @@ module.exports = function(socket, aws, scenes, sequelize) {
             }
           ]
         }).then(function(node) {
-          console.log(JSON.stringify(value));
+          console.log('checking alarm triggers');
+          console.log(node);
           for(var i=0;i<node[0].dataValues.alarm_triggers.length;i++) {
             if(node[0].dataValues.alarm_triggers[i].class_id === comclass) {
               if(node[0].dataValues.alarm_triggers[i].index === value.index) {
