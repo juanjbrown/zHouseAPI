@@ -204,12 +204,24 @@ module.exports = function(socket, aws, scenes, sequelize) {
           required: false,
           include: [
             {
-              model: sequelize.models.nodeSceneTriggerScenes,
-              as: 'scenes',
+              model: sequelize.models.nodeAlarmTriggers,
+              as: 'alarm_triggers',
+              required: false
+            },
+            {
+              model: sequelize.models.nodeSceneTriggers,
+              as: 'scene_triggers',
               required: false,
-              attributes: {
-                exclude: ['id', 'scene_trigger_id']
-              }
+              include: [
+                {
+                  model: sequelize.models.nodeSceneTriggerScenes,
+                  as: 'scenes',
+                  required: false,
+                  attributes: {
+                    exclude: ['id', 'scene_trigger_id']
+                  }
+                }
+              ]
             }
           ]
         }
@@ -251,6 +263,21 @@ module.exports = function(socket, aws, scenes, sequelize) {
               model: sequelize.models.nodeAlarmTriggers,
               as: 'alarm_triggers',
               required: false
+            },
+            {
+              model: sequelize.models.nodeSceneTriggers,
+              as: 'scene_triggers',
+              required: false,
+              include: [
+                {
+                  model: sequelize.models.nodeSceneTriggerScenes,
+                  as: 'scenes',
+                  required: false,
+                  attributes: {
+                    exclude: ['id', 'scene_trigger_id']
+                  }
+                }
+              ]
             }
           ]
         }).then(function(node) {
