@@ -272,9 +272,9 @@ module.exports = function(socket, aws, scenes, sequelize) {
             }
           ]
         }).then(function(node) {
-          console.log('database value: '+String(node[0].dataValues.alarm_triggers[i].value));
-          console.log('zwave transmitted value'+String(value.value));
           for(var i=0;i<node[0].dataValues.alarm_triggers.length;i++) {
+            console.log('database value: '+String(node[0].dataValues.alarm_triggers[i].value));
+            console.log('zwave transmitted value'+String(value.value));
             if(node[0].dataValues.alarm_triggers[i].class_id === comclass) {
               if(node[0].dataValues.alarm_triggers[i].index === value.index) {
                 if(String(node[0].dataValues.alarm_triggers[i].value) === String(value.value)) {
