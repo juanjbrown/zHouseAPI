@@ -1,4 +1,4 @@
-console.log = function(){};
+//console.log = function(){};
 
 var config = require('./config.js')[process.env.NODE_ENV];
 
