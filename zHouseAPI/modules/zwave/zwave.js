@@ -218,7 +218,7 @@ module.exports = function(socket, aws, scenes, sequelize) {
       for(var i=0;i<node[0].dataValues.scene_triggers.length;i++) {
         if(node[0].dataValues.scene_triggers[i].class_id === comclass) {
           if(node[0].dataValues.scene_triggers[i].index === value.index) {
-            if(String(node[0].dataValues.scene_triggers[i].value) === String(value.value) {
+            if(String(node[0].dataValues.scene_triggers[i].value) === String(value.value)) {
               for(var j=0;j<node[0].dataValues.scene_triggers[i].scenes.length;j++) {
                 scenes.runScene(node[0].dataValues.scene_triggers[i].scenes[j].scene_id, function(status, message){
                   console.log(message.message);
@@ -255,7 +255,7 @@ module.exports = function(socket, aws, scenes, sequelize) {
           for(var i=0;i<node[0].dataValues.alarm_triggers.length;i++) {
             if(node[0].dataValues.alarm_triggers[i].class_id === comclass) {
               if(node[0].dataValues.alarm_triggers[i].index === value.index) {
-                if(String(node[0].dataValues.alarm_triggers[i].value) === String(value.value) {
+                if(String(node[0].dataValues.alarm_triggers[i].value) === String(value.value)) {
                   if(node[0].dataValues.alarm_triggers[i].sms) {
                     console.log('sending alarm sms for '+node[0].dataValues.name);
                     aws.sendSMS(node[0].dataValues.name+' alarm!');
