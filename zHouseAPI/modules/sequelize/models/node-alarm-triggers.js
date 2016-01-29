@@ -12,6 +12,14 @@ module.exports = function(sequelize) {
         type: Sequelize.INTEGER,
         allowNull: false
       },
+      instance: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      index: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
       value: {
         type: Sequelize.STRING,
         allowNull: false

@@ -75,7 +75,7 @@ zwave.zwave.on('scan complete', function () {
 /*TODO:
 - alexa voice integration
 - control panel mode?
-- no logs
 - delete failed node from database on remove failed node and replace failed node remove it from the zwave.nodes object too
 - node has failed always reporting true
+- got a abug for alarm values when they report an integer and not a boolean
 */

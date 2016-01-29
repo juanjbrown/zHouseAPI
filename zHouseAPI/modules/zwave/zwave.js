@@ -33,7 +33,8 @@ module.exports = function(socket, aws, scenes, sequelize) {
       nodes[nodeid]['classes'][comclass][value.index] = value;
       socket.updateNodes(nodes);
       if(scanComplete) {
-        checkAlarm(nodeid, comclass, value);
+        checkAlarmTriggers(nodeid, comclass, value);
+        checkSceneTriggers(nodeid, comclass, value);
       }
     }
   });
@@ -191,7 +192,48 @@ module.exports = function(socket, aws, scenes, sequelize) {
     }
   }
   
-  function checkAlarm(nodeid, comclass, value) {
+  function checkSceneTriggers(nodeid, comclass, value) {
+    sequelize.models.nodes.findAll({
+      where: {
+        node_id: nodeid
+      },
+      include: [
+        {
+          model: sequelize.models.nodeSceneTriggers,
+          as: 'scene_triggers',
+          required: false,
+          include: [
+            {
+              model: sequelize.models.nodeSceneTriggerScenes,
+              as: 'scenes',
+              required: false,
+              attributes: {
+                exclude: ['id', 'scene_trigger_id']
+              }
+            }
+          ]
+        }
+      ]
+    }).then(function(node) {
+      for(var i=0;i<node[0].dataValues.scene_triggers.length;i++) {
+        if(node[0].dataValues.scene_triggers[i].class_id === comclass) {
+          if(node[0].dataValues.scene_triggers[i].index === value.index) {
+            if((node[0].dataValues.scene_triggers[i].value == 'true') === value.value) {
+              for(var j=0;j<node[0].dataValues.scene_triggers[i].scenes.length;j++) {
+                scenes.runScene(node[0].dataValues.scene_triggers[i].scenes[j].scene_id, function(status, message){
+                  console.log(message.message);
+                });
+              }
+            }
+          }
+        }
+      }
+    }, function(error) {
+      console.log('error getting scene triggers');
+    });
+  }
+  
+  function checkAlarmTriggers(nodeid, comclass, value) {
     sequelize.models.alarm.findAll({
       attributes: {
         exclude: ['id']
@@ -207,59 +249,46 @@ module.exports = function(socket, aws, scenes, sequelize) {
               model: sequelize.models.nodeAlarmTriggers,
               as: 'alarm_triggers',
               required: false
-            },
-            {
-              model: sequelize.models.nodeSceneTriggers,
-              as: 'scene_triggers',
-              required: false,
-              include: [
-                {
-                  model: sequelize.models.nodeSceneTriggerScenes,
-                  as: 'scenes',
-                  required: false,
-                  attributes: {
-                    exclude: ['id', 'scene_trigger_id']
-                  }
-                }
-              ]
             }
           ]
         }).then(function(node) {
           for(var i=0;i<node[0].dataValues.alarm_triggers.length;i++) {
             if(node[0].dataValues.alarm_triggers[i].class_id === comclass) {
-              if((node[0].dataValues.alarm_triggers[i].value == 'true') === value.value) {
-                if(node[0].dataValues.alarm_triggers[i].sms) {
-                  console.log('sending alarm sms for '+node[0].dataValues.name);
-                  aws.sendSMS(node[0].dataValues.name+' alarm!');
-                }
+              if(node[0].dataValues.alarm_triggers[i].index === value.index) {
+                if((node[0].dataValues.alarm_triggers[i].value == 'true') === value.value) {
+                  if(node[0].dataValues.alarm_triggers[i].sms) {
+                    console.log('sending alarm sms for '+node[0].dataValues.name);
+                    aws.sendSMS(node[0].dataValues.name+' alarm!');
+                  }
 
-                if(node[0].dataValues.alarm_triggers[i].siren) {
-                  console.log('sounding siren for '+node[0].dataValues.name);
-                  soundSiren();
-                }
-                
-                if(node[0].dataValues.alarm_triggers[i].record_cameras) {
-                  sequelize.models.cameras.findAll({}).then(function(cameras){
-                    for(var i=0;i<cameras.length;i++) {
-                      if((cameras[i].dataValues.record_on_alarm) && (!camerasRecording)) {
-                        console.log('recording cameras');
-                        camerasRecording = true;
-                        setTimeout(function(){
-                          camerasRecording = false;
-                        }, parseInt(config.cameras.alarm_record_time+'000',10));
-                        childProcess.exec('/record-camera.sh '+cameras[i].dataValues.name.replace(/\s+/g, '')+' "'+cameras[i].dataValues.url+'" '+config.cameras.alarm_record_time,
-                          function (error, stdout, stderr) {
-                            console.log('stdout: ' + stdout);
-                            console.log('stderr: ' + stderr);
-                            if (error !== null) {
-                              console.log('exec error: ' + error);
-                            }
-                        });
+                  if(node[0].dataValues.alarm_triggers[i].siren) {
+                    console.log('sounding siren for '+node[0].dataValues.name);
+                    soundSiren();
+                  }
+
+                  if(node[0].dataValues.alarm_triggers[i].record_cameras) {
+                    sequelize.models.cameras.findAll({}).then(function(cameras){
+                      for(var i=0;i<cameras.length;i++) {
+                        if((cameras[i].dataValues.record_on_alarm) && (!camerasRecording)) {
+                          console.log('recording cameras');
+                          camerasRecording = true;
+                          setTimeout(function(){
+                            camerasRecording = false;
+                          }, parseInt(config.cameras.alarm_record_time+'000',10));
+                          childProcess.exec('/record-camera.sh '+cameras[i].dataValues.name.replace(/\s+/g, '')+' "'+cameras[i].dataValues.url+'" '+config.cameras.alarm_record_time,
+                            function (error, stdout, stderr) {
+                              console.log('stdout: ' + stdout);
+                              console.log('stderr: ' + stderr);
+                              if (error !== null) {
+                                console.log('exec error: ' + error);
+                              }
+                          });
+                        }
                       }
-                    }
-                  }, function(error){
-                    console.log('error getting cameras for alarm');
-                  });
+                    }, function(error){
+                      console.log('error getting cameras for alarm');
+                    });
+                  }
                 }
               }
             }

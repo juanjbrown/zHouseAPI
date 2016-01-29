@@ -264,12 +264,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452750187377,
+			"time": 1454030999779,
 			"name": "nodes/alarm-triggers/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"class_id\": 37,\n  \"value\": \"false\",\n  \"sms\": 1,\n  \"siren\": 1,\n  \"record_cameras\": 1\n}"
+			"rawModeData": "{\n  \"class_id\": 37,\n  \"instance\": 1,\n  \"index\": 0,\n  \"value\": \"false\",\n  \"sms\": 1,\n  \"siren\": 1,\n  \"record_cameras\": 1\n}"
 		},
 		{
 			"id": "0bf52153-46f4-be03-d933-1a30a1f8b892",
@@ -343,17 +343,17 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1453741450597,
+			"time": 1454009512163,
 			"name": "nodes/:id/command",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n    \"class_id\": 37,\n    \"instance\": 1,\n    \"index\": 0,\n    \"value\": false\n}"
+			"rawModeData": "{\n    \"class_id\": 37,\n    \"instance\": 1,\n    \"index\": 0,\n    \"value\": true\n}"
 		},
 		{
 			"id": "20d3e673-8071-55f4-ca2e-8b69d4bd3d90",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/nodes/10",
+			"url": "{{server}}/nodes/11",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "GET",
@@ -363,7 +363,7 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1453086344712,
+			"time": 1454017179515,
 			"name": "nodes/:node_id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
@@ -372,7 +372,7 @@
 		{
 			"id": "28e70332-16bd-7417-3223-3cfa9d37a868",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/schedules/5",
+			"url": "{{server}}/schedules/6",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "PUT",
@@ -382,12 +382,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1453965321441,
+			"time": 1454026978246,
 			"name": "schedules/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"cron\": \"0 3 * * *\"\n}"
+			"rawModeData": "{\n  \"cron\": \"15 18 * * *\"\n}"
 		},
 		{
 			"id": "2e068e08-4419-3fd1-a48a-80da26f07e93",
@@ -421,12 +421,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452750181061,
+			"time": 1454030984153,
 			"name": "nodes/:id/alarm-triggers",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"class_id\": 37,\n  \"value\": \"true\",\n  \"sms\": 1,\n  \"siren\": 1,\n  \"record_cameras\": 1\n}"
+			"rawModeData": "{\n  \"class_id\": 37,\n  \"instance\": 1,\n  \"index\": 0,\n  \"value\": \"true\",\n  \"sms\": 1,\n  \"siren\": 1,\n  \"record_cameras\": 1\n}"
 		},
 		{
 			"id": "4c010268-8d99-ae67-4136-f92ffe22c329",
@@ -637,12 +637,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452639525055,
+			"time": 1454031036636,
 			"name": "nodes/scene-triggers/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"class_id\": 37,\n  \"value\": \"true\"\n}"
+			"rawModeData": "{\n  \"class_id\": 37,\n  \"instance\": 1,\n  \"index\": 0,\n  \"value\": \"true\"\n}"
 		},
 		{
 			"id": "7ef89cd9-de2c-aa0e-2323-d9d354547005",
@@ -726,7 +726,7 @@
 		{
 			"id": "89819c38-95e4-eaf2-4938-06b3e70f6449",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/schedules/4/add-scene",
+			"url": "{{server}}/schedules/7/add-scene",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "POST",
@@ -736,12 +736,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1453964343474,
+			"time": 1454018098197,
 			"name": "schedules/:id/add-scene",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"scene_id\": 1\n}"
+			"rawModeData": "{\n  \"scene_id\": 8\n}"
 		},
 		{
 			"id": "935b340c-cdb2-1ccd-a6ad-f4422e36e267",
@@ -1194,12 +1194,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452639517051,
+			"time": 1454031020438,
 			"name": "nodes/:id/scene-triggers",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"class_id\": 37,\n  \"value\": \"true\"\n}"
+			"rawModeData": "{\n  \"class_id\": 37,\n  \"instance\": 1,\n  \"index\": 0,\n  \"value\": \"true\"\n}"
 		},
 		{
 			"id": "f96cc8ac-8686-a8c9-a160-c5aff797e344",
@@ -1214,12 +1214,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1453963966580,
+			"time": 1454018101063,
 			"name": "schedules",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"name\": \"test\",\n  \"cron\": \"* * * * *\"\n}"
+			"rawModeData": "{\n  \"name\": \"Outdoor Garage Light Off\",\n  \"cron\": \"0 8 * * *\"\n}"
 		},
 		{
 			"id": "fa6ed686-1679-f903-d778-aa11f49504cf",
