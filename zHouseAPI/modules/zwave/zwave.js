@@ -252,6 +252,7 @@ module.exports = function(socket, aws, scenes, sequelize) {
             }
           ]
         }).then(function(node) {
+          console.log(JSON.stringify(value));
           for(var i=0;i<node[0].dataValues.alarm_triggers.length;i++) {
             if(node[0].dataValues.alarm_triggers[i].class_id === comclass) {
               if(node[0].dataValues.alarm_triggers[i].index === value.index) {
