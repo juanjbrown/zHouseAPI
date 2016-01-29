@@ -193,6 +193,7 @@ module.exports = function(socket, aws, scenes, sequelize) {
   }
   
   function checkSceneTriggers(nodeid, comclass, value) {
+    console.log('checking scene triggers');
     sequelize.models.nodes.findAll({
       where: {
         node_id: nodeid
@@ -234,6 +235,7 @@ module.exports = function(socket, aws, scenes, sequelize) {
   }
   
   function checkAlarmTriggers(nodeid, comclass, value) {
+    console.log('checking alarm triggers');
     sequelize.models.alarm.findAll({
       attributes: {
         exclude: ['id']
