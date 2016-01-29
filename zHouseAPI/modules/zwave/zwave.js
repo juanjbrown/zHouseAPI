@@ -199,29 +199,22 @@ module.exports = function(socket, aws, scenes, sequelize) {
       },
       include: [
         {
+          model: sequelize.models.nodeAlarmTriggers,
+          as: 'alarm_triggers',
+          required: false
+        },
+        {
           model: sequelize.models.nodeSceneTriggers,
           as: 'scene_triggers',
           required: false,
           include: [
             {
-              model: sequelize.models.nodeAlarmTriggers,
-              as: 'alarm_triggers',
-              required: false
-            },
-            {
-              model: sequelize.models.nodeSceneTriggers,
-              as: 'scene_triggers',
+              model: sequelize.models.nodeSceneTriggerScenes,
+              as: 'scenes',
               required: false,
-              include: [
-                {
-                  model: sequelize.models.nodeSceneTriggerScenes,
-                  as: 'scenes',
-                  required: false,
-                  attributes: {
-                    exclude: ['id', 'scene_trigger_id']
-                  }
-                }
-              ]
+              attributes: {
+                exclude: ['id', 'scene_trigger_id']
+              }
             }
           ]
         }
