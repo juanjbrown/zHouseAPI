@@ -67,10 +67,10 @@ sequelize.initialize(function() {
   });
 });
 
-//zwave.zwave.on('scan complete', function () {
+zwave.zwave.on('scan complete', function () {
   express.initialize();
   schedules.initialize();
-//});
+});
 
 /*TODO:
 - alexa voice integration
