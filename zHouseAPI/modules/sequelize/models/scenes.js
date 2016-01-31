@@ -18,6 +18,14 @@ module.exports = function(sequelize) {
       armed: {
         type: Sequelize.BOOLEAN,
         allowNull: false
+      },
+      dawn: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
+      },
+      dusk: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
       }
     },
     {

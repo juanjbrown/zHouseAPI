@@ -43,6 +43,8 @@ module.exports = function(sequelize, scenes) {
     }
     sequelize.models.location.findAll({}).then(function(location) {
       suncalc = SunCalc.getTimes(new Date(), location[0].latitude, location[0].longitude);
+      suncalc.sunrise = new Date(suncalc.sunrise.getTime()-15*60000);
+      suncalc.sunset = new Date(suncalc.sunset.getTime()+15*60000);
       dawnSchedule = Later.parse.recur().on(suncalc.dawn).fullDate();
       duskSchedule = Later.parse.recur().on(suncalc.dusk).fullDate();
       dawnTimeout = Later.setTimeout(runDawn, dawnSchedule);

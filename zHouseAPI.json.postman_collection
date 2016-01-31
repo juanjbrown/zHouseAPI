@@ -323,12 +323,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452755355557,
+			"time": 1454283123737,
 			"name": "scenes",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"id\": 1,\n  \"name\": \"Left Family Room Light On\",\n  \"change_alarm\": false,\n  \"armed\": false\n}"
+			"rawModeData": "{\n  \"id\": 1,\n  \"name\": \"Left Family Room Light On\",\n  \"change_alarm\": false,\n  \"armed\": false,\n  \"dawn\": false,\n  \"dusk\": false\n}"
 		},
 		{
 			"id": "117a0620-668f-2d21-8665-69d07c59e15a",
@@ -372,7 +372,7 @@
 		{
 			"id": "28e70332-16bd-7417-3223-3cfa9d37a868",
 			"headers": "Content-Type: application/json\nusername: {{username}}\napikey: {{apikey}}\n",
-			"url": "{{server}}/schedules/6",
+			"url": "{{server}}/schedules/7",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "PUT",
@@ -382,12 +382,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1454026978246,
+			"time": 1454071139910,
 			"name": "schedules/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"cron\": \"15 18 * * *\"\n}"
+			"rawModeData": "{\n  \"cron\": \"30 7 * * *\"\n}"
 		},
 		{
 			"id": "2e068e08-4419-3fd1-a48a-80da26f07e93",
@@ -795,12 +795,12 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1452823620862,
+			"time": 1454283130261,
 			"name": "scenes/:id",
 			"description": "",
 			"collectionId": "f6685da8-71fa-6f30-05fb-527154333698",
 			"responses": [],
-			"rawModeData": "{\n  \"name\": \"Left Family Room Light On\",\n  \"change_alarm\": true,\n  \"armed\": true\n}"
+			"rawModeData": "{\n  \"name\": \"Left Family Room Light On\",\n  \"change_alarm\": true,\n  \"armed\": true,\n  \"dawn\": false,\n  \"dusk\": false\n}"
 		},
 		{
 			"id": "99c4e6bc-b715-a880-995e-c8bfa643fa04",
