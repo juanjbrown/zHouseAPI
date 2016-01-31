@@ -337,7 +337,7 @@ module.exports = function(socket, aws, scenes, sequelize) {
       for(var i=0;i<sirens.length;i++) {
         setValue(sirens[i].dataValues.node_id, data, function() {
           sirenOn = true;
-          setTimeout(cancelSiren, 60000);
+          setTimeout(cancelSiren, 300000);
         });
       }
     });

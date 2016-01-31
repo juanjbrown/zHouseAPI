@@ -1,4 +1,4 @@
-console.log = function(){};
+//console.log = function(){};
 
 var config = require('./config.js')[process.env.NODE_ENV];
 
@@ -67,15 +67,16 @@ sequelize.initialize(function() {
   });
 });
 
-zwave.zwave.on('scan complete', function () {
+//zwave.zwave.on('scan complete', function () {
   express.initialize();
   schedules.initialize();
-});
+//});
 
 /*TODO:
 - alexa voice integration
 - control panel mode?
 - delete failed node from database on remove failed node and replace failed node remove it from the zwave.nodes object too
 - node has failed always reporting true
-- got a abug for alarm values when they report an integer and not a boolean
+- sunrise/sunset actions
+- update sunrise/sunset on location change
 */

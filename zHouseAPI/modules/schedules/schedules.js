@@ -1,10 +1,19 @@
 module.exports = function(sequelize, scenes) {
+  var Later = require('later');
+  var SunCalc = require('suncalc');
   var CronJob = require('cron').CronJob;
   var schedules = [];
   var scheduleContext = [];
-
+  var suncalc;
+  var dawnSchedule;
+  var duskSchedule;
+  var dawnTimeout;
+  var duskTimeout;
 
   function initialize() {
+    updateSunCalc();
+    new CronJob('* * * * *', updateSunCalc, null, true, "America/New_York");
+    
     sequelize.models.schedules.findAll({
       order: [['id', 'ASC']],
       include: [
@@ -24,6 +33,29 @@ module.exports = function(sequelize, scenes) {
         }
       }
     });
+  }
+  
+  function updateSunCalc() {
+    console.log('updating suncalc');
+    if(typeof dawnTimeout !== 'undefined') {
+      dawnTimeout.clear();
+      duskTimeout.clear();
+    }
+    sequelize.models.location.findAll({}).then(function(location) {
+      suncalc = SunCalc.getTimes(new Date(), location[0].latitude, location[0].longitude);
+      dawnSchedule = Later.parse.recur().on(suncalc.dawn).fullDate();
+      duskSchedule = Later.parse.recur().on(suncalc.dusk).fullDate();
+      dawnTimeout = Later.setTimeout(runDawn, dawnSchedule);
+      duskTimeout = Later.setTimeout(runDusk, duskSchedule);
+    });
+  }
+  
+  function runDawn() {
+    console.log('run dawn');
+  }
+  
+  function runDusk() {
+    console.log('run dusk');
   }
 
   function createJob(id, cron) {
