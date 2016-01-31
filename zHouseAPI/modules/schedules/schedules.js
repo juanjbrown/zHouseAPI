@@ -53,11 +53,29 @@ module.exports = function(sequelize, scenes) {
   }
   
   function runDawn() {
-    console.log('run dawn');
+    console.log('running dawn scenese');
+    sequelize.models.scenes.findAll({
+      where: {
+        dawn: true
+      }
+    }).then(function(scenes) {
+      for(var i=0;i<scenes.length;i++) {
+        scenes.runScene(scenes[i].dataValues.scene_id);
+      }
+    });
   }
   
   function runDusk() {
-    console.log('run dusk');
+    console.log('running dusk scenes');
+    sequelize.models.scenes.findAll({
+      where: {
+        dusk: true
+      }
+    }).then(function(scenes) {
+      for(var i=0;i<scenes.length;i++) {
+        scenes.runScene(scenes[i].dataValues.scene_id);
+      }
+    });
   }
 
   function createJob(id, cron) {

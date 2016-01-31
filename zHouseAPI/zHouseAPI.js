@@ -77,6 +77,6 @@ zwave.zwave.on('scan complete', function () {
 - control panel mode?
 - delete failed node from database on remove failed node and replace failed node remove it from the zwave.nodes object too
 - node has failed always reporting true
-- sunrise/sunset actions
 - update sunrise/sunset on location change
+- null values for sunrise and sunset times in arctic circle
 */
