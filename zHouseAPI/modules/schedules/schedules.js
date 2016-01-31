@@ -12,7 +12,7 @@ module.exports = function(sequelize, scenes) {
 
   function initialize() {
     updateSunCalc();
-    new CronJob('* * * * *', updateSunCalc, null, true, "America/New_York");
+    new CronJob('0 0 * * *', updateSunCalc, null, true, "America/New_York");
     
     sequelize.models.schedules.findAll({
       order: [['id', 'ASC']],
