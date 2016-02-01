@@ -10,7 +10,7 @@ module.exports = function(sequelize, scenes) {
   var dawnTimeout;
   var duskTimeout;
   
-  later.date.localTime();
+  Later.date.localTime();
 
   function initialize() {
     updateSunCalc();
