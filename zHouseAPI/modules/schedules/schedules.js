@@ -58,7 +58,7 @@ module.exports = function(sequelize, scenes) {
   }
   
   function runDawn() {
-    console.log('running dawn scenese');
+    console.log('running dawn scenes ('+new Date()+')');
     sequelize.models.scenes.findAll({
       where: {
         dawn: true
@@ -71,7 +71,7 @@ module.exports = function(sequelize, scenes) {
   }
   
   function runDusk() {
-    console.log('running dusk scenes');
+    console.log('running dusk scenes ('+new Date()+')');
     sequelize.models.scenes.findAll({
       where: {
         dusk: true
