@@ -9,6 +9,8 @@ module.exports = function(sequelize, scenes) {
   var duskSchedule;
   var dawnTimeout;
   var duskTimeout;
+  
+  later.date.localTime();
 
   function initialize() {
     updateSunCalc();
