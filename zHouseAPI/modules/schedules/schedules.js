@@ -38,6 +38,7 @@ module.exports = function(sequelize, scenes) {
   function updateSunCalc() {
     console.log('updating suncalc');
     if(typeof dawnTimeout !== 'undefined') {
+      console.log('clearing old sun based schedules');
       dawnTimeout.clear();
       duskTimeout.clear();
     }
@@ -45,6 +46,8 @@ module.exports = function(sequelize, scenes) {
       suncalc = SunCalc.getTimes(new Date(), location[0].latitude, location[0].longitude);
       suncalc.sunrise = new Date(suncalc.sunrise.getTime()-15*60000);
       suncalc.sunset = new Date(suncalc.sunset.getTime()+15*60000);
+      console.log('setting schedule for 15 minutes before sunrise ('+suncalc.sunrise+')');
+      console.log('setting schedule for 15 minutes after sunset ('+suncalc.sunset+')');
       dawnSchedule = Later.parse.recur().on(suncalc.dawn).fullDate();
       duskSchedule = Later.parse.recur().on(suncalc.dusk).fullDate();
       dawnTimeout = Later.setTimeout(runDawn, dawnSchedule);
