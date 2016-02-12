@@ -109,7 +109,7 @@ module.exports = function(socket, aws, scenes, sequelize) {
   function refreshNodeInfo(nodeid, callback) {
     try {
       zwave.refreshNodeInfo(nodeid);
-      callback(200, {message: 'node successfully updated'});
+      callback(200, {message: 'node info refreshed'});
     }
     catch (error) {
       callback(400, {message: String(error)});
