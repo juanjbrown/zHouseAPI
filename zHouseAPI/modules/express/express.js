@@ -798,7 +798,7 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
     });
   });
   
-  router.put('/nodes/:nodeid/refresh-node-info', function(req, res) {
+  router.get('/nodes/:nodeid/refresh-node-info', function(req, res) {
     zwave.refreshNodeInfo(req.params.nodeid, function(status, message) {
       res.status(status).json({
         status: status === 200 ? 'success' : 'error',
