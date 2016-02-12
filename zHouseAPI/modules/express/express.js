@@ -798,6 +798,15 @@ module.exports = function(aws, socket, schedules, scenes, sequelize, zwave) {
     });
   });
   
+  router.put('/nodes/:nodeid/refresh-node-info', function(req, res) {
+    zwave.refreshNodeInfo(req.params.nodeid, function(status, message) {
+      res.status(status).json({
+        status: status === 200 ? 'success' : 'error',
+        data:  message
+      });
+    });
+  });
+  
   router.put('/nodes/:nodeid/polling', function(req, res) {
     zwave.changePolling(req.params.nodeid, req.body, function(status, message) {
       res.status(status).json({

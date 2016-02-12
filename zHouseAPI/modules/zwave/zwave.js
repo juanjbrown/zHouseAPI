@@ -106,6 +106,16 @@ module.exports = function(socket, aws, scenes, sequelize) {
     zwave.connect(zwavedriverpaths[os.platform()]);
   }
   
+  function refreshNodeInfo(nodeid, callback) {
+    try {
+      zwave.refreshNodeInfo(nodeid);
+      callback(200, {message: 'node successfully updated'});
+    }
+    catch (error) {
+      callback(400, {message: String(error)});
+    }
+  }
+  
   function changePolling(nodeid, data, callback) {
     try {
       if(data.enabled == true) {
@@ -370,6 +380,7 @@ module.exports = function(socket, aws, scenes, sequelize) {
     disconnect: disconnect,
     restart: restart,
     nodes: nodes,
+    refreshNodeInfo: refreshNodeInfo,
     changePolling: changePolling,
     setValue: setValue,
     setConfigParam: setConfigParam,
