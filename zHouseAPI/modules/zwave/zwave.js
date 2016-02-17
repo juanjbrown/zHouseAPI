@@ -3,7 +3,10 @@ module.exports = function(socket, aws, scenes, sequelize) {
   var config = require('../../config.js')[process.env.NODE_ENV];
   var ZWave = require('../../node_modules/openzwave-shared/lib/openzwave-shared.js');
   var os = require('os');
-  var zwave = new ZWave({ConsoleOutput: false});
+  var zwave = new ZWave({
+    ConsoleOutput: false,
+    NetworkKey: config.zwave.networkKey
+  });
   var nodes = [];
   var zwavedriverpaths = {'darwin': '/dev/cu.usbmodem1411', 'linux': '/dev/ttyUSB0', 'windows': '\\\\.\\COM3'};
   var scanComplete = false;
