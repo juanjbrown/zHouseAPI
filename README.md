@@ -4,7 +4,7 @@ Part of the [zHouse Suite](https://github.com/search?q=user%3Apauljdehmer+zHouse
 
 A restful API for home automation built on top of [node-openzwave-shared](https://github.com/OpenZWave/node-openzwave-shared).
 
-Included is a [postman](https://www.getpostman.com/) collection with all endpoints.
+Included is a [postman](https://www.getpostman.com/) collection with all endpoints, and a postman environment file for convenience.
 
 Upon first launch a user with username 'admin' and password 'password' is created. For security, please change this password.
 
