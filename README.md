@@ -8,7 +8,7 @@ Included is a [postman](https://www.getpostman.com/) collection with all endpoin
 
 Upon first launch a user with username 'admin' and password 'password' is created. For security, please change this password.
 
-This program has capabilities to record camera feeds during an alarm. The feeds are saved on the docker host machine in the directory /media/drive1/serverData/security/.
+This program has capabilities to record camera feeds during an alarm. The location of the saved files is in the config file.
 
 ### Prerequisites
 
@@ -26,7 +26,7 @@ This program has capabilities to record camera feeds during an alarm. The feeds 
   
   4. aws: your aws credentials
   
-  5. cameras: how long to record cameras when an alarm is tripped (value is in seconds)
+  5. cameras: how long to record cameras when an alarm is tripped (value is in seconds). also where to save the video files.
 
 ### Quickstart
 
