@@ -15,17 +15,9 @@ module.exports = function(sequelize) {
         type: Sequelize.STRING,
         allowNull: false
       },
-      up_url: {
-        type: Sequelize.STRING
-      },
-      down_url: {
-        type: Sequelize.STRING
-      },
-      left_url: {
-        type: Sequelize.STRING
-      },
-      right_url: {
-        type: Sequelize.STRING
+      record_url: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       record_on_alarm: {
         type: Sequelize.BOOLEAN,
