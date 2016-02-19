@@ -308,7 +308,7 @@ module.exports = function(socket, aws, scenes, sequelize) {
                           setTimeout(function(){
                             camerasRecording = false;
                           }, parseInt(config.cameras.alarm_record_time+'000',10));
-                          childProcess.exec('/record-camera.sh '+cameras[i].dataValues.name.replace(/\s+/g, '')+' "'+cameras[i].dataValues.url+'" '+config.cameras.alarm_record_time+' '+config.cameras.file_location,
+                          childProcess.exec('/record-camera.sh '+cameras[i].dataValues.name.replace(/\s+/g, '')+' "'+cameras[i].dataValues.record_url+'" '+config.cameras.alarm_record_time+' '+config.cameras.file_location,
                             function (error, stdout, stderr) {
                               console.log('stdout: ' + stdout);
                               console.log('stderr: ' + stderr);
