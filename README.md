@@ -27,6 +27,8 @@ This program has capabilities to record camera feeds during an alarm. The locati
   4. aws: your aws credentials
   
   5. cameras: how long to record cameras when an alarm is tripped (value is in seconds). also where to save the video files.
+  
+  6. zwave: network key for securty devices
 
 ### Quickstart
 
