@@ -147,7 +147,7 @@ module.exports = function(socket, aws, scenes, sequelize) {
 
   function setValue(nodeid, data, callback) {
     try {
-      zwave.setValue({nodeid: nodeid, class_id: data.class_id, instance: data.instance, index: data.index}, data.value);
+      zwave.setValue({node_id: nodeid, class_id: data.class_id, instance: data.instance, index: data.index}, data.value);
       callback(200, {message: 'node successfully updated'});
     }
     catch (error) {

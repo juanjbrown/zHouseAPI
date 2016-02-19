@@ -79,4 +79,5 @@ zwave.zwave.on('scan complete', function () {
 - node has failed always reporting true
 - update sunrise/sunset on location change
 - null values for sunrise and sunset times in arctic circle
+- turn off logging only for prod environment
 */
