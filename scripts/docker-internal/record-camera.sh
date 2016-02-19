@@ -6,4 +6,4 @@ duration=$3
 location=$4
 date=`date +%Y-%m-%d___%H-%M-%S`
 
-ffmpeg -i $recordurl -f flv -t $duration $location$cameraname-$date.flv
+ffmpeg -i $recordurl -b:v 2M -f flv -t $duration $location$cameraname-$date.flv

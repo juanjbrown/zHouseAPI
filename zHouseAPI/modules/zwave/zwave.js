@@ -301,21 +301,23 @@ module.exports = function(socket, aws, scenes, sequelize) {
 
                   if(node[0].dataValues.alarm_triggers[i].record_cameras) {
                     sequelize.models.cameras.findAll({}).then(function(cameras){
-                      for(var i=0;i<cameras.length;i++) {
-                        if((cameras[i].dataValues.record_on_alarm) && (!camerasRecording)) {
-                          console.log('recording cameras');
-                          camerasRecording = true;
-                          setTimeout(function(){
-                            camerasRecording = false;
-                          }, parseInt(config.cameras.alarm_record_time+'000',10));
-                          childProcess.exec('/record-camera.sh '+cameras[i].dataValues.name.replace(/\s+/g, '')+' "'+cameras[i].dataValues.record_url+'" '+config.cameras.alarm_record_time+' '+config.cameras.file_location,
-                            function (error, stdout, stderr) {
-                              console.log('stdout: ' + stdout);
-                              console.log('stderr: ' + stderr);
-                              if (error !== null) {
-                                console.log('exec error: ' + error);
-                              }
-                          });
+                      if(!camerasRecording) {
+                        for(var i=0;i<cameras.length;i++) {
+                          if(cameras[i].dataValues.record_on_alarm) {
+                            console.log('recording cameras');
+                            camerasRecording = true;
+                            setTimeout(function(){
+                              camerasRecording = false;
+                            }, parseInt(config.cameras.alarm_record_time+'000',10));
+                            childProcess.exec('/record-camera.sh '+cameras[i].dataValues.name.replace(/\s+/g, '')+' "'+cameras[i].dataValues.record_url+'" '+config.cameras.alarm_record_time+' '+config.cameras.file_location,
+                              function (error, stdout, stderr) {
+                                console.log('stdout: ' + stdout);
+                                console.log('stderr: ' + stderr);
+                                if (error !== null) {
+                                  console.log('exec error: ' + error);
+                                }
+                            });
+                          }
                         }
                       }
                     }, function(error){
